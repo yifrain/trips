@@ -148,6 +148,27 @@ main { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
 .opt-act a { font-size: 14px; }
 .verdict { margin: 14px 0 0; font-size: 15px; background: var(--wash); border-radius: var(--radius); padding: 12px 14px; }
 
+/* ---------- 住宿对比表 ---------- */
+.stay-tools { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 14px; }
+.s-tbl { min-width: 820px; font-size: 14px; }
+.s-tbl th { white-space: nowrap; font-size: 13px; }
+.s-tbl td { padding: 10px 10px 10px 0; }
+.s-tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
+.s-tbl td.r { white-space: nowrap; }
+.s-name { min-width: 170px; }
+.s-toggle { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--ink); cursor: pointer; text-align: left; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+.s-toggle:hover, .s-toggle[aria-expanded="true"] { text-decoration-color: currentColor; }
+.s-sub { font-size: 12px; color: var(--faint); line-height: 1.5; }
+.s-tbl .best { font-weight: 700; color: var(--ink); }
+.s-tbl td.r > div:first-child { font-size: 15px; }
+.s-row.is-chosen td { background: var(--wash); }
+.s-act .btn { white-space: nowrap; padding: 4px 12px; }
+.warn { display: block; font-size: 12px; color: var(--flag); }
+.s-detail td { background: var(--wash); padding: 12px 14px; }
+.s-pc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
+.s-detail a { font-size: 14px; }
+.s-hint { font-size: 13px; color: var(--faint); margin: 6px 0 0; }
+@media (max-width: 720px) { .s-pc { grid-template-columns: 1fr; } }
 /* ---------- 表格 ---------- */
 .table-wrap { overflow-x: auto; }
 .tbl { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 620px; }
@@ -284,3 +305,57 @@ main { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
   .day, .opt, .spot-card { break-inside: avoid; }
   a { color: inherit; }
 }
+.chosen-label.is-none { color: var(--flag); }
+.b-warn { color: var(--flag); }
+.b-rate { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 14px; font-size: 14px; }
+.stay-tools { flex-wrap: wrap; }
+.b-explain { margin: 12px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted, #555); line-height: 1.6; }
+.b-explain li { margin-bottom: 4px; }
+.b-explain b { color: var(--ink); font-weight: 600; }
+.t-more { margin-top: 4px; font-size: 13px; }
+.t-more summary { cursor: pointer; color: var(--naples); width: fit-content; }
+.t-more dl { display: grid; grid-template-columns: 4.5em 1fr; gap: 4px 10px; margin: 6px 0 4px; line-height: 1.55; }
+.t-more dt { color: var(--muted, #777); }
+.t-more dd { margin: 0; }
+/* 景点：折叠列表 */
+.spot-list { border-top: 1px solid var(--line); margin: 8px 0 24px; }
+.spot-item { border-bottom: 1px solid var(--line); }
+.spot-item summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 10px; padding: 12px 0; flex-wrap: wrap; }
+.spot-item summary::-webkit-details-marker { display: none; }
+.spot-item summary::before { content: "＋"; color: var(--faint); width: 1em; flex: none; }
+.spot-item[open] summary::before { content: "－"; }
+.spot-item .sn { font-weight: 600; color: var(--ink); }
+.spot-item .si { font-size: 13px; color: var(--faint); }
+.spot-item .sm { margin-left: auto; display: flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); }
+.spot-body { display: grid; grid-template-columns: 220px 1fr; gap: 18px; padding: 0 0 16px 1.6em; font-size: 14px; color: var(--muted); }
+.spot-body p { margin: 0 0 8px; }
+.spot-dl { display: grid; grid-template-columns: 3em 1fr; gap: 4px 10px; margin: 0; }
+.spot-dl dt { color: var(--faint); }
+.spot-dl dd { margin: 0; color: var(--ink); }
+/* 须知 */
+.tip-grp { border-top: 1px solid var(--line); }
+.tip-grp:last-child { border-bottom: 1px solid var(--line); }
+.tip-grp summary { cursor: pointer; list-style: none; padding: 14px 0; font-weight: 600; color: var(--ink); display: flex; gap: 10px; align-items: baseline; }
+.tip-grp summary::-webkit-details-marker { display: none; }
+.tip-grp summary::before { content: "＋"; color: var(--faint); font-weight: 400; }
+.tip-grp[open] summary::before { content: "－"; }
+.tip-n { font-weight: 400; font-size: 13px; color: var(--muted); margin-left: auto; }
+.tip-list, .pack { margin: 0 0 16px; padding-left: 1.6em; font-size: 14px; color: var(--muted); line-height: 1.65; }
+.tip-list li { margin-bottom: 6px; }
+.tip-list b { color: var(--ink); font-weight: 600; }
+.pack { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+.pack .is-done { text-decoration: line-through; color: var(--faint); }
+@media (max-width: 700px) {
+  .spot-body { grid-template-columns: 1fr; padding-left: 0; }
+  .pack { grid-template-columns: 1fr; }
+  .spot-item .sm { margin-left: 1.6em; width: 100%; }
+}
+@media print { .spot-item, .tip-grp { break-inside: avoid; } }
+.link-list { list-style: none; margin: 0 0 16px; padding: 0; font-size: 14px; }
+.link-list li { padding: 7px 0; border-bottom: 1px solid var(--line); display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.link-list a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
+.link-list a:hover { text-decoration-color: currentColor; }
+.link-list .src { font-size: 12px; color: var(--faint); min-width: 4.5em; }
+.read-grp h3 { font-size: 15px; margin: 18px 0 6px; }
+.tip-sub { font-size: 13px; color: var(--muted); margin: 0 0 6px 1.6em; }
+.tip-list a { color: inherit; }

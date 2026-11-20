@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>罗马与那不勒斯 · 2026.12</title>
-<link rel="stylesheet" href="assets/style.css?v=10">
+<link rel="stylesheet" href="assets/style.css?v=23">
 </head>
 <body>
 
@@ -19,8 +19,10 @@
       <a href="#move">交通</a>
       <a href="#budget">预算</a>
       <a href="#save">省钱</a>
+      <a href="#tips">须知</a>
       <a href="#food">美食</a>
       <a href="#sights">景点</a>
+      <a href="#reads">推荐</a>
       <a href="#jojo">彩蛋</a>
     </div>
     <div class="lang" role="group" aria-label="切换字体">
@@ -61,7 +63,7 @@
 
 <section id="stay" class="sec">
   <h2>住宿候选</h2>
-  <p class="lead">点「定这家」标记选择，可以随时改。价格是 11 月 20 日搜到的参考价。罗马和那不勒斯的城市税按人按晚收，通常到店付现金，比价时要加上。</p>
+  <p class="lead">每段一张表，价格是三人总价（11 月 20–21 日搜到的）。城市税另外按人按晚到店付现金。点「定这家」后，行程和预算会自动更新。</p>
   <div id="stays"></div>
 </section>
 
@@ -97,8 +99,8 @@
   <h3>罗马市内</h3>
   <ul class="notes">
     <li>机场 ⇄ Termini：Leonardo Express 直达，32 分钟，单程 14€，闸机可以直接刷银行卡进站。</li>
-    <li>更便宜的 FL1 区域车单程 8€，但不停 Termini，只到 Trastevere、Ostiense、Tiburtina 这些站。</li>
-    <li>出租车：白色的罗马市（Roma Capitale）出租车，机场到奥勒良城墙以内是固定价 55€，含行李和夜间附加费，三人分摊每人约 18€。注意：菲乌米奇诺市（Comune di Fiumicino）发牌的出租车同一段收 80€，上车前看清车身标识。ElevenG 所在的 Flaminio 区在城墙外，可能按表计价。</li>
+    <li>更便宜的 FL1 区域车单程 8€，每 15 分钟一班，不停 Termini，只到 Trastevere、Ostiense、Tiburtina 这些站。住 Camplus 的话坐到 Tiburtina，换地铁 B 线 3 站就到。纸质票上车前要打卡，末班车约 22:30。</li>
+    <li>出租车：白色的罗马市（Roma Capitale）出租车，机场到奥勒良城墙以内是固定价 55€，含行李和夜间附加费，三人分摊每人约 18€。注意：菲乌米奇诺市（Comune di Fiumicino）发牌的出租车同一段收 80€，上车前看清车身标识。Camplus（Pietralata）在城墙外，按表计价，机场到大环路（GRA）以内上限 80€。</li>
     <li>市内：BIT 单程票 1.5€，100 分钟内有效（可以随便换乘公交，地铁只能进一次）。24 小时票 8.5€。用同一张银行卡刷闸机时，一天的花费最多封顶 8.5€。</li>
     <li>景点集中，多数时候走路最快。注意 64 路公交和 Termini 一带的扒手。</li>
   </ul>
@@ -167,6 +169,12 @@
   </ul>
 </section>
 
+<section id="tips" class="sec">
+  <h2>出行须知</h2>
+  <p class="lead">防盗、证件、插头、天气这些出发前要知道的事。清单可以勾选，进度保存在这台设备上。</p>
+  <div id="tips-body"></div>
+</section>
+
 <section id="food" class="sec">
   <h2>美食</h2>
   <p class="lead">不写死在行程里，按当天在哪儿就近挑。</p>
@@ -224,9 +232,15 @@
 </section>
 
 <section id="sights" class="sec">
-  <h2>景点背景与拍照点</h2>
-  <p class="lead">图片联网时自动从维基百科加载。</p>
+  <h2>景点介绍</h2>
+  <p class="lead">点开看简介、停留时间、门票和实用提示。右边是安排在哪天去。图片联网时从维基百科加载。</p>
   <div id="spots"></div>
+</section>
+
+<section id="reads" class="sec">
+  <h2>推荐攻略</h2>
+  <p class="lead">出发前花一两个晚上看几个，到了现场更有感觉。视频按主题挑过，不是越多越好。</p>
+  <div id="reads-body"></div>
 </section>
 
 <section id="jojo" class="sec">
@@ -240,7 +254,7 @@
   <h3>信息来源与官方链接</h3>
   <ul>
     <li>圣塞维罗礼拜堂开放时间与购票：<a href="https://www.museosansevero.it/en/opening-hours-and-fees">museosansevero.it</a></li>
-    <li>庞贝开放时间与购票规定：<a href="https://pompeiisites.org">pompeiisites.org</a>，<a href="https://www.ticketone.it/artist/scavi-pompei/">TicketOne 官方售票</a></li>
+    <li>庞贝开放时间与购票规定：<a href="https://pompeiisites.org">pompeiisites.org</a>（2026 年 3 月起只在 Vivaticket 售票）</li>
     <li>圣艾尔莫城堡：<a href="https://museicampania.cultura.gov.it/">Musei Campania</a></li>
     <li>斗兽场：<a href="https://ticketing.colosseo.it">ticketing.colosseo.it</a>；梵蒂冈：<a href="https://tickets.museivaticani.va">tickets.museivaticani.va</a></li>
     <li>JoJo 地点整理：<a href="https://joyce630.github.io/BizarreTourtoItaly/BizarreTourtoItaly_Naples.html">Bizarre Tour to Italy</a>，<a href="https://jojowiki.com/Minor_Locations/Part_5">JoJo Wiki</a></li>
@@ -250,8 +264,8 @@
 
 </main>
 
-<script src="assets/data.js?v=10"></script>
-<script src="assets/app.js?v=10"></script>
+<script src="assets/data.js?v=23"></script>
+<script src="assets/app.js?v=23"></script>
 <script src="https://cdn.jsdelivr.net/npm/opencc-js@1.0.5/dist/umd/cn2t.js" async onload="window.dispatchEvent(new Event('opencc-ready'))"></script>
 </body>
 </html>

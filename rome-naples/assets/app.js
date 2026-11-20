@@ -24,6 +24,7 @@
   let done = store.get("done", {});
   let chosen = store.get("chosen", {});
 
+  const P = T.budget.people;
   const CITY = { rome: "罗马", naples: "那不勒斯" };
   const COLOR = { rome: "var(--rome)", naples: "var(--naples)" };
   const TAG = { book: "需预订", decide: "待决定", photo: "拍照点" };
@@ -207,57 +208,142 @@
     convertIfNeeded(s);
   }
 
-  /* ---------- 住宿 ---------- */
+  /* ---------- 住宿：每段一张对比表 ---------- */
   const stayBox = $("#stays");
+  let staySort = store.get("staySort", "price");
+  const openRows = new Set();
+  const nightsOf = st => st.id === "stay-rome2" ? 1 : 2;
+  const rnum = r => { const m = String(r).match(/\d+(\.\d+)?/); return m ? parseFloat(m[0]) : 0; };
+  /* 住宿价格口径：可免费取消 / 最低价（不可退）。住宿表和预算共用这一个设置 */
+  let rate = store.get("rate", "flex");
+  const isFlex = o => rate === "flex" && o.flex != null;
+  const priceOf = o => isFlex(o) ? o.flex : o.min;
+  const byPrice = (a, b) => priceOf(a) - priceOf(b);
+  const stayPick = st => st.options.find(o => o.id === chosen[st.id]) || null;
+  const stayUsed = st => stayPick(st) || st.options.slice().sort(byPrice)[0];
+  const stayTax = (st, o) => o.tax * nightsOf(st) * P;
+  function setRate(r) { rate = r; store.set("rate", r); renderStays(); renderBudget(); }
+  const rateSeg = () => el("div", { class: "seg", role: "group", "aria-label": "价格口径" },
+    [["flex", "可免费取消"], ["min", "最低价（不可退）"]].map(([id, label]) => el("button", { type: "button", "aria-pressed": String(rate === id), onclick: () => setRate(id) }, label)));
+  function pickStay(st, o) {
+    if (chosen[st.id] === o.id && !arguments[2]) delete chosen[st.id]; else chosen[st.id] = o.id;
+    store.set("chosen", chosen);
+    if (stayTodo[st.id]) { done[stayTodo[st.id]] = !!chosen[st.id]; store.set("done", done); }
+    renderStays(); renderTodos(); renderStatus(); renderDayStays(); renderBudget();
+  }
   function renderStays() {
     stayBox.innerHTML = "";
+    stayBox.append(el("div", { class: "stay-tools" }, el("span", { class: "muted" }, "排序"),
+      el("div", { class: "seg", role: "group", "aria-label": "排序" },
+        [["price", "按价格"], ["rating", "按评分"]].map(([id, label]) => el("button", { type: "button", "aria-pressed": String(staySort === id),
+          onclick: () => { staySort = id; store.set("staySort", id); renderStays(); } }, label))),
+      el("span", { class: "muted" }, "价格按"), rateSeg()));
     T.stays.forEach(st => {
-      const pick = chosen[st.id];
+      const pick = chosen[st.id], n = nightsOf(st);
+      const opts = st.options.slice().sort((x, y) => staySort === "price" ? byPrice(x, y) : rnum(y.rating) - rnum(x.rating));
+      const minP = Math.min(...st.options.map(priceOf));
+      const used = stayUsed(st), pk = stayPick(st);
+      const maxR = Math.max(...st.options.map(o => rnum(o.rating)));
       const head = el("div", { class: "stay-head", style: `--c:${COLOR[st.city]}` },
         el("h3", {}, st.label), el("span", { class: "n" }, st.nights),
-        el("span", { class: "chosen-label" }, pick ? "已定：" + st.options.find(o => o.id === pick).name : "未决定"));
-      const opts = el("div", { class: "opts" });
-      st.options.forEach(o => {
-        const isPick = pick === o.id;
-        opts.append(el("div", { class: "opt" + (isPick ? " is-chosen" : pick ? " is-dim" : "") },
-          el("h4", {}, o.name),
-          el("div", { class: "area" }, o.area),
-          el("div", { class: "price" }, o.price),
-          o.priceNote ? el("div", { class: "pnote" }, o.priceNote) : null,
-          el("ul", { class: "facts" },
-            el("li", {}, "评分：" + o.rating), el("li", {}, "房型：" + o.room), el("li", {}, o.checkin)),
-          el("ul", { class: "pc pro" }, o.pros.map(p => el("li", {}, p))),
-          el("ul", { class: "pc con" }, o.cons.map(p => el("li", {}, p))),
-          el("div", { class: "opt-act" },
-            el("button", { type: "button", class: "btn", "aria-pressed": String(isPick), onclick: () => {
-              if (isPick) delete chosen[st.id]; else chosen[st.id] = o.id;
-              store.set("chosen", chosen);
-              if (stayTodo[st.id]) { done[stayTodo[st.id]] = !!chosen[st.id]; store.set("done", done); }
-              renderStays(); renderTodos(); renderStatus(); renderDayStays(); renderBudget();
-            } }, isPick ? "已选这家" : "定这家"),
-            el("a", { href: o.link, target: "_blank", rel: "noopener" }, "打开预订页"))));
+        el("span", { class: "chosen-label" + (pk ? "" : " is-none") }, pk
+          ? `已定：${pk.name}，预算计 ${priceOf(pk)}€ + 城市税 ${stayTax(st, pk)}€`
+          : `未决定，预算暂按最便宜的 ${used.name} ${priceOf(used)}€ 算`));
+      const tbody = el("tbody");
+      opts.forEach(o => {
+        const isPick = pick === o.id, key = st.id + ":" + o.id, isOpen = openRows.has(key);
+        const pr = priceOf(o), pp = pr / P / n;
+        const other = rate === "flex"
+          ? (o.flex == null ? "没有可退价" : o.flex === o.min ? "" : "不可退 " + o.min + "€")
+          : (o.flex != null && o.flex !== o.min ? "可退 " + o.flex + "€" : "");
+        const bedCell = el("td", {}, o.bed, o.beds3 === false ? el("span", { class: "warn" }, "两人合睡") : null);
+        tbody.append(el("tr", { class: "s-row" + (isPick ? " is-chosen" : "") },
+          el("td", { class: "s-name" },
+            el("button", { type: "button", class: "s-toggle", "aria-expanded": String(isOpen), onclick: () => { isOpen ? openRows.delete(key) : openRows.add(key); renderStays(); } }, o.name),
+            el("div", { class: "s-sub" }, o.area), el("div", { class: "s-sub" }, o.src)),
+          el("td", { class: "r" }, el("div", { class: pr === minP ? "best" : "" }, pr + "€"),
+            el("div", { class: "s-sub" }, isFlex(o) ? o.flexNote : o.minNote),
+            other ? el("div", { class: "s-sub" }, other) : null),
+          el("td", { class: "r" + (pr === minP ? " best" : "") }, Math.round(pp) + "€"),
+          el("td", {}, el("span", { class: rnum(o.rating) === maxR ? "best" : "" }, o.rating), o.ratingN ? el("div", { class: "s-sub" }, o.ratingN + " 条") : null),
+          el("td", {}, o.near, o.loc ? el("div", { class: "s-sub" }, "位置评分 " + o.loc) : null),
+          bedCell,
+          el("td", {}, o.breakfast),
+          el("td", { class: "s-act" }, el("button", { type: "button", class: "btn", "aria-pressed": String(isPick), onclick: () => pickStay(st, o) }, isPick ? "已选" : "定这家"))));
+        if (isOpen) tbody.append(el("tr", { class: "s-detail" }, el("td", { colspan: 8 },
+          el("div", { class: "s-pc" },
+            el("ul", { class: "pc pro" }, o.pros.map(x => el("li", {}, x))),
+            el("ul", { class: "pc con" }, o.cons.map(x => el("li", {}, x)))),
+          el("div", { class: "s-sub" }, "入住 / 退房：" + o.checkin + "；城市税每人每晚约 " + o.tax + "€，到店付"),
+          el("a", { href: o.link, target: "_blank", rel: "noopener" }, "打开预订页（" + o.src + "）"))));
       });
+      const table = el("table", { class: "tbl s-tbl" },
+        el("thead", {}, el("tr", {}, ["旅馆", n + " 晚三人总价", "每人每晚", "评分", "位置", "床", "早餐", ""].map((h, i) => el("th", { class: i === 1 || i === 2 ? "r" : "" }, h)))),
+        tbody);
       stayBox.append(el("div", { class: "stay-block", id: st.id }, head,
-        el("p", { class: "stay-why" }, st.why), opts, st.verdict ? el("p", { class: "verdict" }, st.verdict) : null));
+        el("p", { class: "stay-why" }, st.why),
+        el("div", { class: "table-wrap" }, table),
+        el("p", { class: "s-hint" }, "点旅馆名看优缺点和预订链接。价格不含城市税（到店付）。选定的那家会同步到下面的预算。"),
+        st.verdict ? el("p", { class: "verdict" }, st.verdict) : null));
     });
     convertIfNeeded(stayBox);
   }
 
-  /* ---------- 景点 ---------- */
+  /* ---------- 景点：按城市排列，可折叠 ---------- */
   const spotsBox = $("#spots");
+  const spotDays = {};
+  T.days.forEach(d => d.items.forEach(it => { if (it.spot) (spotDays[it.spot] = spotDays[it.spot] || new Set()).add("12/" + d.date); }));
   ["rome", "naples"].forEach(city => {
-    const grid = el("div", { class: "spot-grid" });
+    const list = el("div", { class: "spot-list" });
     Object.entries(T.spots).filter(([, s]) => s.city === city).forEach(([id, s]) => {
+      const x = (T.spotInfo || {})[id] || {};
       const jojo = T.days.some(d => d.items.some(it => it.spot === id && it.jojo));
-      grid.append(el("div", { class: "spot-card" },
-        photoBox(id), el("div", { class: "credit" }),
-        el("h4", {}, s.name), el("div", { class: "it" }, s.it),
-        el("p", {}, s.bg),
-        s.photo ? el("p", { class: "shot" }, "拍照：" + s.photo) : null,
-        jojo ? el("div", { class: "tagline" }, el("span", { class: "tag jojo" }, "JoJo")) : null));
+      const days = spotDays[id] ? [...spotDays[id]].join("、") : "";
+      const body = el("div", { class: "spot-body" });
+      const det = el("details", { class: "spot-item" },
+        el("summary", {},
+          el("span", { class: "sn" }, s.name), el("span", { class: "si" }, s.it),
+          el("span", { class: "sm" }, days ? el("span", { class: "sd" }, days) : null,
+            jojo ? el("span", { class: "tag jojo" }, "JoJo") : null)),
+        body);
+      det.addEventListener("toggle", () => {
+        if (!det.open || body.childElementCount) return;
+        body.append(el("div", {}, photoBox(id), el("div", { class: "credit" })),
+          el("div", { class: "bg-text" },
+            el("p", {}, s.bg),
+            el("dl", { class: "spot-dl" },
+              x.time ? [el("dt", {}, "停留"), el("dd", {}, x.time)] : null,
+              x.fee ? [el("dt", {}, "门票"), el("dd", {}, x.fee)] : null,
+              x.tip ? [el("dt", {}, "提示"), el("dd", {}, x.tip)] : null,
+              s.photo ? [el("dt", {}, "拍照"), el("dd", {}, s.photo)] : null)));
+        convertIfNeeded(body);
+      });
+      list.append(det);
     });
-    spotsBox.append(el("h3", { class: "spot-city " + (city === "rome" ? "c-rome" : "c-naples") }, CITY[city]), grid);
+    spotsBox.append(el("h3", { class: "spot-city " + (city === "rome" ? "c-rome" : "c-naples") }, CITY[city]), list);
   });
+
+  /* ---------- 出行须知 ---------- */
+  const tipsBox = $("#tips-body");
+  let packed = store.get("pack", {});
+  function renderTips() {
+    tipsBox.innerHTML = "";
+    const n = T.pack.filter((_, i) => packed[i]).length;
+    tipsBox.append(el("details", { class: "tip-grp", open: true },
+      el("summary", {}, "出发前清单", el("span", { class: "tip-n" }, `${n} / ${T.pack.length}`)),
+      el("ul", { class: "pack" }, T.pack.map((t, i) => el("li", {}, el("label", { class: "chk" },
+        el("input", { type: "checkbox", checked: !!packed[i], onchange: e => { packed[i] = e.target.checked; store.set("pack", packed); renderTips(); } }),
+        el("span", { class: packed[i] ? "is-done" : "" }, t)))))));
+    tipsBox.append(el("details", { class: "tip-grp", open: true },
+      el("summary", {}, "要装的 App 和官方购票网站"),
+      el("ul", { class: "tip-list" }, T.apps.map(([n, d, u]) => el("li", {}, el("b", {}, el("a", { href: u, target: "_blank", rel: "noopener" }, n), "："), d))),
+      el("p", { class: "tip-sub" }, "门票只在官网买，别点搜索结果里的转售网站，价格常常翻倍，实名票还可能对不上："),
+      el("ul", { class: "tip-list" }, T.ticketSites.map(([n, d, u]) => el("li", {}, el("b", {}, n + "："), el("a", { href: u, target: "_blank", rel: "noopener" }, d))))));
+    T.tips.forEach(g => tipsBox.append(el("details", { class: "tip-grp", open: !!g.open },
+      el("summary", {}, g.title),
+      el("ul", { class: "tip-list" }, g.items.map(([k, v]) => el("li", {}, el("b", {}, k), v))))));
+    convertIfNeeded(tipsBox);
+  }
 
   /* ---------- JoJo ---------- */
   const J = T.jojo, jb = $("#jojo-body");
@@ -272,24 +358,43 @@
       el("li", {}, el("div", {}, el("b", {}, s.name), el("div", { class: "w" }, s.scene)), el("div", { class: "w" }, s.where)))),
     el("h4", {}, "小红书笔记"),
     el("div", { class: "xhs" }, el("code", { class: "ignore-opencc" }, J.xhs), copyBtn),
+    ...(J.tips ? [el("h4", {}, "巡礼小贴士"), el("ul", { class: "tip-list" }, J.tips.map(t => el("li", {}, t)))] : []),
+    ...(J.links ? [el("h4", {}, "视频和资料"), el("ul", { class: "link-list" }, J.links.map(([src, t, u]) =>
+      el("li", {}, el("span", { class: "src" }, src), el("a", { href: u, target: "_blank", rel: "noopener" }, t))))] : []),
     el("p", { class: "small" }, "更多地点整理：", el("a", { href: J.more, target: "_blank", rel: "noopener" }, "Bizarre Tour to Italy")));
+
+  /* ---------- 推荐攻略 ---------- */
+  const readsBox = $("#reads-body");
+  T.reads.forEach(g => readsBox.append(el("div", { class: "read-grp" }, el("h3", {}, g.group),
+    el("ul", { class: "link-list" }, g.items.map(([t, u, n]) => el("li", {},
+      el("a", { href: u, target: "_blank", rel: "noopener" }, t), n ? el("span", { class: "o-note" }, n) : null))))));
 
 
   /* ---------- 预算 ---------- */
-  const B = T.budget, P = B.people;
+  const B = T.budget;
+  function syncStayGroups() {
+    B.groups.filter(g => g.stay).forEach(g => {
+      const st = T.stays.find(x => x.id === g.id);
+      g.st = st;
+      g.options = st.options.slice().sort(byPrice).map(o => ({ id: o.id, name: o.name, src: o,
+        note: isFlex(o) || o.min === o.flex ? "可免费取消" : (rate === "flex" ? "没有可退价" : "不可退"), total: priceOf(o), tax: o.tax }));
+    });
+  }
   let bs = Object.assign({ plan: "12-17", pick: {}, tix: {}, student: false }, store.get("budget2", {}));
   const eur = n => Math.round(n).toLocaleString("en-US") + "€";
   const bBox = $("#budget-app");
   const inPlan = x => !x.plan || x.plan === bs.plan;
+  /* 落地后打车去第一段罗马住处：城墙内固定 55€，城墙外打表（上限 80€） */
+  const arrTaxi = () => { const st = T.stays.find(x => x.id === "stay-rome1"); return stayUsed(st).taxiFCO || 55; };
   function optCost(g, o) {
     if (o.total != null) return o.total;
-    if (g.id === "flight") return o.pp * P + (o.nightTaxi || 0);
+    if (g.id === "flight") return o.pp * P + (o.nightTaxi ? arrTaxi() : 0);
     if (g.id === "airport") {
       // 半夜落地已经算了打车，机场交通只算离开那一程
       const f = picked(B.groups.find(x => x.id === "flight"));
-      const legs = f && f.nightTaxi ? 1 : 2;
-      if (o.car != null) return o.car / 2 * legs * Math.ceil(P / 4);
-      return o.pp / 2 * legs * P;
+      const night = f && f.nightTaxi;
+      if (o.car != null) return (night ? 0 : arrTaxi()) + 55;
+      return o.pp / 2 * (night ? 1 : 2) * P;
     }
     if (o.car != null) return o.car * Math.ceil(P / 4);
     if (o.ppDay != null) return o.ppDay * B.plans[bs.plan].days * P;
@@ -297,10 +402,24 @@
   }
   function picked(g) {
     const opts = g.options.filter(inPlan);
-    const want = bs.pick[bs.plan + ":" + g.id] || (g.stay && chosen[g.id]);
+    if (g.stay) return opts.find(o => o.id === chosen[g.id]) || opts[0];
+    const want = bs.pick[bs.plan + ":" + g.id];
     return opts.find(o => o.id === want) || opts[0];
   }
-  function tixOn(t) { const k = bs.plan + ":" + t.id; return inPlan(t) && (bs.tix[k] != null ? bs.tix[k] : true); }
+  function airportHint(cur) {
+    const r1 = stayUsed(T.stays.find(x => x.id === "stay-rome1"));
+    const far = !!r1.taxiFCO;
+    const f = picked(B.groups.find(x => x.id === "flight"));
+    return el("ul", { class: "b-explain" },
+      el("li", {}, el("b", {}, "FL1："), "普通通勤火车，每 15 分钟一班，停 Trastevere、Ostiense、Tiburtina，不停 Termini。",
+        far ? `住 ${r1.name} 最顺：坐到 Tiburtina，换地铁 B 线 3 站到 Pietralata，全程约 1 小时 10 分。` : "到站后换地铁或公交，地铁票 1.5€ 另付。"),
+      el("li", {}, el("b", {}, "Leonardo："), "Termini 直达、不停站，行李架宽。最后一天从 Termini 一带去机场最省心。"),
+      el("li", {}, el("b", {}, "出租车："), "只坐白色、车顶写 TAXI、车门有 Roma Capitale 标志的车。城墙内固定 55€ / 车，含行李和夜间附加费。",
+        far ? `${r1.name} 在城墙外，打表计价，上限 80€。` : ""),
+      el("li", {}, el("b", {}, "FL1 会不会出问题："), "能用，但要注意三点：纸质票上车前要在绿色机器上打卡（App 买的票要先点“check-in”）；晚上末班车大约 22:30，晚到只能打车；意大利常有交通罢工（sciopero），出发前查一下。",
+        f && f.nightTaxi ? "你选的航班半夜落地，FL1 和 Leonardo 都已停运，所以到达那程按打车算。" : ""));
+  }
+  function tixOn(t) { const k = bs.plan + ":" + t.id; return inPlan(t) && (bs.tix[k] != null ? bs.tix[k] : !t.off); }
   function bSave() { store.set("budget2", bs); }
   /* 每个航班组合在意大利能玩多久：每天一格，按 9:00–21:00 的 12 小时填充 */
   function flightTimes(g, cur) {
@@ -322,6 +441,7 @@
       el("p", { class: "ft-note" }, "第一天：" + cur.d1Text + "。最后一天：" + cur.dlText + "。每格代表一天 9:00–21:00，填满表示整天可玩。"));
   }
   function renderBudget() {
+    syncStayGroups();
     const pl = B.plans[bs.plan];
     const groups = B.groups.filter(inPlan);
     let real = 0, est = 0;
@@ -330,13 +450,15 @@
       if (g.estimate) est += amt; else real += amt;
       const chips = el("div", { class: "b-opts", role: "radiogroup", "aria-label": g.label },
         g.options.filter(inPlan).map(o => el("button", { type: "button", class: "b-opt", role: "radio", "aria-checked": String(o === cur),
-          onclick: () => { bs.pick[bs.plan + ":" + g.id] = o.id; bSave(); renderBudget(); } },
+          onclick: () => { if (g.stay) { pickStay(g.st, o.src, true); return; } bs.pick[bs.plan + ":" + g.id] = o.id; bSave(); renderBudget(); } },
           el("span", { class: "o-name" }, o.name),
-          o.note ? el("span", { class: "o-note" }, o.note) : null,
+          o.note ? el("span", { class: "o-note" }, o.note + (o.nightTaxi ? " " + arrTaxi() + "€" : "")) : null,
           el("span", { class: "o-price" }, eur(optCost(g, o))))));
-      const mid = g.id === "flight" ? el("div", {}, chips, flightTimes(g, cur)) : chips;
+      const mid = g.id === "flight" ? el("div", {}, chips, flightTimes(g, cur))
+        : g.id === "airport" ? el("div", {}, chips, airportHint(cur)) : chips;
       return el("div", { class: "b-group" + (g.estimate ? " is-est" : "") },
-        el("div", { class: "b-head" }, el("div", { class: "b-name" }, g.label), el("div", { class: "b-sub" }, g.sub)),
+        el("div", { class: "b-head" }, el("div", { class: "b-name" }, g.label), el("div", { class: "b-sub" }, g.sub),
+          g.stay && !chosen[g.id] ? el("div", { class: "b-sub b-warn" }, "还没定，先按最便宜的算") : null),
         mid,
         el("div", { class: "b-amt" }, eur(amt)));
     });
@@ -344,7 +466,7 @@
     let taxR = 0, taxN = 0;
     groups.filter(g => g.stay).forEach(g => {
       const o = picked(g);
-      const nights = g.id === "stay-naples" ? 2 : (g.id === "stay-rome1" ? 2 : 1);
+      const nights = g.nights;
       if (g.id === "stay-naples") taxN += o.tax * nights * P; else taxR += o.tax * nights * P;
     });
     real += taxR + taxN;
@@ -356,7 +478,9 @@
       if (on) tix += pp * P;
       return el("li", {}, el("label", { class: "chk" },
         el("input", { type: "checkbox", checked: on, onchange: e => { bs.tix[bs.plan + ":" + t.id] = e.target.checked; bSave(); renderBudget(); } }),
-        el("span", {}, t.name, " ", el("span", { class: "v v-" + (t.v === "可省" ? "skip" : t.v === "必去" ? "must" : "ok") }, t.v), el("span", { class: "o-note" }, t.why))),
+        el("span", {}, t.name, " ", el("span", { class: "v v-" + (t.v === "可省" ? "skip" : t.v === "必去" ? "must" : "ok") }, t.v), el("span", { class: "o-note" }, t.why),
+          t.more ? el("details", { class: "t-more" }, el("summary", {}, "介绍"),
+            el("dl", {}, t.more.flatMap(([k, v]) => [el("dt", {}, k), el("dd", {}, v)]))) : null)),
         el("span", { class: "r" }, eur(pp * P)));
     }));
     real += tix;
@@ -371,7 +495,8 @@
           el("div", { class: "b-split" },
             el("div", {}, el("span", {}, "交通、住宿、门票、税"), el("b", {}, eur(real))),
             est ? el("div", {}, el("span", {}, "吃喝购物（估）"), el("b", {}, eur(est))) : null))),
-      el("p", { class: "b-hint" }, "价格都是三人合计。点选项切换，金额实时更新。住宿默认跟「住宿候选」里选定的那家一致。"),
+      el("p", { class: "b-hint" }, "价格都是三人合计，点选项切换。住宿和上面的住宿表是同一份选择，在哪边改都会同步。"),
+      el("div", { class: "b-rate" }, el("span", { class: "muted" }, "住宿价格按"), rateSeg()),
       ...rows,
       el("div", { class: "b-group b-fixed" },
         el("div", { class: "b-head" }, el("div", { class: "b-name" }, "门票"), el("div", { class: "b-sub" }, "勾选要去的")),
@@ -391,8 +516,21 @@
   let lang = store.get("lang", "cn");
   let conv = null;
   const originals = new Map();
+  /* 台湾用语：OpenCC 只换字形和少量词，这里补上地名和常用词 */
+  const TW_TERMS = [
+    ["意大利麪", "義大利麵"], ["意大利麵", "義大利麵"], ["意大利", "義大利"], ["意式", "義式"], ["意面", "義大利麵"],
+    ["那不勒斯", "拿坡里"], ["佛羅倫薩", "佛羅倫斯"], ["德累斯頓", "德勒斯登"], ["卡普里", "卡布里"], ["馬拉多納", "馬拉度納"],
+    ["西斯廷", "西斯汀"],
+    ["充電寶", "行動電源"], ["插線板", "延長線"], ["插排", "延長線"], ["轉換頭", "轉接頭"],
+    ["出租車", "計程車"], ["打車", "搭計程車"], ["公交車", "公車"], ["公交", "公車"], ["銀行卡", "金融卡"], ["二維碼", "QR Code"],
+    ["視頻", "影片"], ["軟件", "軟體"], ["網絡", "網路"], ["信息", "資訊"], ["默認", "預設"], ["質量", "品質"],
+    ["屏幕", "螢幕"], ["登錄", "登入"], ["打印", "列印"], ["優盤", "隨身碟"], ["套餐", "方案"], ["性價比", "CP 值"]
+  ];
   function getConv() {
-    if (!conv && window.OpenCC) conv = window.OpenCC.Converter({ from: "cn", to: "tw" });
+    if (!conv && window.OpenCC) {
+      let base; try { base = window.OpenCC.Converter({ from: "cn", to: "twp" }); } catch (e) { base = window.OpenCC.Converter({ from: "cn", to: "tw" }); }
+      conv = t => TW_TERMS.reduce((x, [a, b]) => x.split(a).join(b), base(t));
+    }
     return conv;
   }
   function walk(root, fn) {
@@ -428,7 +566,7 @@
 
   /* ---------- 初始化 ---------- */
   const wantTw = lang === "tw"; lang = "cn";
-  renderStays(); renderTodos(); renderStatus(); renderDayStays(); renderBudget();
+  renderStays(); renderTodos(); renderStatus(); renderDayStays(); renderBudget(); renderTips();
   if (wantTw) {
     if (window.OpenCC) setLang("tw", true);
     else window.addEventListener("opencc-ready", () => setLang("tw", true), { once: true });
