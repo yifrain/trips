@@ -274,6 +274,120 @@
     el("div", { class: "xhs" }, el("code", { class: "ignore-opencc" }, J.xhs), copyBtn),
     el("p", { class: "small" }, "更多地点整理：", el("a", { href: J.more, target: "_blank", rel: "noopener" }, "Bizarre Tour to Italy")));
 
+
+  /* ---------- 预算 ---------- */
+  const B = T.budget;
+  const bDefault = { plan: "12-17", base: null, people: 3, students: 0, semester: true, arrive: "leonardo", leave: "leonardo",
+    train: "early", romeRides: null, naplesRides: 4, rateRome: "r-bnb", rateNaples: "n-bnb", bags: 0, bagPrice: 25,
+    food: true, foodPerDay: 35, misc: 20, tickets: {} };
+  let bs = Object.assign({}, bDefault, store.get("budget", {}));
+  const eur = n => Math.round(n).toLocaleString("en-US") + "€";
+  function bPlan() { return B.plans[bs.plan]; }
+  function ticketOn(t) {
+    if (bs.tickets[bs.plan + ":" + t.id] != null) return bs.tickets[bs.plan + ":" + t.id];
+    return t.on && (!t.plan || t.plan === bs.plan);
+  }
+  function computeBudget() {
+    const pl = bPlan(), P = bs.people, S = Math.min(bs.students, P);
+    const rows = [];
+    const add = (cat, name, amt, detail) => rows.push({ cat, name, amt, detail });
+    const base = bs.base != null ? bs.base : pl.base;
+    add("大头", "机票 + 住宿", base, pl.baseNote);
+    add("交通", "德累斯顿 ⇄ 柏林 BER", bs.semester ? 0 : 30 * P, bs.semester ? "学期票坐区域车，0€" : "估：每人往返约 30€");
+    const ap = id => B.airport.find(a => a.id === id);
+    [["arrive", "到达：机场 → 市区"], ["leave", "离开：市区 → 机场"]].forEach(([k, label]) => {
+      const a = ap(bs[k]); const cost = a.per === "car" ? a.price * Math.ceil(P / 4) : a.price * P;
+      add("交通", label + "（" + a.label + "）", cost, a.note);
+    });
+    const tr = B.trainLeg.find(t => t.id === bs.train);
+    add("交通", "罗马 ⇄ 那不勒斯（" + tr.label + "，往返）", tr.price * 2 * P, "每人每程约 " + tr.price + "€");
+    const romeRides = bs.romeRides != null ? bs.romeRides : (bs.plan === "12-17" ? 8 : 6);
+    add("交通", "罗马市内", romeRides * B.local.romeRide * P, "每人约 " + romeRides + " 次 × 1.5€（刷同一张卡每天封顶 8.5€）");
+    add("交通", "那不勒斯市内", bs.naplesRides * B.local.naplesRide * P, "每人约 " + bs.naplesRides + " 次 × 约 1.8€");
+    const pompeiOn = ticketOn(B.tickets.find(t => t.id === "pompei"));
+    if (pompeiOn) add("交通", "Circumvesuviana 去庞贝（往返）", B.local.circum * 2 * P, "每人每程约 3.2–3.8€");
+    B.tickets.forEach(t => {
+      if (!ticketOn(t) || !t.price) return;
+      const full = P - (t.student ? S : 0), red = t.student ? S : 0;
+      const amt = full * t.price + red * (t.student || 0);
+      add("门票", t.name + (t.est ? "（估）" : ""), amt, red ? `${full} 人 × ${t.price}€ + ${red} 人 × ${t.student}€` : `${P} 人 × ${t.price}€`);
+    });
+    const rr = B.cityTax.rome.find(x => x.id === bs.rateRome), nr = B.cityTax.naples.find(x => x.id === bs.rateNaples);
+    add("税", "罗马城市税", rr.rate * pl.romeNights * P, `${rr.rate}€ × ${pl.romeNights} 晚 × ${P} 人`);
+    add("税", "那不勒斯城市税", nr.rate * pl.naplesNights * P, `${nr.rate}€ × ${pl.naplesNights} 晚 × ${P} 人`);
+    if (bs.bags > 0) add("其他", "登机箱", bs.bags * 2 * bs.bagPrice, `${bs.bags} 件 × 往返 × ${bs.bagPrice}€`);
+    add("其他", "零碎（咖啡、餐位费、伴手礼）", bs.misc * P, `每人约 ${bs.misc}€`);
+    if (bs.food) add("吃饭", "吃饭", bs.foodPerDay * pl.foodDays * P, `每人每天 ${bs.foodPerDay}€ × ${pl.foodDays} 天`);
+    const total = rows.reduce((a, r) => a + r.amt, 0);
+    return { rows, total, P };
+  }
+  const bBox = $("#budget-app");
+  function bSave() { store.set("budget", bs); }
+  function seg(name, options, cur, onPick) {
+    return el("div", { class: "seg", role: "group", "aria-label": name },
+      options.map(o => el("button", { type: "button", "aria-pressed": String(o.id === cur), onclick: () => onPick(o.id) }, o.label)));
+  }
+  function num(label, val, min, max, step, onSet, suffix) {
+    const inp = el("input", { type: "number", value: val, min, max, step: step || 1, inputmode: "decimal",
+      onchange: e => { let v = parseFloat(e.target.value); if (isNaN(v)) v = min; onSet(Math.max(min, Math.min(max, v))); } });
+    return el("label", { class: "num" }, el("span", {}, label), el("span", { class: "num-in" }, inp, suffix ? el("span", { class: "suf" }, suffix) : null));
+  }
+  function renderBudget() {
+    const pl = bPlan();
+    const set = (k, v) => { bs[k] = v; bSave(); renderBudget(); };
+    const { rows, total, P } = computeBudget();
+    bBox.innerHTML = "";
+    const ctrl = el("div", { class: "b-ctrl" },
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "方案"),
+        seg("方案", Object.entries(B.plans).map(([id, p]) => ({ id, label: p.label })), bs.plan, v => { bs.plan = v; bs.base = null; bs.romeRides = null; bSave(); renderBudget(); })),
+      el("div", { class: "b-field b-row" },
+        num("机票 + 住宿（三人总额）", bs.base != null ? bs.base : pl.base, 0, 99999, 1, v => set("base", v), "€"),
+        num("人数", bs.people, 1, 6, 1, v => set("people", v)),
+        num("符合学生/青年优惠的人数", bs.students, 0, bs.people, 1, v => set("students", v))),
+      el("p", { class: "b-hint" }, "学生/青年优惠：梵蒂冈限 25 岁及以下、凭在读证明；圣塞维罗礼拜堂限 18–26 岁。斗兽场、庞贝、万神殿的青年优惠只限欧盟公民，居留卡不算。"),
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "到达罗马时（机场 → 市区）"),
+        seg("到达", B.airport, bs.arrive, v => set("arrive", v))),
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "离开罗马时（市区 → 机场）"),
+        seg("离开", B.airport, bs.leave, v => set("leave", v))),
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "罗马 ⇄ 那不勒斯"),
+        seg("城际", B.trainLeg, bs.train, v => set("train", v))),
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "罗马住处类型（决定城市税）"),
+        seg("罗马城市税", B.cityTax.rome, bs.rateRome, v => set("rateRome", v))),
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "那不勒斯住处类型"),
+        seg("那不勒斯城市税", B.cityTax.naples, bs.rateNaples, v => set("rateNaples", v))),
+      el("div", { class: "b-field b-row" },
+        num("罗马坐车次数（每人）", bs.romeRides != null ? bs.romeRides : (bs.plan === "12-17" ? 8 : 6), 0, 30, 1, v => set("romeRides", v)),
+        num("那不勒斯坐车次数（每人）", bs.naplesRides, 0, 30, 1, v => set("naplesRides", v)),
+        num("登机箱件数", bs.bags, 0, 6, 1, v => set("bags", v)),
+        num("每件每程", bs.bagPrice, 0, 80, 1, v => set("bagPrice", v), "€")),
+      el("div", { class: "b-field b-row" },
+        el("label", { class: "chk" }, el("input", { type: "checkbox", checked: bs.semester, onchange: e => set("semester", e.target.checked) }), "用学期票去柏林机场"),
+        el("label", { class: "chk" }, el("input", { type: "checkbox", checked: bs.food, onchange: e => set("food", e.target.checked) }), "算上吃饭"),
+        num("吃饭（每人每天）", bs.foodPerDay, 0, 150, 1, v => set("foodPerDay", v), "€"),
+        num("零碎（每人）", bs.misc, 0, 300, 1, v => set("misc", v), "€")),
+      el("div", { class: "b-field" }, el("div", { class: "b-lab" }, "门票（勾选要去的）"),
+        el("ul", { class: "b-tix" }, B.tickets.map(t => el("li", {},
+          el("label", { class: "chk" }, el("input", { type: "checkbox", checked: ticketOn(t), onchange: e => { bs.tickets[bs.plan + ":" + t.id] = e.target.checked; bSave(); renderBudget(); } }),
+            el("span", {}, t.name, " ", el("b", {}, t.price ? t.price + "€" : "免费"), t.student ? el("span", { class: "muted" }, "（优惠 " + t.student + "€）") : null)),
+          el("div", { class: "b-note" }, t.note)))))
+    );
+    const cats = ["大头", "交通", "门票", "税", "吃饭", "其他"];
+    const tbl = el("table", { class: "tbl b-tbl" },
+      el("thead", {}, el("tr", {}, el("th", {}, "项目"), el("th", {}, "怎么算"), el("th", { class: "r" }, "三人合计"), el("th", { class: "r" }, "每人"))),
+      el("tbody", {}, cats.flatMap(c => {
+        const rs = rows.filter(r => r.cat === c); if (!rs.length) return [];
+        const sub = rs.reduce((a, r) => a + r.amt, 0);
+        return [el("tr", { class: "b-cat" }, el("td", { colspan: 2 }, c), el("td", { class: "r" }, eur(sub)), el("td", { class: "r" }, eur(sub / P)))]
+          .concat(rs.map(r => el("tr", {}, el("td", {}, r.name), el("td", { class: "muted" }, r.detail || ""), el("td", { class: "r" }, eur(r.amt)), el("td", { class: "r" }, eur(r.amt / P)))));
+      })));
+    const sum = el("div", { class: "b-sum", "aria-live": "polite" },
+      el("div", {}, el("div", { class: "b-big" }, eur(total)), el("div", { class: "b-cap" }, "三人合计" + (bs.food ? "（含吃饭）" : "（不含吃饭）"))),
+      el("div", {}, el("div", { class: "b-mid" }, eur(total / P)), el("div", { class: "b-cap" }, "每人")),
+      el("button", { type: "button", class: "btn", onclick: () => { bs = Object.assign({}, bDefault, { tickets: {} }); bSave(); renderBudget(); } }, "恢复默认"));
+    bBox.append(sum, el("div", { class: "b-wrap" }, ctrl, el("div", { class: "table-wrap" }, tbl)));
+    convertIfNeeded(bBox);
+  }
+
   /* ---------- 简繁切换 ---------- */
   let lang = store.get("lang", "cn");
   let conv = null;
@@ -315,7 +429,7 @@
 
   /* ---------- 初始化 ---------- */
   const wantTw = lang === "tw"; lang = "cn";
-  renderStays(); renderTodos(); renderStatus(); renderDayStays();
+  renderStays(); renderTodos(); renderStatus(); renderDayStays(); renderBudget();
   if (wantTw) {
     if (window.OpenCC) setLang("tw", true);
     else window.addEventListener("opencc-ready", () => setLang("tw", true), { once: true });

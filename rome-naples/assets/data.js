@@ -274,7 +274,7 @@ window.TRIP = {
       photo: "早上 8 点前人最少；晚上灯光下更出片。" },
     pantheon: { name: "万神殿", it: "Pantheon", wiki: "Pantheon,_Rome", city: "rome",
       bg: "约公元 125 年由哈德良皇帝重建，是保存最完整的古罗马建筑之一。穹顶直径 43 米，到今天仍是世界上最大的无钢筋混凝土穹顶。顶部的圆孔直通天空，下雨时雨会直接落进殿里。拉斐尔葬在这里。",
-      photo: "目前收约 5€ 门票；中午阳光会从圆孔斜射进来。" },
+      photo: "2026 年 7 月起门票 7€；中午阳光会从圆孔斜射进来。" },
     navona: { name: "纳沃纳广场", it: "Piazza Navona", wiki: "Piazza_Navona", city: "rome",
       bg: "建在图密善竞技场的遗址上，所以是长椭圆形。中央是贝尼尼的四河喷泉。每年 12 月这里有圣诞市集。" },
     colosseo: { name: "斗兽场", it: "Colosseo", wiki: "Colosseum", city: "rome",
@@ -312,7 +312,7 @@ window.TRIP = {
       bg: "从托莱多大街旁的 Augusteo 站上到沃梅罗山，几分钟就到，用普通公交票。" },
     santelmo: { name: "圣艾尔莫城堡", it: "Castel Sant'Elmo", wiki: "Castel_Sant'Elmo", city: "naples",
       bg: "16 世纪的星形要塞，建在城市最高处。城墙顶上是 360° 全景：海湾、维苏威火山、整片老城。旁边的圣马丁修道院也值得看。",
-      photo: "门票约 5€，周二闭馆。下来后在 Largo San Martino 观景台再拍一次。" },
+      photo: "周二闭馆。下来后在 Largo San Martino 观景台再拍一次。" },
     toledo: { name: "托莱多大街与地铁站", it: "Via Toledo / Stazione Toledo", wiki: "Toledo_(Naples_Metro)", itwiki: "Stazione_di_Toledo", city: "naples",
       bg: "托莱多地铁站常被评为欧洲最美的地铁站之一，深蓝色的马赛克隧道像海底。买张单程票就能进站。旁边的翁贝托一世长廊有玻璃穹顶。",
       photo: "在扶梯上往上拍“光之火山口”。" },
@@ -326,6 +326,49 @@ window.TRIP = {
     ovo: { name: "蛋堡与海滨步道", it: "Castel dell'Ovo", wiki: "Castel_dell'Ovo", city: "naples",
       bg: "那不勒斯最古老的城堡，建在海中的小岛上。传说诗人维吉尔在地基里藏了一颗蛋，蛋碎了城市就会遭难。可免费进入；城墙上能看到海湾对面的维苏威火山。",
       photo: "日落时从 Via Partenope 拍城堡剪影。" }
+  },
+
+
+  /* ---------- 预算：价格表（改价格只改这里） ---------- */
+  budget: {
+    plans: {
+      "12-17": { label: "12/12–17（5 晚）", romeNights: 3, naplesNights: 2, foodDays: 6, base: 560,
+        baseNote: "你算的三人机票 + 住宿总额" },
+      "12-16": { label: "12/12–16（4 晚）", romeNights: 2, naplesNights: 2, foodDays: 5, base: 460,
+        baseNote: "估：去掉 12/16 那晚住宿（约 99€）；回程改坐 12/16 14:55 的航班，按同价估算" }
+    },
+    trainLeg: [
+      { id: "early", label: "早订高铁", price: 15, note: "Super Economy / Low Cost，最低约 14€ 起" },
+      { id: "normal", label: "一般高铁", price: 25, note: "提前 1–2 周的常见价" },
+      { id: "late", label: "临近再买", price: 40, note: "出发前几天" },
+      { id: "regional", label: "区域慢车", price: 13, note: "2–3 小时，不用预订" }
+    ],
+    airport: [
+      { id: "leonardo", label: "Leonardo Express", per: "person", price: 14, note: "每人每程 14€" },
+      { id: "taxi", label: "出租车拼车", per: "car", price: 55, note: "每车每程 55€（罗马市出租车，城墙以内）" },
+      { id: "fl1", label: "FL1 区域车", per: "person", price: 8, note: "每人每程 8€，不到 Termini" }
+    ],
+    local: { romeRide: 1.5, romeDayCap: 8.5, naplesRide: 1.8, circum: 3.5 },
+    tickets: [
+      { id: "colosseo", name: "斗兽场 + 古罗马广场 + 帕拉蒂尼山", price: 20, on: true,
+        note: "18€ 加约 2€ 网上预订费。欧盟公民 18–25 岁的 2€ 优惠，非欧盟护照不适用。" },
+      { id: "vatican", name: "梵蒂冈博物馆", price: 25, student: 15, on: true,
+        note: "20€ 加 5€ 预订费。学生票 10€ + 5€：限 25 岁及以下，凭本学年的在读证明（Immatrikulationsbescheinigung），不限国籍；没有有效证明的票作废。" },
+      { id: "pompei", name: "庞贝古城", price: 20, on: true,
+        note: "2026 年 1 月起涨到 20€。18–25 岁优惠只限欧盟公民。" },
+      { id: "sansevero", name: "圣塞维罗礼拜堂", price: 12, student: 8, on: true,
+        note: "全价 12€；18–26 岁 8€（官方信息没写国籍限制，现场可能查证件）。" },
+      { id: "pantheon", name: "万神殿", price: 7, on: true,
+        note: "2026 年 7 月起 7€。18–25 岁 2€ 的优惠一般只限欧盟公民。" },
+      { id: "santelmo", name: "圣艾尔莫城堡", price: 5, on: true, est: true, note: "估，没查到 2026 年价格" },
+      { id: "borghese", name: "博尔盖塞美术馆", price: 20, on: true, plan: "12-17",
+        note: "约 16–18€ 加 2€ 预订费，必须预约" },
+      { id: "sanpietro", name: "圣彼得大教堂", price: 0, on: true, note: "免费，登顶另收费" }
+    ],
+    cityTax: {
+      rome: [ { id: "r-bnb", label: "B&B / 公寓 / 短租", rate: 6 }, { id: "r-3", label: "三星酒店", rate: 6 }, { id: "r-2", label: "一二星酒店", rate: 4 } ],
+      naples: [ { id: "n-bnb", label: "B&B / 短租", rate: 5.5 }, { id: "n-3", label: "三星酒店", rate: 4.5 }, { id: "n-2", label: "二星酒店", rate: 3.5 } ]
+    }
   },
 
   /* ---------- JoJo 彩蛋 ---------- */
