@@ -329,46 +329,66 @@ window.TRIP = {
   },
 
 
-  /* ---------- 预算：价格表（改价格只改这里） ---------- */
+  /* ---------- 预算（改价格只改这里）----------
+     real: true  = 来自你的搜索截图、预订页或官方票价
+     price 单位：pp = 每人, total = 三人合计, car = 每车（最多 4 人） */
   budget: {
+    people: 3,
     plans: {
-      "12-17": { label: "12/12–17（5 晚）", romeNights: 3, naplesNights: 2, foodDays: 6, base: 560,
-        baseNote: "你算的三人机票 + 住宿总额" },
-      "12-16": { label: "12/12–16（4 晚）", romeNights: 2, naplesNights: 2, foodDays: 5, base: 460,
-        baseNote: "估：去掉 12/16 那晚住宿（约 99€）；回程改坐 12/16 14:55 的航班，按同价估算" }
+      "12-17": { label: "12–17 日，5 晚", romeNights: 3, naplesNights: 2, days: 6 },
+      "12-16": { label: "12–16 日，4 晚", romeNights: 2, naplesNights: 2, days: 5 }
     },
-    trainLeg: [
-      { id: "early", label: "早订高铁", price: 15, note: "Super Economy / Low Cost，最低约 14€ 起" },
-      { id: "normal", label: "一般高铁", price: 25, note: "提前 1–2 周的常见价" },
-      { id: "late", label: "临近再买", price: 40, note: "出发前几天" },
-      { id: "regional", label: "区域慢车", price: 13, note: "2–3 小时，不用预订" }
+    groups: [
+      { id: "flight", label: "机票", sub: "柏林 BER ⇄ 罗马 FCO，只含座位下小包", options: [
+        { id: "f1", plan: "12-17", name: "12:40 去，19:15 回", note: "推荐", pp: 102 },
+        { id: "f2", plan: "12-17", name: "22:20 去，19:15 回", note: "半夜落地", pp: 72 },
+        { id: "f3", plan: "12-17", name: "22:20 去，09:05 回", note: "最后一天没法玩", pp: 66 },
+        { id: "f4", plan: "12-16", name: "12:40 去，14:55 回", note: "推荐", pp: 102 },
+        { id: "f5", plan: "12-16", name: "22:20 去，14:55 回", note: "半夜落地", pp: 72 } ] },
+      { id: "stay-rome1", label: "罗马住宿", sub: "12/12–14，2 晚", stay: true, options: [
+        { id: "funny", name: "Funny Holiday", note: "独立卫浴，不可退", total: 194, tax: 6 },
+        { id: "funny-shared", name: "Funny Holiday", note: "共用卫浴，不可退", total: 176, tax: 6 },
+        { id: "sanpietro", name: "Holiday a San Pietro", note: "含早餐", total: 202, tax: 6 } ] },
+      { id: "stay-naples", label: "那不勒斯住宿", sub: "12/14–16，2 晚", stay: true, options: [
+        { id: "diazz", name: "Diazz by Dimorra", note: "", total: 158, tax: 5 },
+        { id: "rolando", name: "Rolando Domus", note: "", total: 198, tax: 5 } ] },
+      { id: "stay-rome2", plan: "12-17", label: "罗马住宿", sub: "12/16–17，1 晚", stay: true, options: [
+        { id: "eleveng", name: "ElevenG", note: "整套公寓", total: 99, tax: 6 },
+        { id: "bigbang", name: "Hotel Big Bang", note: "二星酒店", total: 89, tax: 4 } ] },
+      { id: "airport", label: "机场 ⇄ 罗马市区", sub: "到达和离开各一次", options: [
+        { id: "leonardo", name: "Leonardo Express", note: "14€ / 人 / 程", pp: 28 },
+        { id: "taxi", name: "罗马市出租车", note: "55€ / 车 / 程", car: 110 },
+        { id: "fl1", name: "FL1 区域车", note: "8€ / 人 / 程，不到 Termini", pp: 16 } ] },
+      { id: "train", label: "罗马 ⇄ 那不勒斯", sub: "往返", options: [
+        { id: "hs", name: "高铁最低价", note: "约 14€ / 程，越早订越可能买到", pp: 28 },
+        { id: "hs2", name: "高铁常见价", note: "约 25€ / 程", pp: 50 },
+        { id: "reg", name: "区域慢车", note: "约 13€ / 程，2–3 小时", pp: 26 } ] },
+      { id: "fun", label: "吃喝购物", sub: "可选，估算，每人每天", estimate: true, options: [
+        { id: "none", name: "不计入", note: "只看交通住宿门票", ppDay: 0 },
+        { id: "low", name: "省着花", note: "超市早餐 + 披萨", ppDay: 30 },
+        { id: "mid", name: "正常", note: "每天一顿正餐", ppDay: 45 },
+        { id: "high", name: "宽松", note: "多吃多买", ppDay: 65 } ] }
     ],
-    airport: [
-      { id: "leonardo", label: "Leonardo Express", per: "person", price: 14, note: "每人每程 14€" },
-      { id: "taxi", label: "出租车拼车", per: "car", price: 55, note: "每车每程 55€（罗马市出租车，城墙以内）" },
-      { id: "fl1", label: "FL1 区域车", per: "person", price: 8, note: "每人每程 8€，不到 Termini" }
+    /* 不用选的固定开销（每人） */
+    fixed: [
+      { name: "德累斯顿 ⇄ 柏林 BER", pp: 0, note: "学期票坐区域车" },
+      { name: "罗马市内交通", pp: 12, note: "BIT 1.5€ / 次，约 8 次；刷同一张卡每天封顶 8.5€" },
+      { name: "那不勒斯市内交通 + 去庞贝", pp: 14, note: "地铁 / 缆车约 1.5–1.8€ / 次；Circumvesuviana 3.2€ / 程" }
     ],
-    local: { romeRide: 1.5, romeDayCap: 8.5, naplesRide: 1.8, circum: 3.5 },
     tickets: [
-      { id: "colosseo", name: "斗兽场 + 古罗马广场 + 帕拉蒂尼山", price: 20, on: true,
-        note: "18€ 加约 2€ 网上预订费。欧盟公民 18–25 岁的 2€ 优惠，非欧盟护照不适用。" },
-      { id: "vatican", name: "梵蒂冈博物馆", price: 25, student: 15, on: true,
-        note: "20€ 加 5€ 预订费。学生票 10€ + 5€：限 25 岁及以下，凭本学年的在读证明（Immatrikulationsbescheinigung），不限国籍；没有有效证明的票作废。" },
-      { id: "pompei", name: "庞贝古城", price: 20, on: true,
-        note: "2026 年 1 月起涨到 20€。18–25 岁优惠只限欧盟公民。" },
-      { id: "sansevero", name: "圣塞维罗礼拜堂", price: 12, student: 8, on: true,
-        note: "全价 12€；18–26 岁 8€（官方信息没写国籍限制，现场可能查证件）。" },
-      { id: "pantheon", name: "万神殿", price: 7, on: true,
-        note: "2026 年 7 月起 7€。18–25 岁 2€ 的优惠一般只限欧盟公民。" },
-      { id: "santelmo", name: "圣艾尔莫城堡", price: 5, on: true, est: true, note: "估，没查到 2026 年价格" },
-      { id: "borghese", name: "博尔盖塞美术馆", price: 20, on: true, plan: "12-17",
-        note: "约 16–18€ 加 2€ 预订费，必须预约" },
-      { id: "sanpietro", name: "圣彼得大教堂", price: 0, on: true, note: "免费，登顶另收费" }
+      { id: "colosseo", name: "斗兽场 + 古罗马广场", pp: 20, v: "必去", why: "一票三处，古罗马核心，能逛半天" },
+      { id: "vatican", name: "梵蒂冈博物馆", pp: 25, v: "看兴趣", why: "西斯廷礼拜堂和拉斐尔画室；只看建筑的话，圣彼得大教堂免费" },
+      { id: "pompei", name: "庞贝古城", pp: 20, v: "必去", why: "去那不勒斯的主要理由，没有替代" },
+      { id: "sansevero", name: "圣塞维罗礼拜堂", pp: 12, v: "值", why: "《蒙纱的基督》，半小时看完" },
+      { id: "pantheon", name: "万神殿", pp: 7, v: "值", why: "两千年的穹顶，便宜又顺路" },
+      { id: "santelmo", name: "圣艾尔莫城堡", pp: 5, v: "可省", why: "门口的 Largo San Martino 观景台免费，景色差不多（票价为估）" },
+      { id: "borghese", name: "博尔盖塞美术馆", pp: 20, plan: "12-17", v: "可省", why: "贝尼尼雕塑很惊艳，但有梵蒂冈就够了" }
     ],
-    cityTax: {
-      rome: [ { id: "r-bnb", label: "B&B / 公寓 / 短租", rate: 6 }, { id: "r-3", label: "三星酒店", rate: 6 }, { id: "r-2", label: "一二星酒店", rate: 4 } ],
-      naples: [ { id: "n-bnb", label: "B&B / 短租", rate: 5.5 }, { id: "n-3", label: "三星酒店", rate: 4.5 }, { id: "n-2", label: "二星酒店", rate: 3.5 } ]
-    }
+    free: [
+      ["罗马", "圣彼得大教堂；圣王路易堂、人民圣母堂（卡拉瓦乔）；圣彼得锁链堂（米开朗基罗《摩西》）；卡比托利欧广场后面的平台俯瞰古罗马广场；阿文提诺山钥匙孔"],
+      ["那不勒斯", "Largo San Martino 观景台；蛋堡；主教座堂、新耶稣教堂；托莱多地铁站（一张地铁票）；西班牙区马拉多纳壁画"]
+    ],
+    studentNote: "以上按全价计。25 岁及以下带在读证明可买梵蒂冈学生票（15€，不限国籍）；18–26 岁圣塞维罗 8€。斗兽场、庞贝、万神殿的青年优惠只给欧盟公民。"
   },
 
   /* ---------- JoJo 彩蛋 ---------- */
