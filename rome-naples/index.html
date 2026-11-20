@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>罗马与那不勒斯 · 2026.12</title>
+<link rel="stylesheet" href="assets/style.css?v=4">
+</head>
+<body>
+
+<nav class="bar" aria-label="页面导航">
+  <div class="bar-in">
+    <a class="brand" href="#top">罗马 + 那不勒斯</a>
+    <div class="links">
+      <a href="#plan">行程</a>
+      <a href="#todo">待办</a>
+      <a href="#stay">住宿</a>
+      <a href="#move">交通</a>
+      <a href="#food">美食</a>
+      <a href="#sights">景点</a>
+      <a href="#jojo">彩蛋</a>
+    </div>
+    <div class="lang" role="group" aria-label="切换字体">
+      <button type="button" data-lang="cn" aria-pressed="true">简</button>
+      <button type="button" data-lang="tw" aria-pressed="false">繁</button>
+    </div>
+  </div>
+</nav>
+
+<header id="top" class="hero">
+  <h1 id="title"></h1>
+  <p class="sub"><span id="range"></span>，<span id="people"></span></p>
+  <ol class="strip" id="strip" aria-label="每日概览"></ol>
+  <div class="legend">
+    <span class="lg rome">罗马</span>
+    <span class="lg naples">那不勒斯</span>
+    <span class="lg flag-book">需预订</span>
+    <span class="lg flag-decide">待决定</span>
+    <span class="lg flag-photo">拍照点</span>
+    <span class="lg flag-jojo">JoJo</span>
+  </div>
+  <p class="status" id="status"></p>
+</header>
+
+<main>
+
+<section id="plan" class="sec">
+  <h2>行程</h2>
+  <p class="lead">点景点名可以展开背景介绍和图片。</p>
+  <div id="days"></div>
+</section>
+
+<section id="todo" class="sec">
+  <h2>待预订与待决定</h2>
+  <p class="lead">勾选状态保存在这台设备的浏览器里。</p>
+  <div id="todos"></div>
+</section>
+
+<section id="stay" class="sec">
+  <h2>住宿候选</h2>
+  <p class="lead">点「定这家」标记选择，可以随时改。价格是 11 月 20 日搜到的参考价。罗马和那不勒斯的城市税按人按晚收，通常到店付现金，比价时要加上。</p>
+  <div id="stays"></div>
+</section>
+
+<section id="move" class="sec">
+  <h2>交通</h2>
+
+  <h3>飞机：柏林 BER ⇄ 罗马 FCO</h3>
+  <div class="table-wrap">
+  <table class="tbl">
+    <thead><tr><th>组合</th><th>去程</th><th>回程</th><th>每人参考价</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td>推荐</td><td>12/12 12:40 → 14:50</td><td>12/17 19:15 → 21:25</td><td>约 102€</td><td>Ryanair 往返，玩满 5 天整</td></tr>
+      <tr><td>最便宜</td><td>12/12 22:20 → 00:30+1</td><td>12/17 09:05 → 11:15</td><td>约 66€</td><td>半夜到机场，快线已停，打车约 55€；最后一天几乎没法玩</td></tr>
+      <tr><td>折中</td><td>12/12 22:20 → 00:30+1</td><td>12/17 19:15 → 21:25</td><td>约 72€</td><td>同样半夜落地；加上打车后不比推荐方案便宜</td></tr>
+      <tr><td>早班</td><td>12/12 06:40 → 08:45</td><td>12/17 19:15 → 21:25</td><td>约 99€</td><td>Eurowings 去程，要很早从德累斯顿出发或前一晚住柏林</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul class="notes">
+    <li>以上价格都只含座位下小包（40×30×20 cm）。要带登机箱的话单程每件约 20–40€，三人可共用一个。</li>
+    <li>去 BER：德累斯顿到柏林约 2 小时，再坐 FEX 或 S-Bahn 到机场约 30 分钟。有德国票或学期票的话可以全程坐区域车，大约 3 小时。</li>
+    <li>也可以查一下柏林 ⇄ 那不勒斯（NAP）。如果罗马进、那不勒斯出的价格接近，就不用再回罗马。</li>
+  </ul>
+
+  <h3>城市之间：罗马 ⇄ 那不勒斯</h3>
+  <ul class="notes">
+    <li>高铁 Frecciarossa（Trenitalia）或 Italo，Roma Termini ⇄ Napoli Centrale，约 1 小时 10 分钟。早订单程常见 15–30€，越近越贵。</li>
+    <li>保底方案：区域火车（Regionale）约 2–3 小时，约 13€，票价固定，不用提前买。</li>
+    <li>车票上写着具体车次，误车一般不能改签，早上留足时间。</li>
+  </ul>
+
+  <h3>罗马市内</h3>
+  <ul class="notes">
+    <li>机场 ⇄ 市区：Leonardo Express 到 Termini，约 32 分钟，约 14€。打车有固定价（到老城城墙内约 55€ 起），三个人人均不算贵，适合晚到的情况。</li>
+    <li>地铁只有 A、B、C 三条线，单程票约 1.5€，100 分钟内有效，闸机可以直接刷银行卡。</li>
+    <li>景点集中，多数时候走路最快。注意 64 路公交和 Termini 一带的扒手。</li>
+  </ul>
+
+  <h3>那不勒斯市内</h3>
+  <ul class="notes">
+    <li>地铁 1 号线：Garibaldi（中央车站）→ Università → Municipio → Toledo → Dante → Museo。</li>
+    <li>上沃梅罗山：Funicolare Centrale 中央缆车，从 Augusteo 站出发，用普通公交票。</li>
+    <li>去庞贝：Circumvesuviana 小火车，从 Porta Nolana 或 Garibaldi 出发，在 Pompei Scavi – Villa dei Misteri 站下，约 35–40 分钟，票价约 3–4€。车厢老旧、拥挤，看紧包。</li>
+    <li>公交票在 tabaccheria（烟草店）、报亭或站内机器都能买。</li>
+  </ul>
+</section>
+
+<section id="food" class="sec">
+  <h2>美食</h2>
+  <p class="lead">不写死在行程里，按当天在哪儿就近挑。</p>
+
+  <div class="two">
+    <div>
+      <h3 class="c-rome">罗马必吃</h3>
+      <dl class="dish">
+        <dt>四大罗马面</dt><dd>Carbonara（蛋黄、猪脸肉、羊奶酪）、Cacio e pepe（芝士黑胡椒）、Amatriciana（番茄猪脸肉）、Gricia（没加番茄的 Amatriciana）。</dd>
+        <dt>Supplì</dt><dd>炸米球，里面是番茄饭和拉丝的马苏里拉奶酪，一个 2–3€ 的街头小吃。</dd>
+        <dt>Pizza al taglio</dt><dd>按重量卖的长方形切块披萨，适合赶路时吃。</dd>
+        <dt>Carciofi</dt><dd>朝鲜蓟。犹太区有整颗油炸的做法，冬天正当季。</dd>
+        <dt>Maritozzo</dt><dd>夹满奶油的早餐面包。</dd>
+        <dt>Gelato</dt><dd>冬天也值得吃。颜色太鲜艳、堆得很高的，多半不是好店。</dd>
+      </dl>
+      <h4>不容易踩雷的店</h4>
+      <ul class="places">
+        <li><b>Bonci Pizzarium</b>，梵蒂冈附近，切块披萨（12/16）</li>
+        <li><b>Supplì Roma</b>，特拉斯提弗列区（12/13 晚）</li>
+        <li><b>Da Enzo al 29</b>，特拉斯提弗列区，罗马面，要排队</li>
+        <li><b>Roscioli</b>，鲜花广场附近，偏贵，需订位</li>
+        <li><b>Trapizzino</b>，三角口袋披萨，有多家分店</li>
+        <li><b>Mercato Centrale Roma</b>，Termini 车站里的美食市场，到达当天或离开前吃一顿很方便</li>
+        <li><b>Pasticceria Regoli</b>，Esquilino 区，maritozzo</li>
+        <li><b>Fatamorgana / Giolitti</b>，gelato</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="c-naples">那不勒斯必吃</h3>
+      <dl class="dish">
+        <dt>那不勒斯披萨</dt><dd>Margherita 或 Marinara，饼边厚软，中间偏湿。一张 5–10€，一人一张。</dd>
+        <dt>Pizza fritta</dt><dd>炸披萨，老城街头吃。</dd>
+        <dt>Sfogliatella</dt><dd>贝壳形千层酥（riccia）或软皮版（frolla），里面是乳清奶酪和柑橘馅，趁热吃。</dd>
+        <dt>Babà</dt><dd>浸朗姆酒糖浆的小蛋糕。</dd>
+        <dt>Cuoppo</dt><dd>纸筒装的炸海鲜或炸蔬菜。</dd>
+        <dt>咖啡</dt><dd>站在吧台喝，一杯约 1–1.5€，比坐着便宜。</dd>
+        <dt>圣诞甜点</dt><dd>Struffoli（蜂蜜小炸球）、Roccocò（杏仁硬饼），只有 12 月才有。</dd>
+      </dl>
+      <h4>不容易踩雷的店</h4>
+      <ul class="places">
+        <li><b>L'Antica Pizzeria da Michele</b>，只做两种披萨，排队快</li>
+        <li><b>Gino e Toto Sorbillo</b>，Via dei Tribunali，名气大，排队长</li>
+        <li><b>Di Matteo</b>，Via dei Tribunali，炸披萨和炸物（12/14 午饭）</li>
+        <li><b>Starita</b>，Materdei 区，本地人常去</li>
+        <li><b>Sfogliatella Mary</b>，翁贝托一世长廊入口</li>
+        <li><b>Attanasio</b>，中央车站附近，sfogliatella</li>
+        <li><b>Gran Caffè Gambrinus</b>，平民表决广场的老咖啡馆，偏贵，但值得进去看看</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="notes">
+    <li>账单上的 coperto（餐位费）每人 1–3€ 是正常的；景点旁边带照片菜单的餐馆，尽量避开。</li>
+    <li>去庞贝那天自己带三明治和水，景区里吃饭贵，选择也少。</li>
+  </ul>
+</section>
+
+<section id="sights" class="sec">
+  <h2>景点背景与拍照点</h2>
+  <p class="lead">图片联网时自动从维基百科加载。</p>
+  <div id="spots"></div>
+</section>
+
+<section id="jojo" class="sec">
+  <details class="egg">
+    <summary><h2>彩蛋：JoJo《黄金之风》圣地巡礼</h2></summary>
+    <div id="jojo-body"></div>
+  </details>
+</section>
+
+<footer class="foot">
+  <h3>信息来源与官方链接</h3>
+  <ul>
+    <li>圣塞维罗礼拜堂开放时间与购票：<a href="https://www.museosansevero.it/en/opening-hours-and-fees">museosansevero.it</a></li>
+    <li>庞贝开放时间与购票规定：<a href="https://pompeiisites.org">pompeiisites.org</a>，<a href="https://www.ticketone.it/artist/scavi-pompei/">TicketOne 官方售票</a></li>
+    <li>圣艾尔莫城堡：<a href="https://museicampania.cultura.gov.it/">Musei Campania</a></li>
+    <li>斗兽场：<a href="https://ticketing.colosseo.it">ticketing.colosseo.it</a>；梵蒂冈：<a href="https://tickets.museivaticani.va">tickets.museivaticani.va</a></li>
+    <li>JoJo 地点整理：<a href="https://joyce630.github.io/BizarreTourtoItaly/BizarreTourtoItaly_Naples.html">Bizarre Tour to Italy</a>，<a href="https://jojowiki.com/Minor_Locations/Part_5">JoJo Wiki</a></li>
+  </ul>
+  <p class="small">开放时间和价格整理于 <span id="updated"></span>，出发前请再到官网核对一次。</p>
+</footer>
+
+</main>
+
+<script src="assets/data.js?v=4"></script>
+<script src="assets/app.js?v=4"></script>
+<script src="https://cdn.jsdelivr.net/npm/opencc-js@1.0.5/dist/umd/cn2t.js" async onload="window.dispatchEvent(new Event('opencc-ready'))"></script>
+</body>
+</html>
