@@ -17,7 +17,7 @@ window.TRIP = {
     { id: "h-naples", type: "decide", cat: "住宿", text: "那不勒斯 12/14–16 住宿（2 晚）", due: "尽快", anchor: "stay-naples" },
     { id: "h-rome2", type: "decide", cat: "住宿", text: "罗马 12/16–17 住宿（1 晚）", due: "尽快", anchor: "stay-rome2" },
     { id: "train1", type: "book", cat: "交通", text: "高铁 罗马 → 那不勒斯（12/14 早上）", due: "提前 2–3 周",
-      link: "https://www.trenitalia.com", note: "Trenitalia 和 Italo 都比一下，早订单程常见 15–30€。" },
+      link: "https://www.trenitalia.com", note: "先注册免费的 CartaFRECCIA，对比 Young、Insieme 和 Super Economy 几种价格，再比 Italo。步骤见「省钱」。" },
     { id: "train2", type: "book", cat: "交通", text: "高铁 那不勒斯 → 罗马（12/16 早上）", due: "提前 2–3 周",
       link: "https://www.italotreno.com" },
     { id: "colosseo", type: "book", cat: "门票", text: "斗兽场 + 古罗马广场 + 帕拉蒂尼山（12/13 上午）", due: "提前 1–2 周",
@@ -340,11 +340,17 @@ window.TRIP = {
     },
     groups: [
       { id: "flight", label: "机票", sub: "柏林 BER ⇄ 罗马 FCO，只含座位下小包", options: [
-        { id: "f1", plan: "12-17", name: "12:40 去，19:15 回", note: "推荐", pp: 102 },
-        { id: "f2", plan: "12-17", name: "22:20 去，19:15 回", note: "半夜落地", pp: 72 },
-        { id: "f3", plan: "12-17", name: "22:20 去，09:05 回", note: "最后一天没法玩", pp: 66 },
-        { id: "f4", plan: "12-16", name: "12:40 去，14:55 回", note: "推荐", pp: 102 },
-        { id: "f5", plan: "12-16", name: "22:20 去，14:55 回", note: "半夜落地", pp: 72 } ] },
+        /* d1 / dl：第一天、最后一天在城里能玩的小时数（按 9:00–21:00 算，每天 12 小时） */
+        { id: "f1", plan: "12-17", name: "12:40 去，19:15 回", note: "推荐", pp: 102, d1: 5, dl: 7,
+          d1Text: "14:50 落地，约 16:00 到市区", dlText: "16:15 前出发去机场" },
+        { id: "f2", plan: "12-17", name: "22:20 去，19:15 回", note: "含落地打车 55€", pp: 72, nightTaxi: 55, d1: 0, dl: 7,
+          d1Text: "00:30 落地，快线已停，只能打车", dlText: "16:15 前出发去机场" },
+        { id: "f3", plan: "12-17", name: "22:20 去，09:05 回", note: "含落地打车 55€", pp: 66, nightTaxi: 55, d1: 0, dl: 0,
+          d1Text: "00:30 落地，快线已停，只能打车", dlText: "约 7:00 就要出发去机场" },
+        { id: "f4", plan: "12-16", name: "12:40 去，14:55 回", note: "推荐", pp: 102, d1: 5, dl: 2,
+          d1Text: "14:50 落地，约 16:00 到市区", dlText: "早上从那不勒斯回罗马，约 12:00 去机场" },
+        { id: "f5", plan: "12-16", name: "22:20 去，14:55 回", note: "含落地打车 55€", pp: 72, nightTaxi: 55, d1: 0, dl: 2,
+          d1Text: "00:30 落地，快线已停，只能打车", dlText: "早上从那不勒斯回罗马，约 12:00 去机场" } ] },
       { id: "stay-rome1", label: "罗马住宿", sub: "12/12–14，2 晚", stay: true, options: [
         { id: "funny", name: "Funny Holiday", note: "独立卫浴，不可退", total: 194, tax: 6 },
         { id: "funny-shared", name: "Funny Holiday", note: "共用卫浴，不可退", total: 176, tax: 6 },

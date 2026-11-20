@@ -283,6 +283,14 @@
   const inPlan = x => !x.plan || x.plan === bs.plan;
   function optCost(g, o) {
     if (o.total != null) return o.total;
+    if (g.id === "flight") return o.pp * P + (o.nightTaxi || 0);
+    if (g.id === "airport") {
+      // 半夜落地已经算了打车，机场交通只算离开那一程
+      const f = picked(B.groups.find(x => x.id === "flight"));
+      const legs = f && f.nightTaxi ? 1 : 2;
+      if (o.car != null) return o.car / 2 * legs * Math.ceil(P / 4);
+      return o.pp / 2 * legs * P;
+    }
     if (o.car != null) return o.car * Math.ceil(P / 4);
     if (o.ppDay != null) return o.ppDay * B.plans[bs.plan].days * P;
     return o.pp * P;
@@ -294,6 +302,25 @@
   }
   function tixOn(t) { const k = bs.plan + ":" + t.id; return inPlan(t) && (bs.tix[k] != null ? bs.tix[k] : true); }
   function bSave() { store.set("budget2", bs); }
+  /* 每个航班组合在意大利能玩多久：每天一格，按 9:00–21:00 的 12 小时填充 */
+  function flightTimes(g, cur) {
+    const days = B.plans[bs.plan].days, dates = Array.from({ length: days }, (_, i) => 12 + i);
+    const opts = g.options.filter(inPlan);
+    const rows = opts.map(o => {
+      const hours = dates.map((d, i) => i === 0 ? o.d1 : i === days - 1 ? o.dl : 12);
+      const sum = hours.reduce((a, h) => a + h, 0);
+      return el("div", { class: "ft-row" + (o === cur ? " is-cur" : "") },
+        el("div", { class: "ft-name" }, o.name),
+        el("div", { class: "ft-days" }, hours.map((h, i) => el("span", { class: "ft-day", title: `12/${dates[i]}：约 ${h} 小时` },
+          el("span", { class: "ft-fill", style: `width:${h / 12 * 100}%` })))),
+        el("div", { class: "ft-sum" }, "约 " + sum + " 小时"));
+    });
+    return el("div", { class: "ft" },
+      el("div", { class: "ft-row ft-head" }, el("div", { class: "ft-name" }, "能玩的时间"),
+        el("div", { class: "ft-days" }, dates.map(d => el("span", { class: "ft-date" }, "12/" + d))), el("div", { class: "ft-sum" }, "")),
+      ...rows,
+      el("p", { class: "ft-note" }, "第一天：" + cur.d1Text + "。最后一天：" + cur.dlText + "。每格代表一天 9:00–21:00，填满表示整天可玩。"));
+  }
   function renderBudget() {
     const pl = B.plans[bs.plan];
     const groups = B.groups.filter(inPlan);
@@ -307,9 +334,10 @@
           el("span", { class: "o-name" }, o.name),
           o.note ? el("span", { class: "o-note" }, o.note) : null,
           el("span", { class: "o-price" }, eur(optCost(g, o))))));
+      const mid = g.id === "flight" ? el("div", {}, chips, flightTimes(g, cur)) : chips;
       return el("div", { class: "b-group" + (g.estimate ? " is-est" : "") },
         el("div", { class: "b-head" }, el("div", { class: "b-name" }, g.label), el("div", { class: "b-sub" }, g.sub)),
-        chips,
+        mid,
         el("div", { class: "b-amt" }, eur(amt)));
     });
     // 城市税：按所选住处的税率和晚数
