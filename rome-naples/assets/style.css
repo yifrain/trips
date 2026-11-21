@@ -359,3 +359,4 @@ main { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
 .read-grp h3 { font-size: 15px; margin: 18px 0 6px; }
 .tip-sub { font-size: 13px; color: var(--muted); margin: 0 0 6px 1.6em; }
 .tip-list a { color: inherit; }
+.b-plan { font-size: .9rem; color: var(--muted, #666); }

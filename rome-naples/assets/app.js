@@ -21,8 +21,11 @@
     get(k, d) { try { const v = localStorage.getItem("rn26:" + k); return v == null ? d : JSON.parse(v); } catch (e) { return k in mem ? mem[k] : d; } },
     set(k, v) { mem[k] = v; try { localStorage.setItem("rn26:" + k, JSON.stringify(v)); } catch (e) {} }
   };
-  let done = store.get("done", {});
-  let chosen = store.get("chosen", {});
+  /* 12/5–13 新行程：换了一套存储键，旧行程的勾选和选择不会带过来 */
+  let done = store.get("done2", {});
+  let chosen = store.get("chosen2", {});
+  /* 默认选中 data.js 里 pick 指定的住处；用户取消后存 null，不再自动选回 */
+  T.stays.forEach(st => { if (st.pick && !(st.id in chosen)) chosen[st.id] = st.pick; });
 
   const P = T.budget.people;
   const CITY = { rome: "罗马", naples: "那不勒斯" };
@@ -175,6 +178,7 @@
   /* ---------- 待办 ---------- */
   const todoBox = $("#todos");
   const stayTodo = {}; T.todos.forEach(t => { if (t.anchor) stayTodo[t.anchor] = t.id; });
+  Object.entries(stayTodo).forEach(([sid, tid]) => { if (chosen[sid] && !(tid in done)) done[tid] = true; });
   function renderTodos() {
     todoBox.innerHTML = "";
     [["decide", "需要决定"], ["book", "必须提前预订"]].forEach(([type, label]) => {
@@ -182,7 +186,7 @@
       T.todos.filter(t => t.type === type).forEach(t => {
         const isDone = !!done[t.id];
         const cb = el("input", { type: "checkbox", id: "cb-" + t.id, checked: isDone, onchange: (e) => {
-          done[t.id] = e.target.checked; store.set("done", done); renderTodos(); renderStatus();
+          done[t.id] = e.target.checked; store.set("done2", done); renderTodos(); renderStatus();
         } });
         let note = t.note || "";
         if (t.anchor) { const nm = chosen[t.anchor] && stayName(t.anchor); note = nm ? "已选：" + nm : "还没选，去住宿候选里比较。"; }
@@ -212,7 +216,7 @@
   const stayBox = $("#stays");
   let staySort = store.get("staySort", "price");
   const openRows = new Set();
-  const nightsOf = st => st.id === "stay-rome2" ? 1 : 2;
+  const nightsOf = st => st.n || 1;
   const rnum = r => { const m = String(r).match(/\d+(\.\d+)?/); return m ? parseFloat(m[0]) : 0; };
   /* 住宿价格口径：可免费取消 / 最低价（不可退）。住宿表和预算共用这一个设置 */
   let rate = store.get("rate", "flex");
@@ -226,9 +230,9 @@
   const rateSeg = () => el("div", { class: "seg", role: "group", "aria-label": "价格口径" },
     [["flex", "可免费取消"], ["min", "最低价（不可退）"]].map(([id, label]) => el("button", { type: "button", "aria-pressed": String(rate === id), onclick: () => setRate(id) }, label)));
   function pickStay(st, o) {
-    if (chosen[st.id] === o.id && !arguments[2]) delete chosen[st.id]; else chosen[st.id] = o.id;
-    store.set("chosen", chosen);
-    if (stayTodo[st.id]) { done[stayTodo[st.id]] = !!chosen[st.id]; store.set("done", done); }
+    if (chosen[st.id] === o.id && !arguments[2]) chosen[st.id] = null; else chosen[st.id] = o.id;
+    store.set("chosen2", chosen);
+    if (stayTodo[st.id]) { done[stayTodo[st.id]] = !!chosen[st.id]; store.set("done2", done); }
     renderStays(); renderTodos(); renderStatus(); renderDayStays(); renderBudget();
   }
   function renderStays() {
@@ -380,12 +384,14 @@
         note: isFlex(o) || o.min === o.flex ? "可免费取消" : (rate === "flex" ? "没有可退价" : "不可退"), total: priceOf(o), tax: o.tax }));
     });
   }
-  let bs = Object.assign({ plan: "12-17", pick: {}, tix: {}, student: false }, store.get("budget2", {}));
+  let bs = Object.assign({ pick: {}, tix: {}, student: false }, store.get("budget3", {}));
+  if (!T.budget.plans[bs.plan]) bs.plan = Object.keys(T.budget.plans)[0];
   const eur = n => Math.round(n).toLocaleString("en-US") + "€";
   const bBox = $("#budget-app");
   const inPlan = x => !x.plan || x.plan === bs.plan;
   /* 落地后打车去第一段罗马住处：城墙内固定 55€，城墙外打表（上限 80€） */
   const arrTaxi = () => { const st = T.stays.find(x => x.id === "stay-rome1"); return stayUsed(st).taxiFCO || 55; };
+  const depTaxi = () => { const st = T.stays.find(x => x.id === "stay-rome2"); return stayUsed(st).taxiFCO || 55; };
   function optCost(g, o) {
     if (o.total != null) return o.total;
     if (g.id === "flight") return o.pp * P + (o.nightTaxi ? arrTaxi() : 0);
@@ -393,11 +399,11 @@
       // 半夜落地已经算了打车，机场交通只算离开那一程
       const f = picked(B.groups.find(x => x.id === "flight"));
       const night = f && f.nightTaxi;
-      if (o.car != null) return (night ? 0 : arrTaxi()) + 55;
-      return o.pp / 2 * (night ? 1 : 2) * P;
+      if (o.car != null) return (night ? 0 : arrTaxi()) + depTaxi();
+      return o.pp * (night ? 1 : 2) * P;
     }
     if (o.car != null) return o.car * Math.ceil(P / 4);
-    if (o.ppDay != null) return o.ppDay * B.plans[bs.plan].days * P;
+    if (o.ppDay != null) return o.ppDay * (B.plans[bs.plan].foodDays || B.plans[bs.plan].days) * P;
     return o.pp * P;
   }
   function picked(g) {
@@ -407,23 +413,21 @@
     return opts.find(o => o.id === want) || opts[0];
   }
   function airportHint(cur) {
-    const r1 = stayUsed(T.stays.find(x => x.id === "stay-rome1"));
-    const far = !!r1.taxiFCO;
-    const f = picked(B.groups.find(x => x.id === "flight"));
+    const r2 = stayUsed(T.stays.find(x => x.id === "stay-rome2"));
+    const far = !!r2.taxiFCO;
     return el("ul", { class: "b-explain" },
-      el("li", {}, el("b", {}, "FL1："), "普通通勤火车，每 15 分钟一班，停 Trastevere、Ostiense、Tiburtina，不停 Termini。",
-        far ? `住 ${r1.name} 最顺：坐到 Tiburtina，换地铁 B 线 3 站到 Pietralata，全程约 1 小时 10 分。` : "到站后换地铁或公交，地铁票 1.5€ 另付。"),
-      el("li", {}, el("b", {}, "Leonardo："), "Termini 直达、不停站，行李架宽。最后一天从 Termini 一带去机场最省心。"),
-      el("li", {}, el("b", {}, "出租车："), "只坐白色、车顶写 TAXI、车门有 Roma Capitale 标志的车。城墙内固定 55€ / 车，含行李和夜间附加费。",
-        far ? `${r1.name} 在城墙外，打表计价，上限 80€。` : ""),
-      el("li", {}, el("b", {}, "FL1 会不会出问题："), "能用，但要注意三点：纸质票上车前要在绿色机器上打卡（App 买的票要先点“check-in”）；晚上末班车大约 22:30，晚到只能打车；意大利常有交通罢工（sciopero），出发前查一下。",
-        f && f.nightTaxi ? "你选的航班半夜落地，FL1 和 Leonardo 都已停运，所以到达那程按打车算。" : ""));
+      el("li", {}, el("b", {}, "到达（12/6 00:30）："), "快线和 FL1 都已停运，只能打车，这一程已经算进上面的机票里。"),
+      el("li", {}, el("b", {}, "离开（12/13 早上）："), far
+        ? `最后一晚住 ${r2.name}，在城墙外，早上基本只能打车（打表约 45–55€ / 车），前一晚请前台约好。`
+        : `最后一晚住 ${r2.name}，走到 Termini 坐 Leonardo Express 最省心，32 分钟直达；三个人打车固定 55€，和快线差不多。`),
+      el("li", {}, el("b", {}, "出租车："), "只坐白色、车顶写 TAXI、车门有 Roma Capitale 标志的车。城墙内固定 55€ / 车，含行李和夜间附加费。"),
+      el("li", {}, el("b", {}, "FL1："), "最便宜，但不停 Termini，要从 Tiburtina、Ostiense 或 Trastevere 上车；纸质票上车前要打卡。意大利常有交通罢工（sciopero），出发前查一下。"));
   }
   function tixOn(t) { const k = bs.plan + ":" + t.id; return inPlan(t) && (bs.tix[k] != null ? bs.tix[k] : !t.off); }
-  function bSave() { store.set("budget2", bs); }
+  function bSave() { store.set("budget3", bs); }
   /* 每个航班组合在意大利能玩多久：每天一格，按 9:00–21:00 的 12 小时填充 */
   function flightTimes(g, cur) {
-    const days = B.plans[bs.plan].days, dates = Array.from({ length: days }, (_, i) => 12 + i);
+    const pl0 = B.plans[bs.plan], days = pl0.days, dates = Array.from({ length: days }, (_, i) => pl0.start + i);
     const opts = g.options.filter(inPlan);
     const rows = opts.map(o => {
       const hours = dates.map((d, i) => i === 0 ? o.d1 : i === days - 1 ? o.dl : 12);
@@ -488,7 +492,7 @@
     bBox.innerHTML = "";
     bBox.append(
       el("div", { class: "b-sum", "aria-live": "polite" },
-        el("div", { class: "seg", role: "group", "aria-label": "方案" },
+        Object.keys(B.plans).length < 2 ? el("div", { class: "b-plan" }, B.plans[bs.plan].label) : el("div", { class: "seg", role: "group", "aria-label": "方案" },
           Object.entries(B.plans).map(([id, p]) => el("button", { type: "button", "aria-pressed": String(id === bs.plan), onclick: () => { bs.plan = id; bSave(); renderBudget(); } }, p.label))),
         el("div", { class: "b-totals" },
           el("div", {}, el("div", { class: "b-big" }, eur(total)), el("div", { class: "b-cap" }, "三人合计，每人 " + eur(total / P) + (est ? "" : "，不含吃喝"))),
