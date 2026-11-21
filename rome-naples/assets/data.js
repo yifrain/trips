@@ -12,7 +12,7 @@ window.TRIP = {
     { id: "flight", type: "book", cat: "交通", text: "订机票：12/5 22:20 BER→FCO，12/13 09:55 FCO→BER", due: "尽快，廉航越晚越贵",
       link: "https://www.ryanair.com", note: "Ryanair 基础票约 61€ / 人往返（Google 上 1 人的价格，三人一起下单时再核对）。只含 40×30×20 cm 座位下小包。" },
     { id: "bag", type: "decide", cat: "交通", text: "决定要不要三人合买一件托运", due: "订机票时最便宜",
-      note: "合买一件 20 kg 托运，三个人的衣服放一起，往返约 30€（以下单页为准）。订完机票再加会更贵。" },
+      note: "推荐合买一件 10 kg 托运：16.99€ / 程，往返 33.98€，每人约 11€，装液体、鞋和厚衣服。东西多就选 20 kg（往返 55.98€）。订票时一起加最便宜，之后再加会更贵。" },
     { id: "h-rome1", type: "decide", cat: "住宿", text: "罗马 12/5–9 住宿（4 晚）", due: "尽快", anchor: "stay-rome1" },
     { id: "h-naples", type: "decide", cat: "住宿", text: "那不勒斯 12/9–10 住宿（1 晚）", due: "尽快，只剩 1 间", anchor: "stay-naples" },
     { id: "h-vico", type: "decide", cat: "住宿", text: "Vico Equense 12/10–12 住宿（2 晚）", due: "尽快，12/6 前可免费取消", anchor: "stay-vico" },
@@ -44,7 +44,7 @@ window.TRIP = {
      tax：城市税，每人每晚。taxiFCO：住处不在城墙内时，机场打车的估价（每车）。 */
   stays: [
     {
-      id: "stay-rome1", city: "rome", label: "罗马（第一段）", nights: "12/5–12/9，4 晚", n: 4,
+      id: "stay-rome1", pick: "camping", city: "rome", label: "罗马（第一段）", nights: "12/5–12/9，4 晚", n: 4,
       why: "半夜落地后直接打车来；12/6–8 逛罗马，12/9 早上去 Tiburtina 坐大巴。",
       options: [
         { id: "camping", name: "hu Roma Camping In Town", src: "Booking", area: "罗马西边，Via Aurelia 831",
@@ -59,7 +59,7 @@ window.TRIP = {
       verdict: "定营地：4 晚 260€ 大约是罗马市区三人间价格的一半，评价 2.7 万条、8.5 分，24 小时前台正好配半夜落地。代价是每天进城的时间。订可免费取消那档，只比不可退贵约 5€。顺便问前台：12/9–12 能不能寄存大件行李、机场班车的时间和价格。"
     },
     {
-      id: "stay-naples", city: "naples", label: "那不勒斯", nights: "12/9–12/10，1 晚", n: 1,
+      id: "stay-naples", pick: "station", city: "naples", label: "那不勒斯", nights: "12/9–12/10，1 晚", n: 1,
       why: "12/9 下午老城、圣塞维罗、圣艾尔莫日落，晚上在那不勒斯吃披萨；12/10 早上从旁边的车站坐小火车去庞贝。",
       options: [
         { id: "station", name: "Napoli Station B&B", src: "Booking", area: "中央车站东边，Via San Cosmo Fuori Porta Nolana 37",
@@ -74,7 +74,7 @@ window.TRIP = {
       verdict: "只住一晚，图的就是方便：下大巴走过去，第二天走过去坐小火车。想晚上住得安心一点，可以再查托莱多街一带的 Diazz（之前 3 晚约 350€，1 晚的价格没查）。"
     },
     {
-      id: "stay-vico", city: "naples", label: "Vico Equense（索伦托半岛）", nights: "12/10–12/12，2 晚", n: 2,
+      id: "stay-vico", pick: "celotto", city: "naples", label: "Vico Equense（索伦托半岛）", nights: "12/10–12/12，2 晚", n: 2,
       why: "在庞贝和索伦托之间，同一条小火车线上：12/10 看完庞贝顺路过来，12/11 去阿马尔菲或卡普里都只要先坐 15–20 分钟到索伦托。",
       options: [
         { id: "celotto", name: "Antica Tenuta Celotto", src: "Booking", area: "Vico Equense，Montechiaro 山坡，Via Ruggiero 5",
@@ -89,7 +89,7 @@ window.TRIP = {
       verdict: "订 131€ 那档：12/6 前可以免费取消，只比不可退贵 5€。订完给店家发消息，问清从 Seiano 站怎么走、接送多少钱、几点能入住。"
     },
     {
-      id: "stay-rome2", city: "rome", label: "罗马（最后一晚）", nights: "12/12–12/13，1 晚", n: 1,
+      id: "stay-rome2", pick: "camping2", city: "rome", label: "罗马（最后一晚）", nights: "12/12–12/13，1 晚", n: 1,
       why: "12/12 下午从那不勒斯回来，12/13 早上 6:45 左右出发去机场赶 09:55 的航班。",
       options: [
         { id: "camping2", name: "hu Roma Camping In Town", src: "Booking", area: "罗马西边，Via Aurelia 831",
@@ -501,7 +501,8 @@ window.TRIP = {
           d1Text: "00:30 落地，快线已停，打车去住处", dlText: "约 6:45 出发去机场" } ] },
       { id: "bag", label: "托运行李", sub: "可选", options: [
         { id: "none", name: "不托运", note: "三人都只背座位下小包", total: 0 },
-        { id: "one", name: "合买一件 20 kg", note: "往返约 30€，以下单页为准", total: 30 } ] },
+        { id: "ten", name: "合买一件 10 kg", note: "16.99€ / 程，往返 33.98€（推荐）", total: 34 },
+        { id: "one", name: "合买一件 20 kg", note: "27.99€ / 程，往返 55.98€", total: 56 } ] },
       { id: "stay-rome1", label: "罗马住宿（前四晚）", sub: "12/5–9，4 晚", stay: true, nights: 4 },
       { id: "stay-naples", label: "那不勒斯住宿", sub: "12/9–10，1 晚", stay: true, nights: 1 },
       { id: "stay-vico", label: "Vico Equense 住宿", sub: "12/10–12，2 晚", stay: true, nights: 2 },

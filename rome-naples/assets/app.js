@@ -25,7 +25,7 @@
   let done = store.get("done2", {});
   let chosen = store.get("chosen2", {});
   /* 默认选中 data.js 里 pick 指定的住处；用户取消后存 null，不再自动选回 */
-  T.stays.forEach(st => { if (st.pick && !(st.id in chosen)) chosen[st.id] = st.pick; });
+  T.stays.forEach(st => { const v = chosen[st.id]; if (st.pick && v !== null && !st.options.some(o => o.id === v)) chosen[st.id] = st.pick; });
 
   const P = T.budget.people;
   const CITY = { rome: "罗马", naples: "那不勒斯" };
@@ -462,7 +462,7 @@
         : g.id === "airport" ? el("div", {}, chips, airportHint(cur)) : chips;
       return el("div", { class: "b-group" + (g.estimate ? " is-est" : "") },
         el("div", { class: "b-head" }, el("div", { class: "b-name" }, g.label), el("div", { class: "b-sub" }, g.sub),
-          g.stay && !chosen[g.id] ? el("div", { class: "b-sub b-warn" }, "还没定，先按最便宜的算") : null),
+          null),
         mid,
         el("div", { class: "b-amt" }, eur(amt)));
     });
