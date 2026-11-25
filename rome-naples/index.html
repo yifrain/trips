@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>罗马与那不勒斯 · 2026.12</title>
-<link rel="stylesheet" href="assets/style.css?v=31">
+<link rel="stylesheet" href="assets/style.css?v=44">
 </head>
 <body>
 
@@ -14,13 +14,13 @@
     <a class="brand" href="#top">罗马 + 那不勒斯</a>
     <div class="links">
       <a href="#plan">行程</a>
+      <a href="#food">美食</a>
       <a href="#todo">待办</a>
       <a href="#stay">住宿</a>
       <a href="#move">交通</a>
       <a href="#budget">预算</a>
       <a href="#save">省钱</a>
       <a href="#tips">须知</a>
-      <a href="#food">美食</a>
       <a href="#sights">景点</a>
       <a href="#reads">推荐</a>
       <a href="#jojo">彩蛋</a>
@@ -51,8 +51,27 @@
 
 <section id="plan" class="sec">
   <h2>行程</h2>
-  <p class="lead">点景点名可以展开背景介绍和图片。</p>
+  <p class="lead">点景点名可以展开背景介绍和图片；每天下面的「地图与路线」可以展开看路线和每站之间的距离。</p>
+  <details class="kml-tip">
+    <summary>想在手机上的 Google 地图里看全部打卡点？</summary>
+    <ol>
+      <li>下载 <a href="assets/trip-map.kml" download>trip-map.kml</a>（每天一个图层，站点按顺序编号）。</li>
+      <li>电脑打开 <a href="https://www.google.com/maps/d/" target="_blank" rel="noopener">Google 我的地图（My Maps）</a>，新建地图，点「导入」，选这个文件。</li>
+      <li>手机上打开 Google 地图 → 「已保存」→「地图」，就能看到这张地图，可以按天开关图层；三个人共享这个地图链接即可。</li>
+    </ol>
+  </details>
   <div id="days"></div>
+</section>
+
+<section id="food" class="sec">
+  <h2>美食</h2>
+  <p class="lead">先按天看当天路线上能吃什么，再看必吃清单。点「地图」直接在 Google 地图里打开，出发前看一眼营业时间。</p>
+  <h3>按天就近吃</h3>
+  <div id="food-days"></div>
+  <h3>必吃清单</h3>
+  <div id="food-dishes"></div>
+  <h3>吃饭的规矩</h3>
+  <ul class="notes" id="food-tips"></ul>
 </section>
 
 <section id="todo" class="sec">
@@ -174,50 +193,52 @@
 
 <section id="save" class="sec">
   <h2>省钱办法</h2>
-  <p class="lead">按能省的金额从多到少排。全部用上，每人大约能比预算再省 50–80€。</p>
+  <p class="lead">机票、住宿、大巴都已订好，剩下能省的主要是吃饭、门票和市内交通。</p>
 
-  <h3>1. 罗马 ⇄ 那不勒斯高铁：注册会员比价</h3>
-  <p class="small-lead">Trenitalia 的会员计划 CartaFRECCIA 免费。会员 30 岁以下有 Young 优惠，最多打三折；3–5 人同行还有 Insieme 团体价，最多五折。订票前把几种价格都比一遍，选最便宜的。</p>
-  <ol class="steps">
-    <li><b>三个人各自注册会员。</b>打开 <a href="https://www.trenitalia.com" target="_blank" rel="noopener">trenitalia.com</a> 或 Trenitalia App，点右上角「Accedi / Registrati」注册账号，注册时选择加入 CartaFRECCIA，生日要填真实的，Young 优惠按年龄判断。注册完记下各自的 CartaFRECCIA 卡号。</li>
-    <li><b>由一个人登录后搜索去程。</b>出发站 Roma Termini，到达站 Napoli Centrale，日期 12 月 9 日，乘客数 3 个成人。在乘客信息里填每个人的 CartaFRECCIA 卡号，系统才会显示 Young 价。</li>
-    <li><b>点开车次，比较不同票种。</b>选 10 点前后的 Frecciarossa，展开票价，比较 Base、Economy、Super Economy、Young、Insieme 这几种。其中 Super Economy 不能改签、不能退款，适合时间已经定死的车次。</li>
-    <li><b>回程用同样的方法搜。</b>12 月 12 日，Napoli Centrale → Roma Termini，下午 15 点前后的车。</li>
-    <li><b>再去 Italo 比一次。</b>在 <a href="https://www.italotreno.com" target="_blank" rel="noopener">italotreno.com</a> 搜同样的日期和人数，看 Low Cost 价。Italo 也有免费会员 Italo Più，可以顺手注册。两家选更便宜的那个。</li>
-    <li><b>付款后把票存进手机。</b>电子票在 App 和邮件里都有，上车出示二维码就行。高铁票上写着具体车次，不用打票；如果改坐区域慢车，纸质票上车前要在站台的绿色或黄色机器上打票。</li>
-  </ol>
-  <p class="small-lead">时间：最低价一般在出发前 2–3 周之前还买得到，越晚越贵。不用专门挑 FrecciaYOUNG（19€ 起），它比早订的普通低价票还贵。</p>
-
-  <h3>2. 机票：避开 Ryanair 附加费</h3>
+  <h3>1. 超市和便宜吃饭</h3>
+  <p class="small-lead">按每人每天约 20€ 吃饭：早饭 bar 里站着吃（约 3€）＋午饭切块披萨或炸物（5–8€）＋晚饭超市买菜或一张那不勒斯披萨（5–10€）＋零食咖啡。</p>
+  <div class="two">
+    <div>
+      <h4>常见超市</h4>
+      <ul class="notes">
+        <li><b>Carrefour Express、Conad City、Pam Local、Despar：</b>市中心的小超市，营业时间长，周日和节日不少也开，价格中等。</li>
+        <li><b>Lidl、Eurospin、MD、Todis（罗马）：</b>折扣超市，最便宜，但多在居民区。</li>
+        <li><b>那不勒斯一带：</b>Decò、Sole365（坎帕尼亚本地的平价连锁）、Conad。中央车站、加里波第广场附近都有，Vico 的 Seiano / Meta 车站附近也有。</li>
+        <li><b>住处：</b>罗马营地有小超市；Vico 住处有厨房，12/10 下午到之前顺路买好两天的菜。</li>
+        <li>找店：Google 地图搜 <i>supermercato</i>，看营业时间；12/6 周日、12/8 节日很多店缩短营业。</li>
+      </ul>
+    </div>
+    <div>
+      <h4>买什么、大概多少钱</h4>
+      <ul class="notes">
+        <li><b>自制三明治：</b>面包（rosetta 小圆面包约 0.4€ / 个）＋熟食柜台现切火腿（prosciutto crudo / cotto，一“etto”= 100 g，约 2–3€）＋马苏里拉（125 g 约 1–1.5€）。</li>
+        <li><b>那不勒斯必买：</b>水牛马苏里拉（mozzarella di bufala，250 g 约 3–4€），配小番茄和面包就是一顿。</li>
+        <li><b>水果：</b>12 月是柑橘季，橘子（mandarini）、橙子便宜又好吃。</li>
+        <li><b>现成的：</b>超市冷柜的米饭沙拉、千层面；面包店（forno）按重量卖的白披萨、佛卡夏。</li>
+        <li><b>饮料：</b>6 瓶装水约 2€；超市红酒 3–6€ 就能喝；Peroni、Moretti 啤酒约 1€。</li>
+        <li><b>伴手礼：</b>柠檬酒、意面、咖啡粉在超市买，比纪念品店便宜一半。</li>
+      </ul>
+    </div>
+  </div>
   <ul class="notes">
-    <li>直接在 Ryanair 官网或 App 订，第三方平台常加手续费。</li>
-    <li>出发前在 App 里办好网上值机。在机场柜台办值机要另收高额费用。</li>
-    <li>只带座位下的小包（40×30×20 cm）；真要带多点东西，三人合买一件托运，比每人加登机箱省很多。</li>
+    <li><b>超市的规矩：</b>熟食柜台要先取号（prendi il numero）；水果蔬菜戴手套自己装袋、在秤上按编号打印价签再去结账，没打价签收银台不收；购物袋要另买（约 0.1–0.2€），自带袋子更方便。</li>
+    <li><b>在外面吃：</b>咖啡站在吧台喝；午饭找 <i>tavola calda</i>（熟食快餐）、<i>rosticceria</i>（炸物熟食）、切块披萨店；罗马的街头饮水龙头 nasoni 可以直接喝，带个水瓶。</li>
+    <li>避开景点正门口、贴着照片菜单、门口拉客的餐馆；具体推荐见「美食」。</li>
   </ul>
 
-  <h3>3. 吃饭</h3>
+  <h3>2. 门票</h3>
   <ul class="notes">
-    <li>罗马街边的免费饮水龙头（nasoni）可以直接喝，带个水瓶。</li>
-    <li>咖啡站在吧台喝，约 1–1.5€，坐下喝会贵一倍；早餐吃牛角包加卡布奇诺，约 3€。</li>
-    <li>午饭吃切块披萨或炸米球 supplì，5–8€ 能吃饱；那不勒斯的玛格丽特披萨一张 5–8€。</li>
-    <li>晚上可以去超市（Conad、Carrefour Express、Pam）买面包、火腿、水果和酒；营地有超市，早饭可以自己解决。</li>
-    <li>避开景点正门口、门外贴着照片菜单的餐馆。</li>
+    <li>12/6 是每月第一个周日：斗兽场、古罗马广场、万神殿都免费，每人省约 27€。</li>
+    <li>大量好看的东西免费：圣彼得大教堂、人民圣母堂和圣王路易堂的卡拉瓦乔、平乔山和 Largo San Martino 观景台、蛋堡。</li>
+    <li>只在官网买票，第三方网站常贵一倍；罗马城市卡（Roma Pass）这次不划算。</li>
   </ul>
 
-  <h3>4. 门票</h3>
+  <h3>3. 交通与其他</h3>
   <ul class="notes">
-    <li>12/6 是每月第一个周日，斗兽场、古罗马广场、万神殿都免费，每人省约 27€，代价是早起排队。</li>
-    <li>其余只保留梵蒂冈、博尔盖塞、庞贝、圣塞维罗，换成免费教堂和观景台（见预算里的「免费的替代景点」）。</li>
-    <li>25 岁及以下带在读证明（Immatrikulationsbescheinigung），可以买梵蒂冈学生票，每人省 10€。</li>
-    <li>只在官网买票；第三方网站常贵一倍。不用租语音导览，罗马城市卡（Roma Pass）一般也不划算。</li>
-  </ul>
-
-  <h3>5. 交通与其他</h3>
-  <ul class="notes">
-    <li>罗马景点集中，多走路。坐地铁时用同一张银行卡刷闸机，一天最多扣 8.5€。</li>
-    <li>半夜落地和早班机都绕不开出租车，三人分摊，每程每人约 17€。住 Termini 附近的话，回程坐机场快线（三人 42€）。</li>
-    <li>德国 SIM 卡在意大利照常用流量，不用买当地卡。</li>
-    <li>不要用 Euronet 的取款机，尽量刷卡；公共厕所约 1€，可以在博物馆或咖啡馆里用。</li>
+    <li>罗马地铁和公交用同一张卡（或同一部手机）刷，一天最多扣 8.5€；景点集中，能走就走。</li>
+    <li>出租车三人分摊；在机场只坐白色正规出租车。</li>
+    <li>德国 SIM 卡在意大利照常用流量，不用买当地卡；不要用 Euronet 的取款机，尽量刷卡。</li>
+    <li>公共厕所约 1€，可以在博物馆或咖啡馆里用（买杯咖啡）。</li>
   </ul>
 </section>
 
@@ -227,65 +248,21 @@
   <div id="tips-body"></div>
 </section>
 
-<section id="food" class="sec">
-  <h2>美食</h2>
-  <p class="lead">不写死在行程里，按当天在哪儿就近挑。</p>
 
-  <div class="two">
-    <div>
-      <h3 class="c-rome">罗马必吃</h3>
-      <dl class="dish">
-        <dt>四大罗马面</dt><dd>Carbonara（蛋黄、猪脸肉、羊奶酪）、Cacio e pepe（芝士黑胡椒）、Amatriciana（番茄猪脸肉）、Gricia（没加番茄的 Amatriciana）。</dd>
-        <dt>Supplì</dt><dd>炸米球，里面是番茄饭和拉丝的马苏里拉奶酪，一个 2–3€ 的街头小吃。</dd>
-        <dt>Pizza al taglio</dt><dd>按重量卖的长方形切块披萨，适合赶路时吃。</dd>
-        <dt>Carciofi</dt><dd>朝鲜蓟。犹太区有整颗油炸的做法，冬天正当季。</dd>
-        <dt>Maritozzo</dt><dd>夹满奶油的早餐面包。</dd>
-        <dt>Gelato</dt><dd>冬天也值得吃。颜色太鲜艳、堆得很高的，多半不是好店。</dd>
-      </dl>
-      <h4>不容易踩雷的店</h4>
-      <ul class="places">
-        <li><b>Bonci Pizzarium</b>，梵蒂冈附近，切块披萨（12/7）</li>
-        <li><b>Supplì Roma</b>，特拉斯提弗列区（12/7 晚）</li>
-        <li><b>Da Enzo al 29</b>，特拉斯提弗列区，罗马面，要排队</li>
-        <li><b>Roscioli</b>，鲜花广场附近，偏贵，需订位</li>
-        <li><b>Trapizzino</b>，三角口袋披萨，有多家分店</li>
-        <li><b>Mercato Centrale Roma</b>，Termini 车站里的美食市场，到达当天或离开前吃一顿很方便</li>
-        <li><b>Pasticceria Regoli</b>，Esquilino 区，maritozzo</li>
-        <li><b>Fatamorgana / Giolitti</b>，gelato</li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="c-naples">那不勒斯必吃</h3>
-      <dl class="dish">
-        <dt>那不勒斯披萨</dt><dd>Margherita 或 Marinara，饼边厚软，中间偏湿。一张 5–10€，一人一张。</dd>
-        <dt>Pizza fritta</dt><dd>炸披萨，老城街头吃。</dd>
-        <dt>Sfogliatella</dt><dd>贝壳形千层酥（riccia）或软皮版（frolla），里面是乳清奶酪和柑橘馅，趁热吃。</dd>
-        <dt>Babà</dt><dd>浸朗姆酒糖浆的小蛋糕。</dd>
-        <dt>Cuoppo</dt><dd>纸筒装的炸海鲜或炸蔬菜。</dd>
-        <dt>咖啡</dt><dd>站在吧台喝，一杯约 1–1.5€，比坐着便宜。</dd>
-        <dt>圣诞甜点</dt><dd>Struffoli（蜂蜜小炸球）、Roccocò（杏仁硬饼），只有 12 月才有。</dd>
-      </dl>
-      <h4>不容易踩雷的店</h4>
-      <ul class="places">
-        <li><b>L'Antica Pizzeria da Michele</b>，只做两种披萨，排队快</li>
-        <li><b>Gino e Toto Sorbillo</b>，Via dei Tribunali，名气大，排队长</li>
-        <li><b>Di Matteo</b>，Via dei Tribunali，炸披萨和炸物（12/9 午饭）</li>
-        <li><b>Starita</b>，Materdei 区，本地人常去</li>
-        <li><b>Sfogliatella Mary</b>，翁贝托一世长廊入口</li>
-        <li><b>Attanasio</b>，中央车站附近，sfogliatella</li>
-        <li><b>Gran Caffè Gambrinus</b>，平民表决广场的老咖啡馆，偏贵，但值得进去看看</li>
-      </ul>
-    </div>
-  </div>
-  <ul class="notes">
-    <li>账单上的 coperto（餐位费）每人 1–3€ 是正常的；景点旁边带照片菜单的餐馆，尽量避开。</li>
-    <li>去庞贝那天自己带三明治和水，景区里吃饭贵，选择也少。</li>
-  </ul>
-</section>
 
 <section id="sights" class="sec">
   <h2>景点介绍</h2>
-  <p class="lead">点开看简介、停留时间、门票和实用提示。右边是安排在哪天去。图片联网时从维基百科加载。</p>
+  <p class="lead">点开看简介、进去重点看什么、停留时间和门票，下面还有预习链接。右边是安排在哪天去。图片联网时从维基百科加载。</p>
+  <details class="kml-tip" open>
+    <summary>怎么才不走马观花</summary>
+    <ol>
+      <li><b>出发前每个大景点花 10 分钟预习：</b>看一遍下面每个景点的「进去重点看」，再点一个 B 站或 YouTube 讲解视频。知道要找什么，现场就会有“找到了”的感觉。</li>
+      <li><b>现场带一个免费语音导览：</b>Rick Steves Audio Europe（免费 App，英语）有斗兽场、古罗马广场、万神殿、梵蒂冈博物馆、西斯廷礼拜堂、圣彼得大教堂、庞贝、那不勒斯老城的语音导览，可以提前下载离线听；梵蒂冈博物馆官方语音导览有中文（8€）。</li>
+      <li><b>艺术史讲得最清楚的免费网站：</b><a href="https://smarthistory.org" target="_blank" rel="noopener">Smarthistory</a>（可汗学院合作），西斯廷礼拜堂、《雅典学院》、贝尼尼、卡拉瓦乔、万神殿、庞贝都有短视频和文章。</li>
+      <li><b>想更系统一点：</b>Mary Beard 的《SPQR》（古罗马千年史）和《庞贝》都有中文译本；她的 BBC 纪录片 <i>Meet the Romans</i> 也很好看。</li>
+      <li><b>每个景点给自己定 3–5 个“必找”的细节，</b>比如万神殿的圆孔光斑、《最后的审判》里米开朗基罗的自画像、庞贝街心的跳石。找到了拍一张，比把每个房间都走一遍记得牢。</li>
+    </ol>
+  </details>
   <div id="spots"></div>
 </section>
 
@@ -316,8 +293,8 @@
 
 </main>
 
-<script src="assets/data.js?v=31"></script>
-<script src="assets/app.js?v=31"></script>
+<script src="assets/data.js?v=44"></script>
+<script src="assets/app.js?v=44"></script>
 <script src="https://cdn.jsdelivr.net/npm/opencc-js@1.0.5/dist/umd/cn2t.js" async onload="window.dispatchEvent(new Event('opencc-ready'))"></script>
 </body>
 </html>

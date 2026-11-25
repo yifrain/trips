@@ -9,26 +9,26 @@ window.TRIP = {
 
   /* ---------- 待预订 / 待决定 ---------- */
   todos: [
-    { id: "flight", type: "book", cat: "交通", text: "订机票：12/5 22:20 BER→FCO，12/13 09:55 FCO→BER", due: "尽快，廉航越晚越贵",
-      link: "https://www.ryanair.com", note: "Ryanair 基础票约 61€ / 人往返（Google 上 1 人的价格，三人一起下单时再核对）。只含 40×30×20 cm 座位下小包。" },
-    { id: "bag", type: "decide", cat: "交通", text: "决定要不要三人合买一件托运", due: "订机票时最便宜",
-      note: "推荐合买一件 10 kg 托运：16.99€ / 程，往返 33.98€，每人约 11€，装液体、鞋和厚衣服。东西多就选 20 kg（往返 55.98€）。订票时一起加最便宜，之后再加会更贵。" },
-    { id: "h-rome1", type: "decide", cat: "住宿", text: "罗马 12/5–9 住宿（4 晚）", due: "尽快", anchor: "stay-rome1" },
-    { id: "h-naples", type: "decide", cat: "住宿", text: "那不勒斯 12/9–10 住宿（1 晚）", due: "尽快，只剩 1 间", anchor: "stay-naples" },
-    { id: "h-vico", type: "decide", cat: "住宿", text: "Vico Equense 12/10–12 住宿（2 晚）", due: "尽快，12/6 前可免费取消", anchor: "stay-vico" },
-    { id: "h-rome2", type: "decide", cat: "住宿", text: "罗马 12/12–13 住宿（1 晚）", due: "尽快", anchor: "stay-rome2" },
-    { id: "trip", type: "decide", cat: "行程", text: "12/11 走阿马尔菲海岸还是去卡普里岛", due: "12/10 晚上看天气和海况",
-      note: "默认阿马尔菲海岸（陆路，下雨也能去）。天气晴、海面平静又特别想看海上巨石，就改去卡普里。两边都从索伦托出发，见「交通」里的海岸指南。" },
-    { id: "train1", type: "book", cat: "交通", text: "Itabus 罗马 Tiburtina → 那不勒斯 Metropark（12/9 上午）", due: "越早越便宜",
+    { id: "checkin", type: "book", cat: "交通", text: "Ryanair 网上值机：去程 12/2 22:20 起，回程 12/10 09:55 起（免费）", due: "起飞前 2 小时截止",
+      link: "https://www.ryanair.com", note: "现在提前值机要付 8€ 买座位，不用。到时间在 Ryanair App 里办：证件选护照（德国居留卡不是旅行证件），如果要求填签证 / 居留信息，就填德国居留卡。App 里完成证件验证；做不了的话，出发当天先去 BER 的 Ryanair 证件检查柜台盖章再过安检（免费，留出时间）。登机牌只有 App 里的电子版。" },
+    { id: "flight", type: "book", cat: "交通", text: "机票：12/5 22:20 FR 134 去，12/13 09:55 FR 41 回", due: "已订", done: true,
+      link: "https://www.ryanair.com", note: "已订（Ryanair 基础票，每人往返约 63€）。另外两位也要订同样两班。值机：起飞前 24 小时在 App 里免费办，非欧盟护照先做证件验证。" },
+    { id: "bag", type: "decide", cat: "交通", text: "托运行李：已在 Yifan 的订单里加一件 20 kg", due: "已订", done: true,
+      note: "去程 27.99€ + 回程 29.99€ = 57.98€，三人分摊每人约 19€。托运柜台起飞前 40 分钟关闭；出发前称重，不超过 20 kg。" },
+    { id: "h-rome1", done: true, type: "decide", cat: "住宿", text: "罗马 12/5–9 住宿（4 晚）", due: "尽快", anchor: "stay-rome1" },
+    { id: "h-naples", done: true, type: "decide", cat: "住宿", text: "那不勒斯 12/9–10 住宿（1 晚）", due: "尽快，只剩 1 间", anchor: "stay-naples" },
+    { id: "h-vico", done: true, type: "decide", cat: "住宿", text: "Vico Equense 12/10–12 住宿（2 晚）", due: "尽快，12/6 前可免费取消", anchor: "stay-vico" },
+    { id: "h-rome2", done: true, type: "decide", cat: "住宿", text: "罗马 12/12–13 住宿（1 晚）", due: "尽快", anchor: "stay-rome2" },
+    { id: "trip", type: "decide", cat: "行程", text: "12/11 去波西塔诺 + 索伦托，还是改去卡普里岛", due: "12/10 晚上看天气和海况",
+      note: "默认上午索伦托、下午波西塔诺（陆路，下雨也能去）。天气晴、海面平静又特别想看海上巨石，就改去卡普里。见「交通」里的海岸指南" },
+    { id: "train1", done: true, type: "book", cat: "交通", text: "Itabus 罗马 Tiburtina → 那不勒斯 Metropark（12/9 上午）", due: "越早越便宜",
       link: "https://www.itabus.it", note: "最低 5.99€ / 人，不是每个班次都是这个价，选 8–9 点出发、5.99€ 的那班。约 2 小时 40 分–3 小时。最低价一般不可退。" },
-    { id: "train2", type: "book", cat: "交通", text: "Itabus 那不勒斯 Metropark → 罗马 Tiburtina（12/12 下午）", due: "越早越便宜",
+    { id: "train2", done: true, type: "book", cat: "交通", text: "Itabus 那不勒斯 Metropark → 罗马 Tiburtina（12/12 下午）", due: "越早越便宜",
       link: "https://www.itabus.it", note: "选 14–15 点出发、5.99€ 的那班，傍晚到 Tiburtina，再坐地铁和公交回营地（约 1 小时）。" },
     { id: "colosseo", type: "decide", cat: "门票", text: "斗兽场 12/6 免费日：早上 8 点前去售票处排队", due: "当天，不能预约",
       link: "https://colosseo.it", note: "每月第一个周日国立景点免费，斗兽场、古罗马广场、万神殿都在内，现场先到先得。想稳妥就另买一张付费时段票做备选（约 18–20€，ticketing.colosseo.it）。" },
-    { id: "vatican", type: "book", cat: "门票", text: "梵蒂冈博物馆（12/7 周一，早场）", due: "提前 2–3 周",
+    { id: "vatican", done: true, type: "book", cat: "门票", text: "梵蒂冈博物馆：Yifan 12/7 12:00 已订（学生票），另外两位不去", due: "提前 2–3 周",
       link: "https://tickets.museivaticani.va", note: "12/8 圣母无染原罪节闭馆，只能 12/7 去。" },
-    { id: "borghese", type: "book", cat: "门票", text: "博尔盖塞美术馆（12/8 约 13:00 场）", due: "提前 1–2 周",
-      link: "https://www.galleriaborghese.it", note: "必须预约时段，名额少。节日当天的开放安排以官网为准。" },
     { id: "sansevero", type: "book", cat: "门票", text: "圣塞维罗礼拜堂（12/9 周三下午）", due: "官网提前 60 天开售",
       link: "https://www.museosansevero.it", note: "周二闭馆；票不可退不可改。出发前 2 天会再放一批票。" },
     { id: "pompei", type: "book", cat: "门票", text: "庞贝古城实名时段票（默认 12/10 上午）", due: "出发前 2–3 天看完天气再买",
@@ -44,7 +44,7 @@ window.TRIP = {
      tax：城市税，每人每晚。taxiFCO：住处不在城墙内时，机场打车的估价（每车）。 */
   stays: [
     {
-      id: "stay-rome1", pick: "camping", city: "rome", label: "罗马（第一段）", nights: "12/5–12/9，4 晚", n: 4,
+      id: "stay-rome1", booked: true, pick: "camping", city: "rome", label: "罗马（第一段）", nights: "12/5–12/9，4 晚", n: 4,
       why: "半夜落地后直接打车来；12/6–8 逛罗马，12/9 早上去 Tiburtina 坐大巴。",
       options: [
         { id: "camping", name: "hu Roma Camping In Town", src: "Booking", area: "罗马西边，Via Aurelia 831",
@@ -59,7 +59,7 @@ window.TRIP = {
       verdict: "定营地：4 晚 260€ 大约是罗马市区三人间价格的一半，评价 2.7 万条、8.5 分，24 小时前台正好配半夜落地。代价是每天进城的时间。订可免费取消那档，只比不可退贵约 5€。顺便问前台：12/9–12 能不能寄存大件行李、机场班车的时间和价格。"
     },
     {
-      id: "stay-naples", pick: "station", city: "naples", label: "那不勒斯", nights: "12/9–12/10，1 晚", n: 1,
+      id: "stay-naples", booked: true, pick: "station", city: "naples", label: "那不勒斯", nights: "12/9–12/10，1 晚", n: 1,
       why: "12/9 下午老城、圣塞维罗、圣艾尔莫日落，晚上在那不勒斯吃披萨；12/10 早上从旁边的车站坐小火车去庞贝。",
       options: [
         { id: "station", name: "Napoli Station B&B", src: "Booking", area: "中央车站东边，Via San Cosmo Fuori Porta Nolana 37",
@@ -74,14 +74,14 @@ window.TRIP = {
       verdict: "只住一晚，图的就是方便：下大巴走过去，第二天走过去坐小火车。想晚上住得安心一点，可以再查托莱多街一带的 Diazz（之前 3 晚约 350€，1 晚的价格没查）。"
     },
     {
-      id: "stay-vico", pick: "celotto", city: "naples", label: "Vico Equense（索伦托半岛）", nights: "12/10–12/12，2 晚", n: 2,
+      id: "stay-vico", booked: true, pick: "celotto", city: "naples", label: "Vico Equense（索伦托半岛）", nights: "12/10–12/12，2 晚", n: 2,
       why: "在庞贝和索伦托之间，同一条小火车线上：12/10 看完庞贝顺路过来，12/11 去阿马尔菲或卡普里都只要先坐 15–20 分钟到索伦托。",
       options: [
         { id: "celotto", name: "Antica Tenuta Celotto", src: "Booking", area: "Vico Equense，Montechiaro 山坡，Via Ruggiero 5",
           near: "离小火车 Seiano 站不远，到索伦托约 15–20 分钟；有收费接送", rating: "8.7", ratingN: "1,115", loc: "8.7",
           min: 126, minNote: "2 晚，含早餐，不可退", flex: 131, flexNote: "2 晚，含早餐，12/6 前免费取消",
           bed: "30㎡ 海景四人间：2 张单人床 + 1 张 queen 床", beds3: true, bath: "独立", breakfast: "含",
-          checkin: "自助入住 / 退房", tax: 2,
+          checkin: "入住 14:00–18:00（要提前告诉店家到达时间）；退房 8:30–10:00", tax: 2,
           pros: ["2 晚只要 131€（可退），含早餐，三人各睡一张", "房间正对海湾和维苏威火山，有阳台花园、泳池、热水池", "有独立厨房，晚上可以自己做饭", "评价 1,115 条、8.7 分"],
           cons: ["在山坡上：订前在地图上看清从 Seiano 站走过去多远、坡多陡，天黑后山路可能没有人行道", "周边安静，晚饭要去 Vico 镇上或自己做", "城市税以页面为准（这里按每人每晚 2€ 估）"],
           link: "https://www.booking.com/searchresults.html?ss=Antica+Tenuta+Celotto&checkin=2026-12-10&checkout=2026-12-12&group_adults=3&no_rooms=1" }
@@ -89,7 +89,7 @@ window.TRIP = {
       verdict: "订 131€ 那档：12/6 前可以免费取消，只比不可退贵 5€。订完给店家发消息，问清从 Seiano 站怎么走、接送多少钱、几点能入住。"
     },
     {
-      id: "stay-rome2", pick: "camping2", city: "rome", label: "罗马（最后一晚）", nights: "12/12–12/13，1 晚", n: 1,
+      id: "stay-rome2", booked: true, pick: "camping2", city: "rome", label: "罗马（最后一晚）", nights: "12/12–12/13，1 晚", n: 1,
       why: "12/12 下午从那不勒斯回来，12/13 早上 6:45 左右出发去机场赶 09:55 的航班。",
       options: [
         { id: "camping2", name: "hu Roma Camping In Town", src: "Booking", area: "罗马西边，Via Aurelia 831",
@@ -116,135 +116,205 @@ window.TRIP = {
   /* ---------- 行程 ---------- */
   days: [
     {
-      id: "d1", date: "5", dow: "周六", city: "rome", title: "晚上出发，半夜到罗马",
+      id: "d1", date: "5", dow: "周六", city: "rome", map: ["rome"], title: "晚上出发，半夜到罗马",
       stay: "stay-rome1",
       items: [
         { t: "约 17:30", text: "从德累斯顿出发去柏林 BER 机场（区域车约 2.5 小时）" },
         { t: "20:30", text: "到 BER。只背座位下小包的话，App 里值机后直接过安检" },
-        { t: "22:20", text: "BER → FCO，00:30 落地", tag: "book" },
-        { t: "00:45", text: "机场打车去营地（打表，约 45–55€ / 车，约 30 分钟）；营地 24 小时前台" }
+        { t: "22:20", at: "fco", text: "BER → FCO，00:30 落地", tag: "book" },
+        { t: "00:45", at: "camping", text: "机场打车去营地（打表，约 45–55€ / 车，约 30 分钟）；营地 24 小时前台" }
       ],
       note: "半夜落地时 Leonardo Express 和 FL1 都已经停了。Cotral 夜班车（约 5€）能到 Termini，但从那里再去营地还得打车，不如直接打车。只坐出口排队处的白色正规出租车。"
     },
     {
-      id: "d2", date: "6", dow: "周日", city: "rome", title: "免费日：古罗马一日",
+      id: "d2", date: "6", dow: "周日", city: "rome", map: ["rome"], title: "免费日：从斗兽场一路往西走到特雷维",
       stay: "stay-rome1",
       items: [
-        { t: "7:15", text: "从营地出发（第一天睡得少，但免费日要早去）" },
-        { t: "8:00", text: "斗兽场售票处排免费票，先到先得", spot: "colosseo", tag: "decide", jojo: true },
-        { t: "9:30", text: "古罗马广场 + 帕拉蒂尼山（同样免费）", spot: "foro" },
-        { t: "12:30", text: "午饭：蒙蒂区（Monti）" },
-        { t: "14:00", text: "卡比托利欧广场，市政厅背后的平台俯瞰古罗马广场；维托里奥纪念堂", spot: "vittoriano", tag: "photo" },
-        { t: "15:30", text: "万神殿（免费日，排队可能较长）", spot: "pantheon" },
-        { t: "16:30", text: "纳沃纳广场圣诞市集", spot: "navona", tag: "photo" },
-        { t: "18:30", text: "晚饭：纳沃纳西边小巷或鲜花广场一带" },
-        { t: "22:00", text: "特雷维喷泉：22 点以后下到池边免费，人也少", spot: "trevi", tag: "photo" }
+        { t: "7:30", at: "camping", text: "营地出发：公交到地铁 A 线 Cornelia → Termini 换 B 线 → Colosseo（约 1 小时）。凌晨 1 点多才入住，能睡 5–6 小时；早饭在路上的 bar 站着吃牛角包配卡布奇诺（约 3€）" },
+        { t: "8:30", spot: "colosseo", text: "斗兽场：售票处排免费票（不能预约，先到先得），进去约 1 小时。先上看台看地下层的兽笼通道，再看外墙三种柱式", tag: "decide", jojo: true },
+        { t: "10:15", spot: "foro", text: "帕拉蒂尼山 → 古罗马广场（同样免费）：从 Via di San Gregorio 入口上帕拉蒂尼山，看皇宫遗址和俯瞰大竞技场的平台 → 下到广场：提图斯凯旋门 → 维斯塔贞女之家 → 凯撒火化处 → 元老院 → 塞维鲁凯旋门，从靠卡比托利欧山的西北出口出来" },
+        { t: "12:30", spot: "vittoriano", text: "卡比托利欧广场：米开朗基罗设计的星形广场和马可·奥勒留骑马像 → 市政厅右后方的平台俯瞰整个古罗马广场 → 下台阶到维托里奥纪念堂正面（无名烈士墓、卫兵）", tag: "photo" },
+        { t: "13:15", at: "ghetto", text: "午饭：沿马切罗剧场（像个小斗兽场的古剧场）走进犹太区主街 Via del Portico d'Ottavia：坐下吃炸朝鲜蓟，或者在 Boccione 买点心、在 Largo Argentina 的 Antico Forno Roscioli 买块披萨" },
+        { t: "14:15", at: "argentina", text: "路过 Largo di Torre Argentina：凯撒遇刺的庞培元老院遗址，现在住着一群流浪猫" },
+        { t: "14:45", spot: "pantheon", text: "万神殿（免费日，排队可能 20–40 分钟）。出来后：门口的咖啡馆 Sant'Eustachio、Giolitti gelato；旁边 Santa Maria sopra Minerva 门口有贝尼尼的小象驮方尖碑（教堂免费）" },
+        { t: "15:30", at: "sanluigi", text: "圣王路易堂（San Luigi dei Francesi）：左侧最里面礼拜堂有卡拉瓦乔的《圣马太》三联画，免费，投币照明（开放时间以现场为准）" },
+        { t: "16:00", spot: "navona", text: "纳沃纳广场圣诞市集：贝尼尼的四河喷泉，等天黑亮灯（日落约 16:35）；Gelateria del Teatro 在西边的 Via dei Coronari", tag: "photo" },
+        { t: "17:30", text: "找家咖啡馆歇脚；晚饭在万神殿到特雷维之间吃，或者去西班牙台阶旁的 Pastificio Guerra 吃 5€ 的现做意面" },
+        { t: "19:30", spot: "trevi", text: "特雷维喷泉夜景（广场上看免费；下到池边 2€）。背对喷泉右手往左肩后扔一枚硬币", tag: "photo" },
+        { t: "20:00", at: "spagna", text: "沿 Via delle Muratte、Via del Corso 走 10 分钟到西班牙台阶，地铁 A 线 Spagna 站直达 Cornelia，回营地早点睡" }
       ],
-      note: "每月第一个周日国立景点免费，人会比平时多。斗兽场排不上，就先逛古罗马广场和帕拉蒂尼山（入口不同、通常好排）。记得问营地前台回去的末班车时间。"
+      note: "路线从东往西一条线走完，最后从 Spagna 坐地铁 A 线一趟回 Cornelia，不走回头路。每月第一个周日国立景点免费，人会比平时多。太累的话斗兽场只看外观，直接从帕拉蒂尼山开始。出门前问营地前台回去的末班公交 / 班车时间。"
     },
     {
-      id: "d3", date: "7", dow: "周一", city: "rome", title: "梵蒂冈、圣天使堡、特拉斯提弗列",
+      id: "d3", date: "7", dow: "周一", city: "rome", map: ["rome"], title: "梵蒂冈、圣天使堡、特拉斯提弗列",
       stay: "stay-rome1",
       items: [
-        { t: "8:30", text: "梵蒂冈博物馆 + 西斯廷礼拜堂（早场，营地过去比较近）", spot: "vaticani", tag: "book" },
-        { t: "12:00", text: "午饭：Bonci Pizzarium 的罗马切块披萨" },
-        { t: "13:00", text: "圣彼得大教堂，可以登穹顶", spot: "sanpietro" },
-        { t: "15:00", text: "沿协和大道走到圣天使堡和圣天使桥", spot: "angelo", tag: "photo", jojo: true },
-        { t: "16:30", text: "在桥上等日落，再沿台伯河走" },
-        { t: "18:00", text: "特拉斯提弗列区散步、吃晚饭", spot: "trastevere" }
+        { t: "6:45", at: "camping", text: "从营地出发（营地在西边，离梵蒂冈近）；路上买好早饭" },
+        { t: "7:15", spot: "sanpietro", text: "三人一起：圣彼得大教堂，刚开门安检几乎不排队；遮肩过膝。进门右手第一个礼拜堂是米开朗基罗《圣殇》→ 中间贝尼尼的青铜华盖 → 摸得发亮的圣彼得铜像右脚 → 最里面的“圣彼得宝座”" },
+        { t: "8:00", at: "sanpietro", text: "登穹顶：大教堂右侧的穹顶入口现场买票（电梯 + 楼梯约 15€，纯楼梯约 10€）；先到穹顶内侧环廊往下看大教堂，再爬最后一段窄螺旋梯到顶上露台看广场和全城", tag: "photo" },
+        { t: "9:45", text: "回到广场：站在方尖碑和喷泉之间的圆盘上，看四排柱子重叠成一排；然后去 Prati 区喝咖啡" },
+        { t: "11:00", at: "pizzarium", text: "Bonci Pizzarium 开门，买几种切块披萨当早午饭（按重量）" },
+        { t: "11:30", at: "vaticani", text: "Yifan：到博物馆入口 Viale Vaticano，走右侧预约通道「Corridoio 1」，给工作人员看电子票和证件验票，再过安检、刷闸机" },
+        { t: "12:00", spot: "vaticani", text: "Yifan：梵蒂冈博物馆 + 西斯廷礼拜堂（已订，学生票）。建议路线：松果庭院 → 八角庭院（拉奥孔）→ 缪斯厅、圆厅 → 烛台、挂毯、地图画廊 → 拉斐尔画室（雅典学院）→ 西斯廷礼拜堂", tag: "book" },
+        { t: "12:00", at: "prati", text: "两位朋友：圣天使堡内部（约 16€，可选），或者 Prati 区 Via Cola di Rienzo 逛街、Mercato Trionfale 菜市场买水果火腿面包，找地方歇脚" },
+        { t: "15:15", spot: "angelo", text: "在圣天使桥会合：桥上 10 尊天使各拿一件耶稣受难的刑具", tag: "photo", jojo: true },
+        { t: "16:30", text: "在桥上看日落（约 16:35），沿台伯河南岸往下游走约 25 分钟，从西斯托桥（Ponte Sisto）过河" },
+        { t: "17:30", spot: "trastevere", text: "特拉斯提弗列：Santa Maria in Trastevere 广场（金色马赛克，免费）→ Via della Lungaretta 一带小巷；先在 Supplì Roma 垫一口，晚饭 Da Enzo al 29（要排队）" }
       ],
-      note: "12/8 是节日，梵蒂冈博物馆闭馆，所以必须放在 12/7。"
+      note: "12/8 是节日，梵蒂冈博物馆闭馆，所以只能 12/7。博物馆按时段入场，晚到可能进不去；Yifan 带学生证、在读证明和护照。"
     },
     {
-      id: "d4", date: "8", dow: "周二", city: "rome", title: "圣母无染原罪节：南边山丘、博尔盖塞、教宗献花",
+      id: "d4", date: "8", dow: "周二", city: "rome", map: ["rome"], title: "圣母无染原罪节：南边山丘、人民广场、教宗献花",
       stay: "stay-rome1",
       items: [
-        { t: "9:30", text: "真理之口（排队拍照，人少的时候 5 分钟）", spot: "bocca", tag: "photo" },
-        { t: "10:00", text: "大竞技场遗址，走上阿文提诺山", spot: "circo" },
-        { t: "10:30", text: "橘子花园俯瞰全城，骑士团大门的钥匙孔看圣彼得圆顶", spot: "aranci", tag: "photo" },
-        { t: "11:45", text: "坐公交或打车去博尔盖塞公园，附近吃午饭" },
-        { t: "13:00", text: "博尔盖塞美术馆（约 13:00 场，限 2 小时）", spot: "borghese", tag: "book" },
-        { t: "15:15", text: "穿过博尔盖塞公园到平乔山露台", spot: "pincio", tag: "photo" },
-        { t: "15:45", text: "西班牙广场：约 16:00 教宗为圣母像献花", spot: "colonna", tag: "decide" },
-        { t: "17:00", text: "人民圣母堂：两幅卡拉瓦乔，免费", spot: "popolo" },
-        { t: "17:30", text: "孔多蒂街、科尔索大街看圣诞灯饰，晚饭" }
+        { t: "8:30", at: "camping", text: "营地出发：地铁 A 线到 Termini 换 B 线到 Circo Massimo 站（或公交到真理之口附近）" },
+        { t: "9:30", spot: "bocca", text: "真理之口（排队拍照，一人一张很快）；旁边希腊圣母堂内部免费，看中世纪彩色石地板", tag: "photo" },
+        { t: "10:00", spot: "circo", text: "大竞技场遗址：沿跑道草地走一段，再从 Via di Valle Murcia 走上阿文提诺山" },
+        { t: "10:30", spot: "aranci", text: "橘子花园俯瞰全城 → 隔壁圣撒比纳教堂（5 世纪，原装木门，免费）→ 走 5 分钟到马耳他骑士团广场，排队从钥匙孔看圣彼得圆顶", tag: "photo" },
+        { t: "11:45", at: "piramide", text: "顺着山坡下到 Testaccio，路过塞斯提伍斯金字塔（古罗马人的金字塔形墓，地铁 Piramide 站旁）" },
+        { t: "12:00", at: "testaccio", text: "午饭：Trapizzino 本店（Via Giovanni Branca 88）；Testaccio 市场节日可能不开" },
+        { t: "13:30", text: "地铁 B 线 Piramide → Termini 换 A 线 → Flaminio，出站就是人民广场" },
+        { t: "14:00", spot: "popolo", text: "人民广场：双子教堂和方尖碑 → 人民圣母堂：卡拉瓦乔两幅画（左侧最里面 Cerasi 礼拜堂）、拉斐尔设计的 Chigi 礼拜堂，免费（弥撒时不能参观）" },
+        { t: "14:45", spot: "pincio", text: "从广场东侧台阶走上平乔山露台看全城 → 沿博尔盖塞公园边走 Viale della Trinità dei Monti 到西班牙台阶顶上的天主圣三教堂", tag: "photo" },
+        { t: "15:30", spot: "colonna", text: "下到西班牙广场旁的 Piazza Mignanelli 占位置：约 16:00 教宗为圣母像献花（安检、封路，提前 30 分钟到）", tag: "decide" },
+        { t: "17:00", at: "condotti", text: "孔多蒂街 → 科尔索大街看圣诞灯饰；Pompi 买提拉米苏；晚饭 Pastificio Guerra 或附近" },
+        { t: "20:00", at: "spagna", text: "地铁 A 线 Spagna 站直达 Cornelia 回营地" }
       ],
-      note: "12/8 是全国假日，商店照常开，但城里人很多。教宗献花的具体时间 12 月初公布；早上消防员会先用云梯给圣母像挂花环。西班牙广场会有安检和封路，提前 30 分钟到。"
+      note: "博尔盖塞美术馆这次不去（官网打不开，也能省 18€）；公园和平乔山露台免费照逛。12/8 是全国假日，城里人很多。教宗献花的具体时间 12 月初公布；西班牙广场会有安检和封路，提前 30 分钟到。"
     },
     {
-      id: "d5", date: "9", dow: "周三", city: "transit", from: "rome", to: "naples", title: "去那不勒斯：老城、礼拜堂、山顶城堡",
+      id: "d5", date: "9", dow: "周三", city: "transit", map: ["naples"], from: "rome", to: "naples", title: "去那不勒斯：老城、礼拜堂、山顶城堡",
       stay: "stay-naples",
       items: [
-        { t: "7:15", text: "营地退房（大件行李可以寄存在营地），坐公交 + 地铁去 Tiburtina 大巴站（约 1 小时）" },
-        { t: "8:30", text: "Itabus Roma Tiburtina → Napoli Metropark（约 2 小时 40 分–3 小时，选 5.99€ 的那班）", tag: "book" },
-        { t: "11:30", text: "到 Metropark（中央车站旁），走去旅馆寄存行李", spot: "centrale", jojo: true },
-        { t: "12:30", text: "午饭：Via dei Tribunali 上的披萨或炸披萨" },
-        { t: "14:00", text: "圣塞维罗礼拜堂：《蒙纱的基督》（订 14:00 以后的时段，给大巴晚点留余量）", spot: "sansevero", tag: "book" },
-        { t: "14:45", text: "Spaccanapoli 老城直街、圣格雷戈里奥街（圣诞马槽街）", spot: "spacca", tag: "photo" },
-        { t: "15:45", text: "坐中央缆车上沃梅罗山", spot: "funicolare", jojo: true },
-        { t: "16:10", text: "圣艾尔莫城堡，在城墙上看日落（约 16:35）", spot: "santelmo", tag: "photo" },
-        { t: "17:30", text: "下山走托莱多大街，看托莱多地铁站、翁贝托一世长廊", spot: "toledo", tag: "photo" },
-        { t: "19:30", text: "晚饭" }
+        { t: "7:15", at: "camping", text: "营地退房（大件行李可以寄存在营地），坐公交 + 地铁去 Tiburtina 大巴站（约 1 小时）" },
+        { t: "8:30", at: "tiburtina", text: "Itabus Roma Tiburtina → Napoli Metropark（约 2 小时 40 分–3 小时）；车上睡一觉", tag: "book" },
+        { t: "11:30", at: "bnb", text: "到 Metropark（中央车站旁），走 10 分钟到 Napoli Station B&B 寄存行李；穿过加里波第广场看好包", jojo: true },
+        { t: "12:30", at: "tribunali", text: "从住处走 15–20 分钟到 Via dei Tribunali（老城主街）：Di Matteo 窗口买炸披萨、frittatina，站着吃" },
+        { t: "13:30", spot: "spacca", text: "圣格雷戈里奥街（圣诞马槽街）：一路看作坊里的小人偶，就在 Tribunali 旁边", tag: "photo" },
+        { t: "14:00", spot: "sansevero", text: "圣塞维罗礼拜堂：《蒙纱的基督》、《谦逊》、《解脱》、地下室的“解剖机器”（订 14:00 以后的时段）；出来隔壁 Scaturchio 吃 babà", tag: "book" },
+        { t: "14:45", at: "gesu", text: "沿 Spaccanapoli 直街往西：新耶稣教堂（钻石面外墙）→ 对面 Santa Chiara（回廊收费，可跳过）→ 走到托莱多大街" },
+        { t: "15:45", spot: "funicolare", text: "托莱多大街旁的 Augusteo 站坐中央缆车到终点 Fuga，走 10 分钟上山", jojo: true },
+        { t: "16:10", spot: "santelmo", text: "圣艾尔莫城堡城墙上看日落（约 16:35）；不想买票就在下面的 Largo San Martino 观景台看，景色接近", tag: "photo" },
+        { t: "17:30", spot: "toledo", text: "缆车下山 → 托莱多大街 → 翁贝托一世长廊（玻璃穹顶）→ 托莱多地铁站看“海底隧道”，Pintauro 买 sfogliatella", tag: "photo" },
+        { t: "19:00", at: "michele", text: "地铁 1 号线 Toledo → Garibaldi 回住处附近；晚饭 L'Antica Pizzeria da Michele（取号排队，离住处步行约 5 分钟）" }
       ],
       note: "圣塞维罗、圣艾尔莫城堡周二闭馆，周三去正好。大巴要是晚到很多，下午就先去圣塞维罗，圣艾尔莫挪到 12/12 上午。"
     },
     {
-      id: "d6", date: "10", dow: "周四", city: "naples", title: "庞贝，傍晚到 Vico Equense 看海",
+      id: "d6", date: "10", dow: "周四", city: "naples", map: ["naples", "coast"], title: "庞贝，傍晚到 Vico Equense 看海",
       stay: "stay-vico",
       items: [
-        { t: "8:00", text: "退房，背上小包，Porta Nolana 或 Garibaldi 坐 Circumvesuviana（索伦托方向）到 Pompei Scavi – Villa dei Misteri（约 35–40 分钟）" },
+        { t: "8:00", at: "bnb", text: "退房，背上小包，Porta Nolana 或 Garibaldi 坐 Circumvesuviana（索伦托方向）到 Pompei Scavi – Villa dei Misteri（约 35–40 分钟）" },
         { t: "9:00", text: "庞贝古城，留 3–4 小时；入口可以寄存背包（以现场为准）", spot: "pompei", tag: "book", jojo: true },
         { t: "13:00", text: "车站附近吃午饭" },
-        { t: "14:30", text: "继续坐同一条线到 Vico Equense 或 Seiano（约 20–25 分钟），去住处入住", spot: "vico" },
-        { t: "16:00", text: "在住处的花园或阳台看海湾和维苏威火山的日落（约 16:35）", tag: "photo" },
-        { t: "19:00", text: "晚饭：Vico 镇上吃“一米披萨”（pizza a metro），或超市买菜回去做" }
+        { t: "14:30", at: "celotto", text: "继续坐同一条线（索伦托方向）到 Seiano 或 Meta 站（约 20–25 分钟，问店家哪个近），走去住处入住；入住时间 14:00–18:00，提前告诉店家到达时间" },
+        { t: "16:00", at: "celotto", text: "在住处的花园或阳台看海湾和维苏威火山的日落（约 16:35）", tag: "photo" },
+        { t: "19:00", text: "晚饭：住处有厨房，下午在车站附近超市买菜回来做；想吃 Vico 镇上的“一米披萨”（pizza a metro）就打车或请店家帮忙叫车，离住处约 2 km" }
       ],
       note: "庞贝不一定要今天去：它在那不勒斯和 Vico 之间，12/11、12/12 上午也能顺路去。哪天晴就哪天，门票出发前 2–3 天再买。"
     },
     {
-      id: "d7", date: "11", dow: "周五", city: "naples", title: "阿马尔菲海岸：波西塔诺、阿马尔菲、索伦托",
+      id: "d7", date: "11", dow: "周五", city: "naples", map: ["coast"], title: "上午索伦托，下午波西塔诺看日落",
       stay: "stay-vico",
       items: [
-        { t: "8:30", text: "Vico / Seiano 坐 Circumvesuviana 到终点索伦托（15–20 分钟，约 2–3€）；车站附近的报刊亭买 SITA 巴士票" },
-        { t: "9:00", text: "索伦托坐 SITA 巴士去波西塔诺（40–50 分钟），坐右侧看海" },
-        { t: "10:00", text: "波西塔诺：公路边拍小镇全景，再沿小路走到海滩和彩色圆顶教堂", spot: "positano", tag: "photo" },
-        { t: "12:15", text: "SITA 巴士 波西塔诺 → 阿马尔菲（40–50 分钟），途经 Praiano、Furore 峡湾" },
-        { t: "13:00", text: "阿马尔菲：午饭，主教座堂和大台阶，天堂回廊，海边码头", spot: "amalfi", tag: "photo" },
-        { t: "16:00", text: "SITA 巴士 阿马尔菲 → 索伦托（约 1.5 小时，天黑了就在车上休息）" },
-        { t: "17:45", text: "索伦托：塔索广场，市立公园观景台看那不勒斯湾夜景，吃晚饭", spot: "sorrento" },
-        { t: "晚上", text: "小火车回 Vico" },
-        { t: "备选", text: "卡普里岛：索伦托 Marina Piccola 坐船约 20–25 分钟，缆车上卡普里镇、奥古斯都花园；只在晴天、海面平静时去", spot: "capri", jojo: true }
+        { t: "8:45", at: "celotto", text: "从住处出发，走到最近的 Circumvesuviana 车站（Seiano 或 Meta，入住时问店家哪个近，也可以付费接送）" },
+        { t: "9:15", spot: "sorrento", text: "坐小火车到终点索伦托（约 10–15 分钟，约 2–3€）。上午逛索伦托：塔索广场 → 广场边往下看磨坊谷（Vallone dei Mulini）→ 老城小巷（Via San Cesareo，柠檬和柠檬酒小店）→ 市立公园观景台（Villa Comunale），正对海湾和维苏威火山；想多走就从观景台旁的台阶下到 Marina Grande 渔港", tag: "photo" },
+        { t: "11:30", text: "回火车站旁的报刊亭买 SITA 巴士票（单程或 24 小时票，上车打卡）" },
+        { t: "11:45", text: "SITA 巴士 索伦托 → 波西塔诺（40–50 分钟），坐右侧看海" },
+        { t: "12:40", spot: "positano", text: "波西塔诺：在镇子上方的公路边（Sponda 站）下车，先拍小镇全景 → 沿小路一路往下走到彩色马约利卡瓷砖圆顶的圣母升天教堂 → 大海滩 Spiaggia Grande；在海边吃午饭", tag: "photo" },
+        { t: "15:30", text: "沿海边步道走到 Fornillo 小海滩，或者回到大海滩，等日落（约 16:35，太阳落在海面那一侧）", tag: "photo" },
+        { t: "17:00", text: "爬回公路边，坐 SITA 巴士回索伦托（约 50 分钟）。冬季末班车早，出发前查好时刻表" },
+        { t: "18:00", at: "celotto", text: "索伦托火车站坐小火车回 Seiano / Meta 站，走回住处；晚饭在索伦托车站附近吃完再回，或回住处自己做" },
+        { t: "备选", spot: "capri", text: "卡普里岛：整天改去卡普里。从索伦托 Marina Piccola 坐船约 20–25 分钟，缆车上卡普里镇、奥古斯都花园；只在晴天、海面平静时去", jojo: true }
       ],
-      note: "冬季 SITA 班次少，提前查好阿马尔菲回索伦托的末班车。车常满座，在索伦托始发站上车更容易有座。弯道多，容易晕车的提前吃药。具体买票方法见「交通」里的海岸指南。"
+      note: "路线就是 住处 → 索伦托 → 波西塔诺 → 住处：去波西塔诺和回来都要在索伦托换车（小火车 ↔ SITA 巴士），所以上午顺便逛索伦托。下午在波西塔诺海边看日落。冬天 SITA 班次少、偶尔满座，在索伦托始发站排队更容易有座；山路弯多，容易晕车的提前吃药。阿马尔菲小镇这次不去，单程还要多 50 分钟。"
     },
     {
-      id: "d8", date: "12", dow: "周六", city: "transit", from: "naples", to: "rome", title: "回那不勒斯海边半天，下午回罗马",
+      id: "d8", date: "12", dow: "周六", city: "transit", map: ["naples"], from: "naples", to: "rome", title: "回那不勒斯海边半天，下午回罗马",
       stay: "stay-rome2",
       items: [
-        { t: "8:00", text: "退房，Vico / Seiano 坐 Circumvesuviana 回 Napoli Garibaldi（约 1 小时）" },
-        { t: "9:15", text: "行李多的话寄存在中央车站，只背小包就直接走" },
-        { t: "9:45", text: "西班牙区、马拉多纳壁画", spot: "quartieri" },
-        { t: "10:45", text: "平民表决广场、Gambrinus 咖啡馆", spot: "plebiscito" },
-        { t: "11:15", text: "新堡、港口（JoJo：坐船去卡普里岛的码头）", spot: "nuovo", jojo: true },
-        { t: "11:45", text: "蛋堡和海滨步道，看维苏威火山", spot: "ovo", tag: "photo", jojo: true },
-        { t: "13:00", text: "午饭：最后一顿那不勒斯披萨" },
-        { t: "14:30", text: "Itabus Napoli Metropark → Roma Tiburtina（约 2 小时 40 分，选 5.99€ 的那班）", tag: "book" },
-        { t: "17:15", text: "到 Tiburtina，坐地铁 + 公交回营地（约 1 小时），取寄存的行李" },
-        { t: "19:00", text: "营地餐厅或超市解决晚饭，早点休息" }
+        { t: "8:00", at: "celotto", text: "退房，走到 Seiano / Meta 站，坐 Circumvesuviana 回 Napoli Garibaldi（约 1 小时）" },
+        { t: "9:15", at: "centrale", text: "行李多的话寄存在中央车站，只背小包就直接走；地铁 1 号线 Garibaldi → Toledo" },
+        { t: "9:45", spot: "quartieri", text: "西班牙区：从托莱多大街往西拐进窄巷，走到马拉多纳壁画（Largo Maradona）" },
+        { t: "10:30", at: "galleria", text: "回到托莱多大街 → 翁贝托一世长廊（看地面的十二星座马赛克）" },
+        { t: "10:45", spot: "plebiscito", text: "平民表决广场：圣方济各教堂、王宫正面 8 尊国王像；Gambrinus 站着喝杯咖啡、吃个 babà" },
+        { t: "11:15", spot: "nuovo", text: "新堡：入口两座塔之间的白色凯旋门；对面是去卡普里的 Molo Beverello 码头（JoJo）", jojo: true },
+        { t: "11:45", spot: "ovo", text: "沿海边 Via Partenope 走到蛋堡：城墙平台（免费）看维苏威火山和 Borgo Marinari 小港", tag: "photo", jojo: true },
+        { t: "12:45", at: "ovo", text: "午饭：海边的 Sorbillo Lievito Madre al Mare，最后一顿那不勒斯披萨" },
+        { t: "13:40", at: "centrale", text: "地铁 1 号线 Municipio → Garibaldi（或打车约 15 分钟）回 Metropark，取行李" },
+        { t: "14:30", at: "centrale", text: "Itabus Napoli Metropark → Roma Tiburtina（约 2 小时 40 分）", tag: "book" },
+        { t: "17:15", at: "tiburtina", text: "到 Tiburtina，坐地铁 + 公交回营地（约 1 小时），取寄存的行李" },
+        { t: "19:00", at: "camping", text: "营地餐厅或超市解决晚饭，早点休息" }
       ],
       note: "到营地后请前台约好 12/13 早上的机场班车或 6:45 的出租车。"
     },
     {
-      id: "d9", date: "13", dow: "周日", city: "rome", title: "早班机回柏林",
+      id: "d9", date: "13", dow: "周日", city: "rome", map: ["rome"], title: "早班机回柏林",
       items: [
-        { t: "6:45", text: "营地出发去机场：营地的收费机场班车，或打车约 30 分钟" },
-        { t: "8:00", text: "到 FCO。申根内航班，提前约 2 小时到就够" },
+        { t: "6:45", at: "camping", text: "营地出发去机场：营地的收费机场班车，或打车约 30 分钟" },
+        { t: "8:00", at: "fco", text: "到 FCO。申根内航班，提前约 2 小时到就够" },
         { t: "9:55", text: "FCO → BER，12:05 落地", tag: "book" },
         { t: "下午", text: "坐区域车回德累斯顿" }
       ]
     }
   ],
 
+
+  /* ---------- 地图坐标：每日地图和导航用。ll 是大致坐标，导航按 q 搜索 ---------- */
+  places: {
+    camping: { n: "hu Roma Camping In Town（住处）", q: "hu Roma Camping In Town, Via Aurelia 831, Roma", ll: [41.8885, 12.4045], city: "rome" },
+    fco: { n: "菲乌米奇诺机场 FCO", q: "Aeroporto di Roma-Fiumicino", ll: [41.8003, 12.2389], city: "rome" },
+    cornelia: { n: "地铁 A 线 Cornelia 站", q: "Metro Cornelia, Roma", ll: [41.9036, 12.4246], city: "rome" },
+    argentina: { n: "Largo di Torre Argentina", q: "Largo di Torre Argentina, Roma", ll: [41.8955, 12.4767], city: "rome" },
+    sanluigi: { n: "圣王路易堂（卡拉瓦乔）", q: "San Luigi dei Francesi, Roma", ll: [41.8996, 12.4745], city: "rome" },
+    piramide: { n: "塞斯提伍斯金字塔", q: "Piramide Cestia, Roma", ll: [41.8763, 12.4808], city: "rome" },
+    gesu: { n: "新耶稣教堂 / Santa Chiara", q: "Chiesa del Gesù Nuovo, Napoli", ll: [40.8483, 14.2505], city: "naples" },
+    galleria: { n: "翁贝托一世长廊", q: "Galleria Umberto I, Napoli", ll: [40.8386, 14.2496], city: "naples" },
+    michele: { n: "L'Antica Pizzeria da Michele", q: "L'Antica Pizzeria da Michele, Via Cesare Sersale 1, Napoli", ll: [40.8497, 14.2634], city: "naples" },
+    colosseo: { n: "斗兽场", q: "Colosseo, Roma", ll: [41.8902, 12.4922], city: "rome" },
+    foro: { n: "帕拉蒂尼山 / 古罗马广场", q: "Foro Romano, Roma", ll: [41.8918, 12.4870], city: "rome" },
+    vittoriano: { n: "卡比托利欧广场 / 维托里奥纪念堂", q: "Piazza del Campidoglio, Roma", ll: [41.8934, 12.4828], city: "rome" },
+    ghetto: { n: "犹太区（午饭）", q: "Via del Portico d'Ottavia, Roma", ll: [41.8925, 12.4777], city: "rome" },
+    pantheon: { n: "万神殿", q: "Pantheon, Roma", ll: [41.8986, 12.4769], city: "rome" },
+    navona: { n: "纳沃纳广场", q: "Piazza Navona, Roma", ll: [41.8992, 12.4731], city: "rome" },
+    trevi: { n: "特雷维喷泉", q: "Fontana di Trevi, Roma", ll: [41.9009, 12.4833], city: "rome" },
+    spagna: { n: "西班牙台阶 / 地铁 Spagna 站", q: "Metro Spagna, Roma", ll: [41.9063, 12.4824], city: "rome" },
+    sanpietro: { n: "圣彼得大教堂（和穹顶）", q: "Basilica di San Pietro, Città del Vaticano", ll: [41.9022, 12.4539], city: "rome" },
+    pizzarium: { n: "Bonci Pizzarium", q: "Pizzarium Bonci, Via della Meloria 43, Roma", ll: [41.9066, 12.4471], city: "rome" },
+    vaticani: { n: "梵蒂冈博物馆入口（Viale Vaticano）", q: "Musei Vaticani, Viale Vaticano, Roma", ll: [41.9065, 12.4536], city: "rome" },
+    prati: { n: "Prati 区 Via Cola di Rienzo（朋友）", q: "Via Cola di Rienzo, Roma", ll: [41.9076, 12.4640], city: "rome" },
+    angelo: { n: "圣天使堡 / 圣天使桥", q: "Ponte Sant'Angelo, Roma", ll: [41.9020, 12.4666], city: "rome" },
+    trastevere: { n: "特拉斯提弗列", q: "Santa Maria in Trastevere, Roma", ll: [41.8894, 12.4700], city: "rome" },
+    bocca: { n: "真理之口", q: "Bocca della Verità, Roma", ll: [41.8881, 12.4815], city: "rome" },
+    circo: { n: "大竞技场遗址", q: "Circo Massimo, Roma", ll: [41.8861, 12.4851], city: "rome" },
+    aranci: { n: "橘子花园 / 骑士团钥匙孔", q: "Giardino degli Aranci, Roma", ll: [41.8844, 12.4795], city: "rome" },
+    testaccio: { n: "Testaccio 区（午饭）", q: "Mercato di Testaccio, Roma", ll: [41.8771, 12.4752], city: "rome" },
+    popolo: { n: "人民广场 / 人民圣母堂", q: "Santa Maria del Popolo, Roma", ll: [41.9115, 12.4764], city: "rome" },
+    pincio: { n: "平乔山露台", q: "Terrazza del Pincio, Roma", ll: [41.9113, 12.4797], city: "rome" },
+    colonna: { n: "圣母无染原罪柱（教宗献花）", q: "Colonna dell'Immacolata, Piazza Mignanelli, Roma", ll: [41.9045, 12.4836], city: "rome" },
+    condotti: { n: "孔多蒂街 / 科尔索大街", q: "Via dei Condotti, Roma", ll: [41.9050, 12.4800], city: "rome" },
+    tiburtina: { n: "Tiburtina 大巴站", q: "Roma Tiburtina Autostazione", ll: [41.9104, 12.5306], city: "rome" },
+    centrale: { n: "Napoli Metropark / 中央车站", q: "Napoli Metropark Centrale", ll: [40.8530, 14.2720], city: "naples" },
+    bnb: { n: "Napoli Station B&B（住处）", q: "Napoli Station B&B, Via San Cosmo Fuori Porta Nolana 37, Napoli", ll: [40.8497, 14.2682], city: "naples" },
+    tribunali: { n: "Via dei Tribunali（午饭）", q: "Via dei Tribunali, Napoli", ll: [40.8510, 14.2551], city: "naples" },
+    sansevero: { n: "圣塞维罗礼拜堂", q: "Museo Cappella Sansevero, Napoli", ll: [40.8495, 14.2547], city: "naples" },
+    spacca: { n: "Spaccanapoli / 圣格雷戈里奥街", q: "Via San Gregorio Armeno, Napoli", ll: [40.8507, 14.2575], city: "naples" },
+    funicolare: { n: "中央缆车 Augusteo 站", q: "Funicolare Centrale Augusteo, Napoli", ll: [40.8384, 14.2486], city: "naples" },
+    santelmo: { n: "圣艾尔莫城堡", q: "Castel Sant'Elmo, Napoli", ll: [40.8436, 14.2389], city: "naples" },
+    toledo: { n: "托莱多地铁站 / 翁贝托一世长廊", q: "Stazione Toledo, Napoli", ll: [40.8430, 14.2486], city: "naples" },
+    quartieri: { n: "西班牙区 / 马拉多纳壁画", q: "Murale Maradona, Quartieri Spagnoli, Napoli", ll: [40.8410, 14.2460], city: "naples" },
+    plebiscito: { n: "平民表决广场", q: "Piazza del Plebiscito, Napoli", ll: [40.8358, 14.2484], city: "naples" },
+    nuovo: { n: "新堡 / 港口", q: "Castel Nuovo, Napoli", ll: [40.8384, 14.2528], city: "naples" },
+    ovo: { n: "蛋堡", q: "Castel dell'Ovo, Napoli", ll: [40.8282, 14.2475], city: "naples" },
+    pompei: { n: "庞贝古城（Porta Marina 入口）", q: "Pompei Scavi Porta Marina", ll: [40.7486, 14.4838], city: "coast" },
+    vico: { n: "Vico Equense 镇中心", q: "Vico Equense", ll: [40.6612, 14.4268], city: "coast" },
+    celotto: { n: "Antica Tenuta Celotto（住处）", q: "Antica Tenuta Celotto, Vico Equense", ll: [40.65464, 14.40820], city: "coast" },
+    sorrento: { n: "索伦托（火车站 / 塔索广场）", q: "Piazza Tasso, Sorrento", ll: [40.6263, 14.3756], city: "coast" },
+    villacom: { n: "索伦托市立公园观景台", q: "Villa Comunale di Sorrento", ll: [40.6283, 14.3758], city: "coast" },
+    positano: { n: "波西塔诺", q: "Positano", ll: [40.6281, 14.4850], city: "coast" },
+    amalfi: { n: "阿马尔菲", q: "Duomo di Amalfi", ll: [40.6340, 14.6027], city: "coast" },
+    capri: { n: "卡普里岛", q: "Marina Grande, Capri", ll: [40.5560, 14.2380], city: "coast" }
+  },
   /* ---------- 景点背景（图片按 wiki 词条自动加载） ---------- */
   spots: {
     trevi: { name: "特雷维喷泉", it: "Fontana di Trevi", wiki: "Trevi_Fountain", city: "rome",
@@ -264,7 +334,7 @@ window.TRIP = {
       bg: "纪念意大利统一后第一位国王，罗马人嫌它太白太大，戏称它为“打字机”。顶层露台可以俯瞰古罗马广场和斗兽场，需要买票坐电梯上去。" },
     vaticani: { name: "梵蒂冈博物馆与西斯廷礼拜堂", it: "Musei Vaticani", wiki: "Vatican_Museums", city: "rome",
       bg: "历代教宗的收藏，包括拉斐尔画室。最后一站是西斯廷礼拜堂，有米开朗基罗的天顶画《创世纪》和祭坛墙上的《最后的审判》。礼拜堂里禁止拍照。",
-      photo: "出口的布拉曼特螺旋楼梯很出片。" },
+      photo: "出口的双螺旋楼梯很出片。" },
     sanpietro: { name: "圣彼得大教堂", it: "Basilica di San Pietro", wiki: "St._Peter's_Basilica", city: "rome",
       bg: "天主教最重要的教堂，圆顶由米开朗基罗设计。进门右手边是他 24 岁时的作品《圣殇》。可以付费登顶。" },
     angelo: { name: "圣天使堡与圣天使桥", it: "Castel Sant'Angelo", wiki: "Castel_Sant'Angelo", city: "rome",
@@ -332,42 +402,125 @@ window.TRIP = {
       photo: "从 Via Partenope 拍城堡和背后的维苏威火山。" }
   },
 
+  /* ---------- 美食：必吃清单（图片按 wiki 词条自动加载）+ 按天就近吃 ---------- */
+  food: {
+    dishes: [
+      { city: "rome", name: "Carbonara", it: "Spaghetti alla carbonara", wiki: "Carbonara", desc: "蛋黄、风干猪脸肉（guanciale）、羊奶酪（pecorino）和黑胡椒，正宗做法不放奶油。", price: "12–15€" },
+      { city: "rome", name: "Cacio e pepe", it: "Cacio e pepe", wiki: "Cacio e pepe", desc: "只有羊奶酪和黑胡椒，乳化成奶油状的酱，最考手艺。", price: "11–14€" },
+      { city: "rome", name: "Amatriciana / Gricia", it: "Amatriciana", wiki: "Amatriciana", desc: "Amatriciana 是番茄加猪脸肉，Gricia 是不放番茄的版本。罗马“四大面”就是这两道加上面两道。", price: "11–14€" },
+      { city: "rome", name: "Supplì", it: "Supplì", wiki: "Supplì", desc: "炸米球，里面是番茄饭和拉丝的马苏里拉奶酪，掰开会拉出“电话线”（supplì al telefono）。", price: "2–3€ / 个" },
+      { city: "rome", name: "切块披萨", it: "Pizza al taglio", wiki: "Pizza al taglio", desc: "长方形大盘烤，按重量剪着卖，可以一次拿好几种口味，适合赶路时吃。", price: "约 3–6€ / 块" },
+      { city: "rome", name: "犹太式炸朝鲜蓟", it: "Carciofi alla giudia", wiki: "Carciofi alla giudia", desc: "整颗朝鲜蓟油炸到像一朵金黄的花，外脆里软。冬天正当季，犹太区最地道。", price: "6–9€" },
+      { city: "rome", name: "Trapizzino", it: "Trapizzino", wiki: "Trapizzino", itwiki: "Trapizzino", img: "https://commons.wikimedia.org/wiki/Special:FilePath/Trapizzino%20-%20Pollo%20alla%20Cacciatora.jpg?width=500", imgPage: "https://commons.wikimedia.org/wiki/File:Trapizzino_-_Pollo_alla_Cacciatora.jpg", desc: "三角形的披萨口袋，塞进罗马炖菜（炖鸡、牛肚、肉丸），2008 年在 Testaccio 发明。", price: "5–6€" },
+      { city: "rome", name: "Maritozzo", it: "Maritozzo", wiki: "Maritozzo", desc: "夹满打发奶油的软面包，罗马人的早餐。", price: "2–4€" },
+      { city: "rome", name: "提拉米苏", it: "Tiramisù", wiki: "Tiramisu", desc: "西班牙台阶附近的 Pompi 以提拉米苏出名，有开心果、草莓等口味，盒装带走。", price: "约 5€" },
+      { city: "rome", name: "Gelato", it: "Gelato", wiki: "Gelato", desc: "冬天也值得吃。颜色太鲜艳、堆得高高的多半不是好店；装在不锈钢桶里盖着盖子的更靠谱。", price: "3–4€" },
+      { city: "naples", name: "那不勒斯披萨", it: "Pizza napoletana", wiki: "Neapolitan pizza", desc: "饼边厚软起泡、中间偏湿，Margherita（番茄、马苏里拉、罗勒）或 Marinara（番茄、蒜、牛至）。一人一整张，用刀叉或对折着吃。", price: "5–10€" },
+      { city: "naples", name: "炸披萨", it: "Pizza fritta", wiki: "Pizza fritta", desc: "包了里科塔奶酪、猪油渣或番茄的面饼下锅炸，战后穷人的披萨，现在是街头名物。", price: "3–6€" },
+      { city: "naples", name: "炸面饼（Frittatina）", it: "Frittatina di pasta", wiki: "Frittatina di pasta", itwiki: "Frittatina di pasta", commons: "frittatina di pasta Napoli", desc: "把通心粉、肉酱、豌豆、奶酪裹面糊油炸成圆饼，一个就很顶饱。", price: "2–3€" },
+      { city: "naples", name: "Sfogliatella", it: "Sfogliatella", wiki: "Sfogliatella", desc: "贝壳形千层酥（riccia）或软皮版（frolla），里面是乳清奶酪、粗麦和柑橘皮，刚出炉温热时最好吃。", price: "1.5–2.5€" },
+      { city: "naples", name: "Babà", it: "Babà", wiki: "Babà", desc: "浸透朗姆酒糖浆的蘑菇形小蛋糕，那不勒斯人的骄傲。", price: "2–3€" },
+      { city: "naples", name: "Cuoppo", it: "Cuoppo", wiki: "Cuoppo", itwiki: "Cuoppo", img: "https://commons.wikimedia.org/wiki/Special:FilePath/Cuoppo.jpg?width=500", imgPage: "https://commons.wikimedia.org/wiki/File:Cuoppo.jpg", desc: "纸筒装的炸物：炸小鱼小虾，或者炸蔬菜、炸面团（zeppoline）。", price: "5–8€" },
+      { city: "naples", name: "圣诞甜点 Struffoli", it: "Struffoli", wiki: "Struffoli", desc: "蜂蜜裹着的小炸面球撒彩糖，只在圣诞季出现；还有 Roccocò（杏仁硬饼）和 Mostaccioli（巧克力饼）。", price: "按盒卖" },
+      { city: "naples", name: "那不勒斯咖啡", it: "Caffè napoletano", wiki: "Caffè sospeso", desc: "浓、甜、烫，站在吧台喝。“待用咖啡”（caffè sospeso）的习俗就来自这里：多付一杯留给后来没钱的人。", price: "1–1.5€" },
+      { city: "coast", name: "柠檬酒 Limoncello", it: "Limoncello", wiki: "Limoncello", desc: "用索伦托和阿马尔菲的大柠檬皮泡的甜酒，冰镇小杯喝。买回家在超市比纪念品店便宜。", price: "小瓶 5–10€" },
+      { city: "coast", name: "柠檬小蛋糕 Delizia al limone", it: "Delizia al limone", wiki: "Delizia al limone", desc: "海绵蛋糕里灌柠檬奶油，外面淋柠檬奶油，索伦托半岛的代表甜点。", price: "3–5€" },
+      { city: "coast", name: "一米披萨", it: "Pizza a metro", wiki: "Pizza a metro", itwiki: "Pizza a metro", commons: "pizza a metro Vico Equense", desc: "Vico Equense 发明的长条披萨，按长度卖，一条能拼好几种口味，适合几个人分。", price: "按米 / 半米卖" },
+      { city: "coast", name: "Provolone del Monaco", it: "Provolone del Monaco", wiki: "Provolone del Monaco", desc: "Vico Equense 一带出产的熟成牛奶奶酪（DOP），味道浓，可以买一小块配面包。", price: "按重量卖" }
+    ],
+    byDay: [
+      { d: "12/6", area: "斗兽场 → 犹太区 → 万神殿 → 特雷维", list: [
+        { n: "Antico Forno Roscioli", q: "Antico Forno Roscioli, Via dei Chiavari 34, Roma", what: "老面包店，白披萨（pizza bianca）、红披萨按块卖，便宜", when: "午饭前后路过 Largo Argentina（周日营业时间以地图为准）" },
+        { n: "Ba'Ghetto / Nonna Betta", q: "Nonna Betta, Via del Portico d'Ottavia 16, Roma", what: "犹太区的罗马犹太菜：炸朝鲜蓟、炸鳕鱼条", when: "13:15 午饭（坐下吃，约 20–30€ / 人）" },
+        { n: "Pasticceria Boccione", q: "Pasticceria Boccione, Via del Portico d'Ottavia 1, Roma", what: "犹太老点心铺，“犹太披萨”（其实是果干杏仁硬饼）和里科塔樱桃挞", when: "周日上午开，周六不开" },
+        { n: "Sant'Eustachio Il Caffè", q: "Sant'Eustachio Il Caffè, Roma", what: "万神殿旁的老咖啡馆，招牌 Gran Caffè（加糖起泡）", when: "排万神殿前后" },
+        { n: "Giolitti", q: "Giolitti, Via degli Uffici del Vicario 40, Roma", what: "1900 年开业的老牌 gelato", when: "万神殿 → 纳沃纳路上" },
+        { n: "Gelateria del Teatro", q: "Gelateria del Teatro, Via dei Coronari 65, Roma", what: "纳沃纳广场旁，口味有创意（鼠尾草覆盆子等）", when: "纳沃纳之后" },
+        { n: "Pastificio Guerra", q: "Pastificio Guerra, Via della Croce 8, Roma", what: "西班牙台阶旁的面店，每天两种面，一盘约 5€ 含水", when: "晚饭，去 Spagna 地铁站的路上（营业时间以地图为准）" }
+      ] },
+      { d: "12/7", area: "梵蒂冈 → Prati → 特拉斯提弗列", list: [
+        { n: "Bonci Pizzarium", q: "Pizzarium Bonci, Via della Meloria 43, Roma", what: "罗马最出名的切块披萨，按重量买，站着吃", when: "11:00 开门后，早午饭" },
+        { n: "Mercato Trionfale", q: "Mercato Trionfale, Via Andrea Doria, Roma", what: "本地人的室内菜市场，买水果、火腿面包，便宜", when: "朋友们 12:00–15:00 在 Prati 时" },
+        { n: "Sciascia Caffè 1919", q: "Sciascia Caffè, Via Fabio Massimo 80, Roma", what: "Prati 区的老咖啡馆，巧克力咖啡", when: "等博物馆前后" },
+        { n: "Supplì Roma", q: "Supplì Roma, Via di San Francesco a Ripa 137, Roma", what: "特拉斯提弗列的老店，supplì 和切块披萨", when: "晚上先垫一口" },
+        { n: "Da Enzo al 29", q: "Da Enzo al 29, Via dei Vascellari 29, Roma", what: "罗马四大面和炸朝鲜蓟，通常要排队，开门前 20–30 分钟到", when: "晚饭（约 25–35€ / 人）" },
+        { n: "Fior di Luna", q: "Fior di Luna, Via della Lungaretta 96, Roma", what: "手工 gelato，用当季原料", when: "饭后" }
+      ] },
+      { d: "12/8", area: "真理之口 → Testaccio → 人民广场 → 西班牙台阶", list: [
+        { n: "Trapizzino（Testaccio 本店）", q: "Trapizzino, Via Giovanni Branca 88, Roma", what: "Trapizzino 的发源地，炖鸡、牛肚、肉丸口味", when: "12:00 午饭" },
+        { n: "Mercato di Testaccio", q: "Mercato di Testaccio, Roma", what: "室内市场，里面的 Mordi e Vai 卖牛肉三明治", when: "节日当天可能不开，以地图为准" },
+        { n: "Pompi", q: "Pompi, Via della Croce 82, Roma", what: "提拉米苏专门店，盒装带走", when: "等教宗献花前后" },
+        { n: "Pastificio Guerra", q: "Pastificio Guerra, Via della Croce 8, Roma", what: "便宜的现做意面", when: "晚饭" }
+      ] },
+      { d: "12/9", area: "那不勒斯老城 → 沃梅罗 → 托莱多 → 住处", list: [
+        { n: "Di Matteo", q: "Pizzeria Di Matteo, Via dei Tribunali 94, Napoli", what: "炸披萨、frittatina，门口窗口外卖便宜", when: "12:30 午饭" },
+        { n: "Gino e Toto Sorbillo", q: "Gino e Toto Sorbillo, Via dei Tribunali 32, Napoli", what: "名气最大的披萨店之一，排队长，取号后可以先逛", when: "午饭备选" },
+        { n: "Scaturchio", q: "Scaturchio, Piazza San Domenico Maggiore 19, Napoli", what: "百年甜品店，babà 和招牌 ministeriale 巧克力", when: "圣塞维罗出来正好在旁边" },
+        { n: "Pintauro", q: "Pintauro, Via Toledo 275, Napoli", what: "据说是把 sfogliatella 带进城的老店", when: "下山走托莱多大街时" },
+        { n: "L'Antica Pizzeria da Michele", q: "L'Antica Pizzeria da Michele, Via Cesare Sersale 1, Napoli", what: "只做 Margherita 和 Marinara，取号排队，翻台快", when: "晚饭，离住处步行约 5 分钟" }
+      ] },
+      { d: "12/10", area: "庞贝 → Vico Equense", list: [
+        { n: "Sfogliatelle Attanasio", q: "Sfogliatelle Attanasio, Vico Ferrovia 1, Napoli", what: "中央车站旁，刚出炉的 sfogliatella，可以多买几个当庞贝的干粮", when: "早上出发前" },
+        { n: "车站附近超市", q: "supermercato Piazza Garibaldi Napoli", what: "买三明治、水和水果带进庞贝，里面吃的少又贵", when: "早上" },
+        { n: "Da Gigino – Pizza a Metro", q: "Da Gigino Pizza a Metro, Vico Equense", what: "一米披萨的发源店", when: "晚饭（离住处约 2 km，打车或请店家叫车）" }
+      ] },
+      { d: "12/11", area: "索伦托 → 波西塔诺", list: [
+        { n: "I Giardini di Cataldo", q: "I Giardini di Cataldo, Corso Italia 267, Sorrento", what: "柠檬园里的店：柠檬冰沙、柠檬 gelato、试喝柠檬酒", when: "上午逛索伦托" },
+        { n: "Pizzeria Da Franco", q: "Pizzeria Da Franco, Corso Italia 265, Sorrento", what: "本地人常去的平价披萨，纸盘长桌", when: "晚饭（回到索伦托换车时）" },
+        { n: "波西塔诺", q: "Positano", what: "12 月很多店休息，海边开着的餐厅也偏贵；可以在索伦托买好三明治带上，在海滩边吃", when: "午饭" }
+      ] },
+      { d: "12/12", area: "西班牙区 → 平民表决广场 → 海边", list: [
+        { n: "Gran Caffè Gambrinus", q: "Gran Caffè Gambrinus, Napoli", what: "1860 年的老咖啡馆，babà、sfogliatella、咖啡，站着吃喝更便宜", when: "10:45" },
+        { n: "Sorbillo Lievito Madre al Mare", q: "Sorbillo Lievito Madre al Mare, Via Partenope 1, Napoli", what: "海滨路上的 Sorbillo 分店，看着蛋堡吃最后一顿那不勒斯披萨", when: "13:00 午饭" },
+        { n: "Zia Esterina Sorbillo", q: "Zia Esterina Sorbillo, Piazza Trieste e Trento, Napoli", what: "炸披萨外卖窗口", when: "顺路垫一口" }
+      ] }
+    ],
+    tips: [
+      "账单上的 coperto（餐位费）每人 1–3€ 是正常的，小费不强制。",
+      "咖啡站在吧台（al banco）喝最便宜；坐下来（al tavolo）在景点旁可能贵一倍。",
+      "午饭约 12:30–15:00，晚饭 19:30 以后才开始；下午很多餐厅关门，可以吃切块披萨、炸物垫一下。",
+      "水默认上瓶装水（naturale 无气 / frizzante 有气）；罗马街上的“大鼻子”饮水龙头（nasoni）可以直接喝。",
+      "周日和 12/8 节日，部分店休息，出发前在 Google 地图看一眼营业时间。",
+      "景点旁带照片菜单、门口拉客的餐馆尽量避开；热门店可以用 TheFork 订位，有时有折扣。"
+    ]
+  },
+
   /* ---------- 景点补充：门票、停留时间、实用提示 ---------- */
   spotInfo: {
-    trevi: { fee: "广场免费；下到水池边 2€（只收卡，22:00 后免费）", time: "15 分钟", tip: "在广场上远看不用票。想下到池边又不想花钱，晚上 22 点以后再来，人也少。" },
-    pantheon: { fee: "平时 7€；12/6 首个周日免费", time: "20–30 分钟", tip: "免费日排队会长一些。门外的圆柱广场晚上也很好看。" },
-    navona: { fee: "免费", time: "30 分钟", tip: "12 月有圣诞市集。广场边上的餐厅偏贵，吃饭往西边小巷走。" },
-    colosseo: { fee: "12/6 首个周日免费，现场排队，不能预约", time: "约 1 小时", tip: "8 点前到售票处排队，名额有限，先到先得。不能带大包。冬季 16:30 左右关门。" },
-    foro: { fee: "12/6 免费；平时和斗兽场同一张票", time: "2–3 小时", tip: "遗址里几乎没有遮挡，下雨天带伞。先上帕拉蒂尼山再下到广场，坡少一点。" },
-    vittoriano: { fee: "台阶免费；顶层电梯约 10–15€", time: "20 分钟", tip: "不想花钱的话，卡比托利欧山市政厅背后的平台也能俯瞰古罗马广场，免费。" },
-    vaticani: { fee: "见预算里的门票", time: "2.5–3 小时", tip: "官网实名预约，不可退。要遮肩过膝。周日闭馆（每月最后一个周日除外），12/8 节日也闭馆。" },
-    sanpietro: { fee: "免费；登穹顶约 10–17€", time: "1 小时", tip: "安检队伍下午最长。周一没有教宗公开接见，广场正常开放。" },
-    angelo: { fee: "看外观免费；城堡内部约 16€", time: "外观 20 分钟", tip: "从对岸走过圣天使桥，黄昏回头拍城堡。" },
-    trastevere: { fee: "免费", time: "一个晚上", tip: "19:30 以后才热闹。Santa Maria in Trastevere 教堂有 12 世纪的金色马赛克，免费进。" },
-    bocca: { fee: "约 2€ 捐款", time: "15 分钟", tip: "开门后不久去排队最快。门廊外的铁栅栏外也能远远拍到。" },
-    circo: { fee: "免费", time: "15 分钟", tip: "穿过草地往阿文提诺山方向走，就是去橘子花园的路。" },
-    aranci: { fee: "免费", time: "30–45 分钟", tip: "钥匙孔在 Piazza dei Cavalieri di Malta，从花园走 5 分钟，节日上午排队可能 15–30 分钟。" },
+    trevi: { look: ["中间是海神俄刻阿诺斯，两侧是象征“富饶”和“健康”的女神像", "上方浮雕：一个少女给士兵指出水源，这条水道因此叫 Aqua Virgo（处女水道）", "右手边一个大石瓮：传说是建造者为了挡住对面理发店老板的指指点点"], fee: "广场免费；下到水池边 2€（只收卡，22:00 后免费）", time: "15 分钟", tip: "在广场上远看不用票。想下到池边又不想花钱，晚上 22 点以后再来，人也少。" },
+    pantheon: { look: ["穹顶的格子（藻井）越往上越小，制造出更高的错觉；混凝土越往上越轻（掺了浮石）", "顶上 9 米的圆孔是唯一光源，看光斑一天里在墙上移动", "地面中间微微隆起、有小排水孔：下雨时雨直接落进来", "拉斐尔墓：石棺上的拉丁文墓志铭大意是“他在世时，自然女神怕被他超越”", "门廊正面的拉丁文 M·AGRIPPA：其实是哈德良重建时保留的原建造者名字"], sh: "Pantheon", fee: "平时 7€；12/6 首个周日免费", time: "20–30 分钟", tip: "免费日排队会长一些。门外的圆柱广场晚上也很好看。" },
+    navona: { look: ["贝尼尼的四河喷泉：四个河神代表四大洲的大河（尼罗河、恒河、多瑙河、拉普拉塔河），尼罗河神蒙着头，因为当时还不知道源头", "对面博罗米尼设计的圣依搦斯教堂；“河神抬手挡住教堂怕它倒”是流传很广的段子，但喷泉其实比教堂立面早完工", "广场的长椭圆形就是古罗马图密善竞技场的跑道形状"], sh: "Bernini Four Rivers", fee: "免费", time: "30 分钟", tip: "12 月有圣诞市集。广场边上的餐厅偏贵，吃饭往西边小巷走。" },
+    colosseo: { look: ["地下层（hypogeum）：看台下面纵横的通道和兽笼，猛兽靠人力升降机升到场上；从看台往下就能看清结构", "外墙的三种柱式：一层多立克、二层爱奥尼、三层科林斯，教科书级示范", "墙上密密麻麻的小洞：中世纪人挖走固定石块的铁扣留下的", "残缺的南侧外墙：1349 年地震后倒塌，之后几百年被当成采石场，据说圣彼得大教堂等建筑都用过这里的石头", "看台上的十字架：纪念传说中在此殉道的基督徒，每年耶稣受难日教宗在这里主持苦路"], official: ["斗兽场官网", "https://colosseo.it"], sh: "Colosseum", fee: "12/6 首个周日免费，现场排队，不能预约", time: "约 1 小时", tip: "8 点前到售票处排队，名额有限，先到先得。不能带大包。冬季 16:30 左右关门。" },
+    foro: { look: ["帕拉蒂尼山上的皇宫遗址（Domus Flavia / Augustana）和俯瞰大竞技场的平台", "提图斯凯旋门：内侧浮雕刻着罗马士兵抬走耶路撒冷圣殿的七枝烛台", "元老院（Curia Julia）：保存最完整的建筑之一，地板是原来的彩色大理石", "凯撒火化处（Tempio del Divo Giulio）：至今常有人放花", "维斯塔贞女之家：长方形水池边一排贞女雕像", "塞维鲁凯旋门和农神庙的 8 根柱子：广场西头的标志性画面"], official: ["斗兽场考古公园官网", "https://colosseo.it"], sh: "Roman Forum", fee: "12/6 免费；平时和斗兽场同一张票", time: "2–3 小时", tip: "遗址里几乎没有遮挡，下雨天带伞。先上帕拉蒂尼山再下到广场，坡少一点。" },
+    vittoriano: { look: ["卡比托利欧广场是米开朗基罗设计的，地面星形图案；中间是马可·奥勒留骑马像（复制品，原件在博物馆里）", "市政厅背后的平台（右侧）免费俯瞰古罗马广场全景", "维托里奥纪念堂里有无名烈士墓，有卫兵站岗"], sh: "Campidoglio Michelangelo", fee: "台阶免费；顶层电梯约 10–15€", time: "20 分钟", tip: "不想花钱的话，卡比托利欧山市政厅背后的平台也能俯瞰古罗马广场，免费。" },
+    vaticani: { look: ["松果庭院（Cortile della Pigna）：巨大的古罗马青铜松果", "八角庭院：《拉奥孔》（米开朗基罗看过出土现场）和《观景殿的阿波罗》", "缪斯厅：《观景殿躯干》，只剩躯干，米开朗基罗画西斯廷时反复研究它", "圆厅：一整块斑岩雕成的巨大浴盆", "烛台画廊、挂毯画廊（看耶稣的眼睛会跟着你移动）、地图画廊（16 世纪意大利各地的大幅地图）", "拉斐尔画室：《雅典学院》——中间是柏拉图（以达·芬奇为原型）和亚里士多德，前景托腮的赫拉克利特是米开朗基罗，右下角戴黑帽的是拉斐尔本人", "西斯廷天顶：从入口往祭坛方向看，九幅创世纪按倒序；《创造亚当》两根手指之间的空隙；四角和两侧的先知、女先知", "《最后的审判》：圣巴托罗缪手里那张人皮上的脸被认为是米开朗基罗自画像；右下角长驴耳朵、被蛇缠住的冥界判官米诺斯，画的是批评裸体的教廷礼仪长 Biagio da Cesena", "出口的螺旋楼梯：多数人走的是 1932 年 Momo 设计的双螺旋楼梯，常被误叫“布拉曼特楼梯”（真正的布拉曼特楼梯在馆内另一处，一般不开放）"], official: ["梵蒂冈博物馆官网", "https://www.museivaticani.va"], sh: "Sistine Chapel", fee: "Yifan 已订 12/7 12:00 学生票 15€", time: "2.5–3 小时", tip: "入口在 Viale Vaticano，走右侧预约通道「Corridoio 1」，先给工作人员看电子票和证件验票，过安检后在一楼刷闸机。官网实名预约，不可退。要遮肩过膝。周日闭馆（每月最后一个周日除外），12/8 节日也闭馆。" },
+    sanpietro: { look: ["进门右手第一个礼拜堂：米开朗基罗 24 岁的《圣殇》，圣母衣带上刻着他的名字（他唯一署名的作品）", "中央贝尼尼的青铜华盖，约 29 米高，四根扭曲的柱子；下面是圣彼得墓所在", "最里面的“圣彼得宝座”（Cathedra Petri），上方黄色的鸽子窗是整个教堂的光源焦点", "圣彼得青铜坐像：右脚被朝圣者摸得发亮", "地上刻着世界各大教堂长度的铜标记，证明这里最长", "广场上两个圆盘（喷泉和方尖碑之间）：站上去看，四排柱子会重叠成一排"], official: ["圣彼得大教堂官网", "https://www.basilicasanpietro.va"], sh: "St. Peter's Basilica", fee: "免费；登穹顶约 10–17€", time: "1 小时", tip: "安检队伍下午最长。周一没有教宗公开接见，广场正常开放。" },
+    angelo: { look: ["桥上 10 尊天使各拿一件耶稣受难的刑具，其中两尊原作是贝尼尼做的（现在桥上的是复制品）", "城堡顶上的青铜天使：传说 590 年瘟疫时天使在这里收剑，瘟疫结束，城堡因此得名", "通往梵蒂冈的高架密道 Passetto di Borgo，教宗曾经从这里逃难"], sh: "Castel Sant'Angelo", fee: "看外观免费；城堡内部约 16€", time: "外观 20 分钟", tip: "从对岸走过圣天使桥，黄昏回头拍城堡。" },
+    trastevere: { look: ["Santa Maria in Trastevere：后殿 12 世纪金色马赛克，罗马最早的圣母堂之一，免费", "小巷里的爬山虎、街灯和小神龛（edicole），晚上最好看"], fee: "免费", time: "一个晚上", tip: "19:30 以后才热闹。Santa Maria in Trastevere 教堂有 12 世纪的金色马赛克，免费进。" },
+    bocca: { look: ["面具可能是古罗马的井盖或排水口，雕的是河神或海神", "旁边的希腊圣母堂（Santa Maria in Cosmedin）内部免费，有中世纪的彩色石地板（Cosmatesque）和罗马式钟楼"], fee: "约 2€ 捐款", time: "15 分钟", tip: "开门后不久去排队最快。门廊外的铁栅栏外也能远远拍到。" },
+    circo: { look: ["草地就是跑道，中间一条略高的“脊”（spina）原来立着方尖碑，其中两根现在在人民广场和拉特朗广场"], fee: "免费", time: "15 分钟", tip: "穿过草地往阿文提诺山方向走，就是去橘子花园的路。" },
+    aranci: { look: ["钥匙孔：透过马耳他骑士团大门的钥匙孔，看到的是骑士团花园的树篱尽头框着圣彼得圆顶——一个视野里能“看见三个国家”（马耳他骑士团、意大利、梵蒂冈）"], fee: "免费", time: "30–45 分钟", tip: "钥匙孔在 Piazza dei Cavalieri di Malta，从花园走 5 分钟，节日上午排队可能 15–30 分钟。" },
     borghese: { fee: "见预算里的门票", time: "每场限 2 小时", tip: "必须预约时段，提前 30 分钟到取票、寄包。外面的公园免费。" },
-    pincio: { fee: "免费", time: "30 分钟", tip: "西班牙台阶上不能坐，会被罚款。12/8 下午台阶一带会封路、安检。" },
-    colonna: { fee: "免费", time: "1 小时（含等待）", tip: "提前 30–45 分钟到，人很多，站在 Via Condotti 路口一侧比较容易看到。看好包。" },
-    popolo: { fee: "免费", time: "20 分钟", tip: "弥撒时不能参观。卡拉瓦乔那间礼拜堂光线暗，旁边有投币灯。" },
+    pincio: { look: ["西班牙台阶顶上的天主圣三教堂和埃及方尖碑", "台阶下的“破船喷泉”（Barcaccia），贝尼尼父亲的作品", "台阶右边的济慈-雪莱故居：济慈在这里去世"], fee: "免费", time: "30 分钟", tip: "西班牙台阶上不能坐，会被罚款。12/8 下午台阶一带会封路、安检。" },
+    colonna: { look: ["柱子是 1777 年出土的古罗马大理石柱，顶上青铜圣母像；底座四周是摩西、大卫、以赛亚、以西结", "12/8 早上消防员用云梯给圣母像挂花环，下午教宗献花后城里的圣诞季正式开始"], fee: "免费", time: "1 小时（含等待）", tip: "提前 30–45 分钟到，人很多，站在 Via Condotti 路口一侧比较容易看到。看好包。" },
+    popolo: { look: ["左侧最里面的 Cerasi 礼拜堂：卡拉瓦乔《圣保罗皈依》（马占据了大半个画面，保罗躺在地上张开双手）和《圣彼得受难》", "Chigi 礼拜堂：拉斐尔设计，穹顶马赛克；贝尼尼的《哈巴谷与天使》和《但以理与狮子》", "旁边有投币灯，投 1€ 照亮礼拜堂几分钟"], sh: "Caravaggio Conversion of Saint Paul", fee: "免费", time: "20 分钟", tip: "弥撒时不能参观。卡拉瓦乔那间礼拜堂光线暗，旁边有投币灯。" },
     centrale: { fee: "—", time: "—", tip: "车站和门口的加里波第广场人多杂乱，看好包，不理会主动帮拿行李、帮叫车的人。" },
-    sansevero: { fee: "见预算里的门票", time: "30–45 分钟", tip: "周二闭馆，里面不能拍照。时段常提前订满，早点订。" },
-    spacca: { fee: "免费", time: "1–2 小时", tip: "12 月是圣格雷戈里奥街一年里最挤的时候（圣诞马槽季），注意包。旁边的 Santa Chiara 修道院回廊有彩色瓷砖，单独收费。" },
+    sansevero: { look: ["《蒙纱的基督》（Giuseppe Sanmartino，1753）：薄纱下能看到额头的伤口和凹陷的脸颊，曾长期流传是“炼金术把真纱变成大理石”的说法，后来研究证明是整块大理石雕的", "《谦逊》（Pudicizia，Corradini）：蒙着透明纱的女子，献给建造者的母亲", "《解脱》（Disinganno，Queirolo）：一个男人挣脱一张大理石雕成的网，网和身体分离雕刻，被认为是技术最难的一件", "地下室两具“解剖机器”：18 世纪的人体血管系统标本", "天顶画和彩色地板（迷宫图案）"], official: ["圣塞维罗礼拜堂官网（有作品介绍）", "https://www.museosansevero.it"], fee: "见预算里的门票", time: "30–45 分钟", tip: "周二闭馆，里面不能拍照。时段常提前订满，早点订。" },
+    spacca: { look: ["从高处（Largo San Martino）往下看，这条街把老城“劈成两半”，沿古希腊城市的主干道", "圣格雷戈里奥街：做圣诞马槽小人的作坊，除了宗教人物，还有足球明星、政客、名人的小人偶，每年跟着新闻更新", "新耶稣教堂外墙一颗颗菱形凸起的石头（钻石面），传说石头上刻着音符", "Santa Chiara 修道院回廊：铺满彩色马约利卡瓷砖的柱子和长椅（收费）"], fee: "免费", time: "1–2 小时", tip: "12 月是圣格雷戈里奥街一年里最挤的时候（圣诞马槽季），注意包。旁边的 Santa Chiara 修道院回廊有彩色瓷砖，单独收费。" },
     funicolare: { fee: "一张公交票，约 1.5–1.8€", time: "5 分钟", tip: "Augusteo 站在托莱多大街上，坐 Centrale 线到终点 Fuga，再走 10 分钟到城堡。" },
-    santelmo: { fee: "见预算里的门票", time: "1 小时", tip: "周二闭馆。日落前 1 小时到；城堡下面的 Largo San Martino 观景台免费，景色差不多。" },
-    toledo: { fee: "一张地铁票", time: "30 分钟", tip: "托莱多地铁站的蓝色“海洋”穹顶在下层通道，买票进站就能看。" },
-    pompei: { fee: "见预算里的门票", time: "3–4 小时", tip: "从 Napoli Garibaldi 坐 Circumvesuviana 到 Pompei Scavi，约 40 分钟，车上扒手多。冬季下午关门早，上午去。" },
-    ercolano: { fee: "见预算里的门票（可选）", time: "约 2 小时", tip: "Circumvesuviana 的 Ercolano Scavi 站下车，走 10 分钟。冬季约 15:30 停止入场，以官网为准。" },
-    vico: { fee: "免费", time: "一个傍晚", tip: "一米披萨最有名的是镇上的老店 Da Gigino，按长度点，三个人点半米左右，以现场为准。" },
-    positano: { fee: "免费；海边教堂免费", time: "约 2 小时", tip: "镇里全是下坡台阶，走到海滩后要再爬回公路上坐车，留 20 分钟。" },
-    amalfi: { fee: "主教座堂免费看外观；天堂回廊和博物馆约 5€", time: "约 2 小时", tip: "冬天不少餐厅关门，主教座堂广场一带一定有开的。回索伦托的巴士站在海边码头。" },
-    sorrento: { fee: "免费", time: "1–2 小时", tip: "市立公园观景台从塔索广场走 5 分钟。买柠檬酒去超市比纪念品店便宜。" },
-    capri: { fee: "索伦托出发的船单程约 20–25€；岛上缆车约 2.4€ / 程", time: "一整天", tip: "风浪大会停航或取消，前一天看天气和船公司通知。蓝洞冬天常常关闭，别抱太大期望。" },
-    quartieri: { fee: "免费", time: "30–45 分钟", tip: "白天去，主路走就好，摩托会从窄巷里穿过，靠边走。" },
-    nuovo: { fee: "外观免费；内部约 6€", time: "20 分钟", tip: "门口的白色凯旋门浮雕值得看，内部可以跳过。" },
-    plebiscito: { fee: "免费", time: "20 分钟", tip: "对面的翁贝托一世拱廊有玻璃穹顶，免费。老字号 Gambrinus 咖啡馆站着喝更便宜。" },
-    ovo: { fee: "免费", time: "1 小时", tip: "城堡平台免费开放（以现场为准）。沿海滨步道往维苏威方向拍。" }
+    santelmo: { look: ["城墙顶上的 360° 全景：Spaccanapoli 直线、维苏威火山、那不勒斯湾和卡普里岛", "旁边的圣马丁修道院（Certosa di San Martino）有大型马槽收藏和华丽的巴洛克教堂（单独收费）"], fee: "见预算里的门票", time: "1 小时", tip: "周二闭馆。日落前 1 小时到；城堡下面的 Largo San Martino 观景台免费，景色差不多。" },
+    toledo: { look: ["托莱多站下层：深蓝色马赛克“海底隧道”和向上的“光之火山口”，是“艺术地铁站”项目之一", "翁贝托一世长廊：铁和玻璃的穹顶，地面马赛克有十二星座"], fee: "一张地铁票", time: "30 分钟", tip: "托莱多地铁站的蓝色“海洋”穹顶在下层通道，买票进站就能看。" },
+    pompei: { look: ["广场（Foro）和背后的维苏威火山：先站在广场北端看一下全城规模", "石板路：车辙印、街心的“跳石”（下雨时过马路踩的，也限制了车的宽度）", "Thermopolium：街边“快餐店”，柜台里嵌着装热食的陶罐", "墙上的涂鸦和选举标语：古罗马人的“朋友圈”", "维蒂之家（Casa dei Vettii）：庞贝最精美的壁画之一，门口有名的普里阿普斯像", "牧神之家：《亚历山大大战大流士》马赛克是复制品，原件在那不勒斯国家考古博物馆", "悲剧诗人之家门口的“小心有狗”（Cave Canem）马赛克", "Stabian 浴场：更衣室、冷水池、温水池、热水池和地下供暖", "石膏像：是考古学家往火山灰里的空腔灌石膏得到的人和动物最后的姿势", "神秘别墅（Plus 票）：整面红底大型壁画，见上面的介绍"], official: ["庞贝考古公园官网", "https://pompeiisites.org"], sh: "Pompeii", fee: "见预算里的门票", time: "3–4 小时", tip: "从 Napoli Garibaldi 坐 Circumvesuviana 到 Pompei Scavi，约 40 分钟，车上扒手多。冬季下午关门早，上午去。" },
+    ercolano: { look: ["二层楼房、木头房梁和门窗都还在，因为埋它的是更厚、更热的火山泥流", "古海滩上的船屋：发现了 300 多具逃难者遗骸", "海神与安菲特里忒之家的彩色马赛克墙"], sh: "Herculaneum", fee: "见预算里的门票（可选）", time: "约 2 小时", tip: "Circumvesuviana 的 Ercolano Scavi 站下车，走 10 分钟。冬季约 15:30 停止入场，以官网为准。" },
+    vico: { look: ["Vico 老城悬崖边的 Santissima Annunziata 教堂，是海边少有的哥特式教堂"], fee: "免费", time: "一个傍晚", tip: "一米披萨最有名的是镇上的老店 Da Gigino，按长度点，三个人点半米左右，以现场为准。" },
+    positano: { look: ["圣母升天教堂的马约利卡瓷砖圆顶和里面的拜占庭黑圣母像", "镇子从山顶到海边全是台阶小路：一路往下走，回头看层层叠叠的彩色房子"], fee: "免费；海边教堂免费", time: "约 2 小时", tip: "镇里全是下坡台阶，走到海滩后要再爬回公路上坐车，留 20 分钟。" },
+    amalfi: { look: ["主教座堂 62 级大台阶、黑白条纹加金色马赛克的立面；地下墓室供奉圣安德烈遗骨", "天堂回廊：13 世纪贵族墓园，阿拉伯式交叉拱"], fee: "主教座堂免费看外观；天堂回廊和博物馆约 5€", time: "约 2 小时", tip: "冬天不少餐厅关门，主教座堂广场一带一定有开的。回索伦托的巴士站在海边码头。" },
+    sorrento: { look: ["磨坊谷（Vallone dei Mulini）：塔索广场旁边的深谷，废弃的磨坊被植物覆盖", "老城里 Sedile Dominova：带壁画穹顶的中世纪议事厅，现在是老人打牌的地方", "市立公园观景台：正对那不勒斯湾和维苏威火山，旁边的台阶可以下到 Marina Grande 渔港"], fee: "免费", time: "1–2 小时", tip: "市立公园观景台从塔索广场走 5 分钟。买柠檬酒去超市比纪念品店便宜。" },
+    capri: { look: ["奥古斯都花园俯瞰法拉廖尼巨石和下面的之字形 Via Krupp", "小广场（Piazzetta）：岛上的“客厅”", "蓝洞：只有风平浪静时坐小船躺着进洞，冬天常常关闭"], fee: "索伦托出发的船单程约 20–25€；岛上缆车约 2.4€ / 程", time: "一整天", tip: "风浪大会停航或取消，前一天看天气和船公司通知。蓝洞冬天常常关闭，别抱太大期望。" },
+    quartieri: { look: ["马拉多纳壁画：1990 年画的，旁边形成了一个小“圣殿”，有球衣、围巾、蜡烛", "窄巷里的晾衣绳、小神龛和一楼的 bassi（临街住家）"], fee: "免费", time: "30–45 分钟", tip: "白天去，主路走就好，摩托会从窄巷里穿过，靠边走。" },
+    nuovo: { look: ["入口两座塔之间的白色大理石凯旋门：文艺复兴风格，纪念阿拉贡的阿方索一世入城", "原来的青铜门（现在在城堡内部）上还嵌着一颗当年的炮弹"], fee: "外观免费；内部约 6€", time: "20 分钟", tip: "门口的白色凯旋门浮雕值得看，内部可以跳过。" },
+    plebiscito: { look: ["圣方济各教堂：仿罗马万神殿的圆顶和半圆形柱廊", "王宫正面 8 尊雕像是那不勒斯历代王朝的国王", "传说蒙着眼从王宫门口走到两座骑马像中间很难走直"], fee: "免费", time: "20 分钟", tip: "对面的翁贝托一世拱廊有玻璃穹顶，免费。老字号 Gambrinus 咖啡馆站着喝更便宜。" },
+    ovo: { look: ["“蛋”的传说：诗人维吉尔把一颗蛋藏在地基里，蛋碎城亡", "城墙平台上能看到对岸的维苏威火山和海边的 Borgo Marinari 小港"], fee: "免费", time: "1 小时", tip: "城堡平台免费开放（以现场为准）。沿海滨步道往维苏威方向拍。" }
   },
 
   /* ---------- 出行须知 ---------- */
@@ -497,12 +650,11 @@ window.TRIP = {
     groups: [
       { id: "flight", label: "机票", sub: "柏林 BER ⇄ 罗马 FCO，Ryanair 基础票，只含座位下小包", options: [
         /* d1 / dl：第一天、最后一天在城里能玩的小时数（按 9:00–21:00 算，每天 12 小时） */
-        { id: "r1", name: "12/5 22:20 去，12/13 09:55 回", note: "含落地打车", pp: 61, nightTaxi: true, d1: 0, dl: 0,
+        { id: "r1", name: "12/5 22:20 去，12/13 09:55 回（已订）", note: "28.99€ + 33.99€ / 人，含落地打车", pp: 62.98, nightTaxi: true, d1: 0, dl: 0,
           d1Text: "00:30 落地，快线已停，打车去住处", dlText: "约 6:45 出发去机场" } ] },
-      { id: "bag", label: "托运行李", sub: "可选", options: [
-        { id: "none", name: "不托运", note: "三人都只背座位下小包", total: 0 },
-        { id: "ten", name: "合买一件 10 kg", note: "16.99€ / 程，往返 33.98€（推荐）", total: 34 },
-        { id: "one", name: "合买一件 20 kg", note: "27.99€ / 程，往返 55.98€", total: 56 } ] },
+      { id: "bag", label: "托运行李", sub: "已订，挂在 Yifan 的订单里", options: [
+        { id: "booked", name: "已订：一件 20 kg", note: "去程 27.99€ + 回程 29.99€", total: 57.98 },
+        { id: "none", name: "不托运", note: "三人都只背座位下小包", total: 0 } ] },
       { id: "stay-rome1", label: "罗马住宿（前四晚）", sub: "12/5–9，4 晚", stay: true, nights: 4 },
       { id: "stay-naples", label: "那不勒斯住宿", sub: "12/9–10，1 晚", stay: true, nights: 1 },
       { id: "stay-vico", label: "Vico Equense 住宿", sub: "12/10–12，2 晚", stay: true, nights: 2 },
@@ -516,7 +668,7 @@ window.TRIP = {
         { id: "hs", name: "高铁最低价", note: "约 14€ / 程，1 小时 10 分钟", pp: 28 },
         { id: "hs2", name: "高铁常见价", note: "约 25€ / 程", pp: 50 } ] },
       { id: "trip", label: "12/11 一日游", sub: "从 Vico 出发的交通费，估算", options: [
-        { id: "amalfi", name: "阿马尔菲海岸", note: "小火车到索伦托 + SITA 巴士往返，约 15€", pp: 15 },
+        { id: "amalfi", name: "索伦托 + 波西塔诺", note: "小火车往返索伦托 + SITA 巴士往返波西塔诺，约 12–15€", pp: 15 },
         { id: "capri", name: "卡普里岛", note: "索伦托往返船票约 40–50€ + 小火车 + 岛上缆车", pp: 55 } ] },
       { id: "fun", label: "吃喝购物", sub: "可选，估算，每人每天", estimate: true, options: [
         { id: "none", name: "不计入", note: "只看交通住宿门票", ppDay: 0 },
@@ -534,8 +686,8 @@ window.TRIP = {
       { id: "colosseo", name: "斗兽场 + 古罗马广场（12/6 免费日）", pp: 0, v: "必去", why: "每月第一个周日免费，现场排队，先到先得", more: [["看什么", "斗兽场内部看台；古罗马广场是古罗马城的政治和宗教中心遗址；帕拉蒂尼山是皇宫遗址，山上能俯瞰广场。"], ["花多久", "斗兽场约 1 小时，广场加帕拉蒂尼 2–3 小时。"], ["要注意", "免费日不能预约，8 点前到售票处排队。地下结构和顶层不开放给免费票。"], ["排不上", "先逛古罗马广场和帕拉蒂尼山；想稳妥，另买下面那张付费票做备选。"]] },
       { id: "colosseo-paid", name: "斗兽场付费时段票（备选）", pp: 20, off: true, v: "看情况", why: "怕免费日排不上就买一张，官网 ticketing.colosseo.it，不可退", more: [["怎么用", "买 12/8 上午或别的时段，免费日顺利进去了这张就浪费，所以只在特别想稳妥时买。"]] },
       { id: "pantheon", name: "万神殿（12/6 免费日）", pp: 0, v: "值", why: "两千年的穹顶，首个周日免费", more: [["看什么", "两千年前的混凝土穹顶，直径 43 米，顶上 9 米的圆洞是唯一光源；拉斐尔葬在这里。"], ["花多久", "20–30 分钟，门外广场晚上也很好看。"]] },
-      { id: "vatican", name: "梵蒂冈博物馆", pp: 25, v: "看兴趣", why: "西斯廷礼拜堂和拉斐尔画室；只看建筑的话，圣彼得大教堂免费", more: [["看什么", "西斯廷礼拜堂（米开朗基罗的天顶画和《最后的审判》）、拉斐尔画室（《雅典学院》）、拉奥孔群像、地图画廊、螺旋楼梯。"], ["花多久", "至少 2.5–3 小时。路线单向，从入口走到西斯廷要 1 小时以上。"], ["值不值", "对文艺复兴、宗教或美术有一点兴趣就值，西斯廷没有替代品。只想看壮观的建筑，免费的圣彼得大教堂就够了，再花约 10–17€ 登穹顶看全城。"], ["要注意", "官网 20€ + 5€ 预约费，实名，不可退。25 岁以下学生带在读证明 10€ + 5€，不限国籍。12/8 闭馆，只能 12/7 去。"]] },
-      { id: "borghese", name: "博尔盖塞美术馆", pp: 20, v: "值", why: "贝尼尼的雕塑，限流 2 小时看得很从容；12/8 正好顺路去西班牙广场", more: [["看什么", "贝尼尼的《阿波罗与达芙妮》《劫掠普洛塞庇娜》，卡诺瓦的《保琳娜》，还有多幅卡拉瓦乔。"], ["花多久", "每场限 2 小时，人数限制。"], ["要注意", "必须提前预约时段，名额少。"], ["不买票", "外面的博尔盖塞公园免费，走到平乔露台能看人民广场。"]] },
+      { id: "vatican", name: "梵蒂冈博物馆（仅 Yifan，已订）", pp: 15, total: 15, v: "看兴趣", why: "西斯廷礼拜堂和拉斐尔画室；只看建筑的话，圣彼得大教堂免费", more: [["看什么", "西斯廷礼拜堂（米开朗基罗的天顶画和《最后的审判》）、拉斐尔画室（《雅典学院》）、拉奥孔群像、地图画廊、螺旋楼梯。"], ["花多久", "至少 2.5–3 小时。路线单向，从入口走到西斯廷要 1 小时以上。"], ["值不值", "对文艺复兴、宗教或美术有一点兴趣就值，西斯廷没有替代品。只想看壮观的建筑，免费的圣彼得大教堂就够了，再花约 10–17€ 登穹顶看全城。"], ["要注意", "官网 20€ + 5€ 预约费，实名，不可退。25 岁以下学生带在读证明 10€ + 5€，不限国籍。12/8 闭馆，只能 12/7 去。"]] },
+      { id: "borghese", name: "博尔盖塞美术馆（这次不去）", pp: 18, off: true, v: "可省", why: "贝尼尼的雕塑，限流 2 小时看得很从容；12/8 正好顺路去西班牙广场", more: [["看什么", "贝尼尼的《阿波罗与达芙妮》《劫掠普洛塞庇娜》，卡诺瓦的《保琳娜》，还有多幅卡拉瓦乔。"], ["花多久", "每场限 2 小时，人数限制。"], ["要注意", "必须提前预约时段，名额少。"], ["不买票", "外面的博尔盖塞公园免费，走到平乔露台能看人民广场。"]] },
       { id: "angelo", name: "圣天使堡内部", pp: 16, off: true, v: "可省", why: "外观和桥免费；登顶能看圣彼得和台伯河", more: [["看什么", "从哈德良陵墓到教宗城堡的几层结构，顶层露台看圣彼得大教堂。"], ["不买票", "桥上和对岸看外观，日落时最好看。"]] },
       { id: "sansevero", name: "圣塞维罗礼拜堂", pp: 12, v: "值", why: "《蒙纱的基督》，半小时看完", more: [["看什么", "《蒙纱的基督》，大理石雕出的薄纱像真的一样；还有《解脱》和地下室两具 18 世纪的人体血管标本。"], ["花多久", "30–45 分钟。"], ["要注意", "按时段预约，周二闭馆，里面不能拍照。"]] },
       { id: "santelmo", name: "圣艾尔莫城堡", pp: 5, v: "可省", why: "门口的 Largo San Martino 观景台免费，景色差不多（票价为估）", more: [["看什么", "沃梅罗山顶的星形城堡，城墙上 360° 看那不勒斯湾、维苏威火山和老城的 Spaccanapoli 直街。"], ["不买票", "城堡下面的 Largo San Martino 观景台免费，日落时景色接近。周二闭馆。"]] },
@@ -547,7 +699,7 @@ window.TRIP = {
       ["罗马", "12/6 首个周日：斗兽场、古罗马广场、万神殿；圣彼得大教堂；人民圣母堂、圣王路易堂（卡拉瓦乔）；圣彼得锁链堂（米开朗基罗《摩西》）；卡比托利欧广场后面的平台；阿文提诺山钥匙孔"],
       ["那不勒斯", "Largo San Martino 观景台；蛋堡；主教座堂、新耶稣教堂；托莱多地铁站（一张地铁票）；西班牙区马拉多纳壁画"]
     ],
-    studentNote: "以上按全价计。25 岁及以下带在读证明可买梵蒂冈学生票（15€，不限国籍）；18–26 岁圣塞维罗 8€。斗兽场、庞贝、万神殿的青年优惠只给欧盟公民。"
+    studentNote: "以上按全价计。梵蒂冈：25 岁以下带学生证可买学生票 10€ + 5€ 预约费，不限国籍。圣塞维罗：18–26 岁（含 26 岁）8€。博尔盖塞：16€ + 2€ 预约费，18–25 岁优惠只给欧盟公民；最后一场（17:45）11€ + 2€。斗兽场、庞贝、万神殿的青年优惠只给欧盟公民。"
   },
 
   /* ---------- JoJo 彩蛋 ---------- */

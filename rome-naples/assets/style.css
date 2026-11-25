@@ -360,3 +360,86 @@ main { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
 .tip-sub { font-size: 13px; color: var(--muted); margin: 0 0 6px 1.6em; }
 .tip-list a { color: inherit; }
 .b-plan { font-size: .9rem; color: var(--muted, #666); }
+
+/* ---------- 每日地图 ---------- */
+.day-map { margin-top: 14px; font-size: 14px; }
+.day-map summary { cursor: pointer; color: var(--naples); width: fit-content; }
+.day-map[open] summary { margin-bottom: 8px; }
+.map-box { height: 320px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--wash); overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 13px; }
+.map-box.leaflet-container { display: block; }
+.map-box.off { height: auto; padding: 12px; justify-content: flex-start; }
+.pin span { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--ink); }
+.map-links { margin: 8px 0 4px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.map-links a, .stop-list a { color: var(--naples); }
+.stop-list { list-style: none; margin: 4px 0 0; padding: 0; }
+.stop-list li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); }
+.stop-list .sn { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.stop-list li.alt .sn { background: var(--faint); }
+.stop-list .sh { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.stop-list .st { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.stop-list p { margin: 2px 0; font-size: 13px; }
+.stop-list a { font-size: 13px; }
+@media print { .day-map { display: none; } }
+
+/* 地图 v2：桌面左右两栏，地图固定 */
+.dm-wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.dm-map { position: sticky; top: 72px; }
+.dm-map .map-box { height: 420px; }
+.dm-all { font: inherit; font-size: 13px; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); color: var(--ink); cursor: pointer; }
+.stop-list li:not(.leg) { cursor: pointer; border-radius: var(--radius); padding-left: 4px; }
+.stop-list li:not(.leg):hover, .stop-list li.on { background: var(--wash); }
+.stop-list li.leg { display: block; border-top: 0; padding: 0 0 0 40px; font-size: 12px; color: var(--faint); }
+.stop-list li.leg::before { content: "↓ "; }
+.stop-list li.leg + li { border-top: 0; }
+@media (max-width: 860px) {
+  .dm-wrap { grid-template-columns: 1fr; }
+  .dm-map { position: static; }
+  .dm-map .map-box { height: 280px; }
+}
+
+.kml-tip { margin: -6px 0 18px; font-size: 14px; }
+.kml-tip summary { cursor: pointer; color: var(--naples); width: fit-content; }
+.kml-tip ol { margin: 8px 0 0; padding-left: 20px; line-height: 1.7; color: var(--muted); }
+.kml-tip a { color: var(--naples); }
+
+/* ---------- 美食 v2 ---------- */
+#food h3 { margin-top: 26px; }
+.food-day { border-top: 1px solid var(--line); }
+.food-day summary { cursor: pointer; display: flex; gap: 12px; align-items: baseline; padding: 12px 0; list-style: none; }
+.food-day summary::-webkit-details-marker { display: none; }
+.food-day summary::before { content: "▸"; color: var(--faint); }
+.food-day[open] summary::before { content: "▾"; }
+.food-day .fd { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.2em; }
+.food-day .fa { flex: 1; color: var(--ink); }
+.food-day .fc { color: var(--faint); font-size: 13px; }
+.food-list { list-style: none; margin: 0 0 12px; padding: 0 0 0 22px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px 20px; }
+.food-list li { padding: 10px 12px; background: var(--wash); border-radius: var(--radius); }
+.food-list .fn { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.food-list .fn a { font-size: 13px; color: var(--naples); }
+.food-list p { margin: 4px 0 0; font-size: 14px; }
+.dish-city { margin: 18px 0 8px; font-size: 15px; }
+.dish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.dish-card { margin: 0; }
+.dish-card .ph { aspect-ratio: 4 / 3; height: auto; }
+.dish-card .credit { font-size: 11px; color: var(--faint); min-height: 1em; }
+.dish-card .dn { display: flex; justify-content: space-between; gap: 6px; align-items: baseline; margin-top: 4px; }
+.dish-card .dp { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.dish-card .di { font-size: 12px; color: var(--faint); font-style: italic; }
+.dish-card p { margin: 4px 0 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+/* ---------- 景点看点与预习 ---------- */
+.look { margin-top: 10px; }
+.look h4 { margin: 0 0 4px; font-size: 14px; }
+.look ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.65; }
+.look li { margin: 3px 0; }
+.learn { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.learn .lh { color: var(--ink); font-weight: 600; }
+.learn a { color: var(--naples); }
+.pin span { width: auto; min-width: 22px; padding: 0 5px; border-radius: 11px; }
+
+/* 行程条目：左对齐，景点名加粗可点 */
+.item .txt { text-align: left; }
+.spot-btn { font: inherit; font-weight: 600; text-align: left; display: inline; color: var(--ink); text-decoration: underline dotted; text-decoration-color: var(--faint); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.spot-btn::after { content: "▾"; font-size: .75em; margin-left: 3px; color: var(--faint); display: inline-block; transition: transform .15s; }
+.spot-btn[aria-expanded="true"]::after { transform: rotate(180deg); }
+.spot-btn:hover { text-decoration-color: currentColor; }
+.lead-in { font-weight: 600; }

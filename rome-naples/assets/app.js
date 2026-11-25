@@ -66,6 +66,7 @@
         credit.append("图片：", el("a", { href: info.page, target: "_blank", rel: "noopener" }, "Wikipedia / Wikimedia Commons"));
       }
     };
+    if (spot.img) return put({ src: spot.img, page: spot.imgPage || spot.img });  /* 维基词条没有配图的，直接指定 Commons 图片 */
     if (imgCache[key]) return put(imgCache[key]);
     box.append(el("span", { class: "alt" }, spot.name));
     /* 依次尝试：英文维基 → 意大利语维基备用词条 → 意大利语原名。
@@ -114,11 +115,30 @@
     if (io) io.observe(box); else fillImage(box, T.spots[id]);
     return box;
   }
-  function spotText(s) {
+  function spotText(s, id) {
+    const x = (T.spotInfo || {})[id] || {};
     return el("div", { class: "bg-text" },
       el("p", { class: "it" }, s.it),
       el("p", {}, s.bg),
-      s.photo ? el("p", { class: "shot" }, "拍照：" + s.photo) : null);
+      s.photo ? el("p", { class: "shot" }, "拍照：" + s.photo) : null,
+      x.look ? lookBlock(x.look) : null,
+      learnLinks(id, s));
+  }
+  function lookBlock(look) {
+    return el("div", { class: "look" }, el("h4", {}, "进去重点看"), el("ul", {}, look.map(t => el("li", {}, t))));
+  }
+  /* 预习链接：维基、中文维基、B 站、YouTube，加上官网和 Smarthistory（艺术史免费讲解） */
+  function learnLinks(id, s) {
+    const x = (T.spotInfo || {})[id] || {}, enc = encodeURIComponent;
+    const links = [];
+    if (x.official) links.push(x.official);
+    links.push(["维基百科", "https://en.wikipedia.org/wiki/" + enc(s.wiki)]);
+    links.push(["中文维基", "https://zh.wikipedia.org/w/index.php?search=" + enc(s.name.split(/[（/]/)[0].trim())]);
+    if (x.sh) links.push(["Smarthistory 艺术史讲解", "https://smarthistory.org/?s=" + enc(x.sh)]);
+    links.push(["B 站讲解视频", "https://search.bilibili.com/all?keyword=" + enc(s.name.split(/[（/]/)[0].trim() + " 讲解")]);
+    links.push(["YouTube", "https://www.youtube.com/results?search_query=" + enc(s.it.split(" / ")[0] + " history explained")]);
+    return el("p", { class: "learn" }, el("span", { class: "lh" }, "提前预习："),
+      links.flatMap(([t, u], i) => [i ? " · " : "", el("a", { href: u, target: "_blank", rel: "noopener" }, t)]));
   }
 
   /* ---------- 行程 ---------- */
@@ -127,6 +147,124 @@
     if (!st) return null;
     const pick = st.options.find(o => o.id === chosen[stayId]);
     return pick ? pick.name : "待定（" + st.options.map(o => o.name).join(" / ") + "）";
+  }
+  /* ---------- 每日地图：点开才加载 Leaflet 和底图 ---------- */
+  const gSearch = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+  function gRoute(stops) {
+    const q = stops.map(s => s.p.q);
+    let u = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(q[0]) + "&destination=" + encodeURIComponent(q[q.length - 1]);
+    const mid = q.slice(1, -1).slice(0, 9);
+    if (mid.length) u += "&waypoints=" + encodeURIComponent(mid.join("|"));
+    return u;
+  }
+  function dayStops(d) {
+    const out = [];
+    if (!T.places) return out;
+    d.items.forEach(it => {
+      const k = it.at || it.spot, p = k && T.places[k];
+      if (!p || (d.map && !d.map.includes(p.city))) return;
+      const alt = it.t === "备选";
+      if (!alt && out.length && out[out.length - 1].k === k) return;
+      out.push({ k, p, it, alt });
+    });
+    return out;
+  }
+  let leafletP = null;
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve(window.L);
+    if (leafletP) return leafletP;
+    leafletP = new Promise((res, rej) => {
+      document.head.append(el("link", { rel: "stylesheet", href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" }));
+      const s = document.createElement("script");
+      s.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      s.onload = () => window.L ? res(window.L) : rej();
+      s.onerror = () => { leafletP = null; rej(); };
+      document.head.append(s);
+    });
+    return leafletP;
+  }
+  function km(a, b) {
+    const R = 6371, r = Math.PI / 180, dLa = (b[0] - a[0]) * r, dLo = (b[1] - a[1]) * r;
+    const h = Math.sin(dLa / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dLo / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  /* 两站之间的大概距离：直线距离 × 1.3 估算步行 */
+  function legText(a, b) {
+    const d = km(a.p.ll, b.p.ll) * 1.3;
+    if (d < 0.15) return "就在旁边";
+    if (d <= 2.5) return `步行约 ${Math.max(3, Math.round(d / 4.5 * 60))} 分钟（${d.toFixed(1)} km）`;
+    return `坐车 · 约 ${Math.round(d)} km`;
+  }
+  function drawMap(box, stops, lis) {
+    box.textContent = "地图加载中…";
+    loadLeaflet().then(L => {
+      box.textContent = "";
+      const map = L.map(box, { scrollWheelZoom: false, tap: true });
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+        { attribution: "Tiles &copy; Esri", maxZoom: 18 }).addTo(map);
+      const pts = stops.map(s => s.p.ll);
+      /* 只画步行能到的相邻两站；坐车的段不画直线，免得横穿山和海 */
+      for (let i = 0; i < stops.length - 1; i++) {
+        if (km(pts[i], pts[i + 1]) * 1.3 <= 2.5) L.polyline([pts[i], pts[i + 1]], { color: "#1c1f23", weight: 2.5, opacity: .7, dashArray: "2 6", lineCap: "round" }).addTo(map);
+      }
+      /* 同一地点（比如起点和终点都是住处）合成一个标记，编号写成「1·4」 */
+      const groups = new Map();
+      stops.forEach((s, i) => { if (!groups.has(s.k)) groups.set(s.k, { s, idx: [] }); groups.get(s.k).idx.push(i); });
+      const marks = [];
+      groups.forEach(g => {
+        const lab = g.idx.map(i => i + 1).join("·"), w = 14 + 8 * lab.length;
+        const mk = L.marker(g.s.p.ll, { title: g.s.p.n, icon: L.divIcon({ className: "pin", html: "<span>" + lab + "</span>", iconSize: [w, 22], iconAnchor: [w / 2, 11] }) })
+          .addTo(map).bindTooltip(lab + ". " + g.s.p.n, { direction: "top", offset: [0, -10] })
+          .on("click", () => focus(g.idx[0], false));
+        g.idx.forEach(i => { marks[i] = mk; });
+      });
+      const all = () => map.fitBounds(pts, { padding: [36, 36], maxZoom: 15 });
+      all();
+      function focus(i, pan) {
+        lis.forEach((li, j) => li.classList.toggle("on", j === i));
+        if (pan) map.setView(stops[i].p.ll, Math.max(map.getZoom(), 15));
+        marks[i].openTooltip();
+      }
+      lis.forEach((li, i) => li.addEventListener("click", e => { if (e.target.closest("a")) return; focus(i, true); }));
+      box.parentNode.querySelector(".dm-all").addEventListener("click", () => { lis.forEach(li => li.classList.remove("on")); all(); });
+    }).catch(() => {
+      box.classList.add("off");
+      box.textContent = "地图需要联网加载。也可以点下面的 Google 地图链接。";
+    });
+  }
+  function dayMap(d, stops) {
+    const main = stops.filter(s => !s.alt), alts = stops.filter(s => s.alt);
+    const row = (s, label) => {
+      const sid = s.it.spot && T.spots[s.it.spot] ? s.it.spot : null;  /* 只是路过或换乘的站不显示停留时间 */
+      const sp = sid ? T.spots[sid] : null, info = sid && T.spotInfo ? T.spotInfo[sid] : null;
+      const meta = info ? [info.time && info.time !== "—" ? "停留 " + info.time : "", info.fee && info.fee !== "—" ? info.fee : ""].filter(Boolean).join("；") : "";
+      return el("li", { class: label === "备" ? "alt" : "", tabindex: "0" },
+        el("span", { class: "sn" }, label),
+        el("div", {},
+          el("div", { class: "sh" }, el("b", {}, s.p.n), el("span", { class: "st" }, s.it.t)),
+          sp && sp.photo ? el("p", { class: "shot" }, "打卡：" + sp.photo) : null,
+          meta ? el("p", { class: "o-note" }, meta) : null,
+          el("a", { href: gSearch(s.p.q), target: "_blank", rel: "noopener" }, "导航")));
+    };
+    const lis = main.map((s, i) => row(s, String(i + 1)));
+    const ol = el("ol", { class: "stop-list" });
+    lis.forEach((li, i) => {
+      ol.append(li);
+      if (i < main.length - 1) ol.append(el("li", { class: "leg", "aria-hidden": "true" }, legText(main[i], main[i + 1])));
+    });
+    alts.forEach(s => ol.append(row(s, "备")));
+    const box = el("div", { class: "map-box", role: "img", "aria-label": d.title + " 地图" });
+    const det = el("details", { class: "day-map" },
+      el("summary", {}, `地图与路线（${main.length} 站）`),
+      el("div", { class: "dm-wrap" },
+        el("div", { class: "dm-map" }, box,
+          el("div", { class: "map-links" },
+            el("button", { type: "button", class: "dm-all" }, "看全部"),
+            el("a", { href: gRoute(main), target: "_blank", rel: "noopener" }, "在 Google 地图按顺序打开"),
+            el("span", { class: "o-note" }, "虚线连的是步行能到的相邻两站；坐车的段不画线。点右侧的站可以在地图上定位。"))),
+        ol));
+    det.addEventListener("toggle", () => { if (det.open && !box.dataset.done) { box.dataset.done = "1"; drawMap(box, main, lis); } });
+    return det;
   }
   const daysBox = $("#days");
   T.days.forEach(d => {
@@ -144,26 +282,48 @@
       if (it.tag) tags.append(el("span", { class: "tag " + it.tag }, TAG[it.tag]));
       if (it.jojo) tags.append(el("span", { class: "tag jojo", title: "JoJo 打卡点" }, "JoJo"));
       const txt = el("div", { class: "txt" });
+      /* 把「地点：说明」拆开：前半句加粗，景点名做成可点开的按钮 */
+      const mm = it.text.match(/^([^：]{1,26})：([\s\S]*)$/);
       if (it.spot && T.spots[it.spot]) {
+        /* 在文字里找到景点名，只把景点名做成按钮；找不到再按「：」或括号拆 */
+        const sp = T.spots[it.spot];
+        const cands = sp.name.split(/与|\/|（|\(/).map(x => x.trim()).filter(x => x.length >= 2);
+        cands.push(...cands.map(x => x.replace(/[区站]$/, "")));
+        let pos = -1, word = "";
+        cands.forEach(c => { const k = it.text.indexOf(c); if (k >= 0 && (pos < 0 || k < pos)) { pos = k; word = c; } });
+        let before = "", label, rest;
+        if (pos >= 0) { before = it.text.slice(0, pos); label = word; rest = it.text.slice(pos + word.length); }
+        else if (mm) { label = mm[1]; rest = "：" + mm[2]; }
+        else {
+          const k = it.text.search(/[（；，(]/);
+          if (k > 0 && k <= 26) { label = it.text.slice(0, k); rest = it.text.slice(k); }
+          else { label = sp.name; rest = " " + it.text; }
+        }
+        const bm = before.match(/^([^：]{1,16})：([\s\S]*)$/);
+        const beforeNodes = bm ? [el("b", { class: "lead-in" }, bm[1]), "：" + bm[2]] : [before];
         const pid = `p-${d.id}-${i}`;
         const panel = el("div", { class: "spot-panel", id: pid, hidden: true });
-        const btn = el("button", { class: "spot-btn", type: "button", "aria-expanded": "false", "aria-controls": pid, onclick: () => {
+        const btn = el("button", { class: "spot-btn", type: "button", "aria-expanded": "false", "aria-controls": pid, title: "点开看介绍和图片", onclick: () => {
           const open = btn.getAttribute("aria-expanded") === "true";
           btn.setAttribute("aria-expanded", String(!open));
           panel.hidden = open;
           if (!open && !panel.childElementCount) {
             const s = T.spots[it.spot];
-            panel.append(el("div", {}, photoBox(it.spot), el("div", { class: "credit" })), spotText(s));
+            panel.append(el("div", {}, photoBox(it.spot), el("div", { class: "credit" })), spotText(s, it.spot));
             convertIfNeeded(panel);
           }
-        } }, it.text);
-        txt.append(btn, tags, panel);
+        } }, label);
+        txt.append(...beforeNodes, btn, rest, tags, panel);
+      } else if (mm && mm[1].length <= 30) {
+        txt.append(el("b", { class: "lead-in" }, mm[1]), "：", mm[2], tags);
       } else {
         txt.append(it.text, tags);
       }
       ul.append(el("li", { class: "item" }, el("span", { class: "t" }, it.t), txt));
     });
     body.append(ul);
+    const stops = dayStops(d);
+    if (stops.filter(s => !s.alt).length >= 2) body.append(dayMap(d, stops));
     daysBox.append(el("article", { class: "day", id: d.id }, date, body));
     if (d.note) daysBox.lastChild.append(el("p", { class: "day-note", style: "grid-column:1/-1" }, d.note));
   });
@@ -177,6 +337,7 @@
 
   /* ---------- 待办 ---------- */
   const todoBox = $("#todos");
+  T.todos.forEach(t => { if (t.done && !(t.id in done)) done[t.id] = true; });
   const stayTodo = {}; T.todos.forEach(t => { if (t.anchor) stayTodo[t.anchor] = t.id; });
   Object.entries(stayTodo).forEach(([sid, tid]) => { if (chosen[sid] && !(tid in done)) done[tid] = true; });
   function renderTodos() {
@@ -251,7 +412,7 @@
       const head = el("div", { class: "stay-head", style: `--c:${COLOR[st.city]}` },
         el("h3", {}, st.label), el("span", { class: "n" }, st.nights),
         el("span", { class: "chosen-label" + (pk ? "" : " is-none") }, pk
-          ? `已定：${pk.name}，预算计 ${priceOf(pk)}€ + 城市税 ${stayTax(st, pk)}€`
+          ? `${st.booked && pk.id === st.pick ? "已预订" : "已定"}：${pk.name}，预算计 ${priceOf(pk)}€ + 城市税 ${stayTax(st, pk)}€`
           : `未决定，预算暂按最便宜的 ${used.name} ${priceOf(used)}€ 算`));
       const tbody = el("tbody");
       opts.forEach(o => {
@@ -319,13 +480,44 @@
               x.time ? [el("dt", {}, "停留"), el("dd", {}, x.time)] : null,
               x.fee ? [el("dt", {}, "门票"), el("dd", {}, x.fee)] : null,
               x.tip ? [el("dt", {}, "提示"), el("dd", {}, x.tip)] : null,
-              s.photo ? [el("dt", {}, "拍照"), el("dd", {}, s.photo)] : null)));
+              s.photo ? [el("dt", {}, "拍照"), el("dd", {}, s.photo)] : null),
+            x.look ? lookBlock(x.look) : null,
+            learnLinks(id, s)));
         convertIfNeeded(body);
       });
       list.append(det);
     });
     spotsBox.append(el("h3", { class: "spot-city " + (city === "rome" ? "c-rome" : "c-naples") }, CITY[city]), list);
   });
+
+  /* ---------- 美食 ---------- */
+  (function renderFood() {
+    const F = T.food, daysEl = $("#food-days"), dishEl = $("#food-dishes"), tipsEl = $("#food-tips");
+    if (!F || !daysEl) return;
+    const today = new Set();
+    daysEl.append(...F.byDay.map(g => el("details", { class: "food-day" },
+      el("summary", {}, el("span", { class: "fd" }, g.d), el("span", { class: "fa" }, g.area), el("span", { class: "fc" }, g.list.length + " 家")),
+      el("ul", { class: "food-list" }, g.list.map(x => el("li", {},
+        el("div", { class: "fn" }, el("b", {}, x.n), el("a", { href: gSearch(x.q), target: "_blank", rel: "noopener" }, "地图")),
+        el("p", {}, x.what),
+        el("p", { class: "o-note" }, x.when)))))));
+    const fio = "IntersectionObserver" in window ? new IntersectionObserver(ents => ents.forEach(e => {
+      if (e.isIntersecting) { fio.unobserve(e.target); fillImage(e.target, e.target._dish); }
+    }), { rootMargin: "200px" }) : null;
+    const LABEL = { rome: "罗马", naples: "那不勒斯", coast: "索伦托半岛" };
+    ["rome", "naples", "coast"].forEach(c => {
+      const grid = el("div", { class: "dish-grid" }, F.dishes.filter(x => x.city === c).map(x => {
+        const ph = el("div", { class: "ph" });
+        ph._dish = x;
+        if (fio) fio.observe(ph); else fillImage(ph, x);
+        return el("figure", { class: "dish-card" }, ph, el("div", { class: "credit" }),
+          el("figcaption", {}, el("div", { class: "dn" }, el("b", {}, x.name), el("span", { class: "dp" }, x.price)),
+            el("div", { class: "di" }, x.it), el("p", {}, x.desc)));
+      }));
+      dishEl.append(el("h4", { class: "dish-city c-" + (c === "coast" ? "naples" : c) }, LABEL[c]), grid);
+    });
+    if (tipsEl) tipsEl.append(...F.tips.map(t => el("li", {}, t)));
+  })();
 
   /* ---------- 出行须知 ---------- */
   const tipsBox = $("#tips-body");
@@ -478,14 +670,14 @@
     fixedRows.push(el("li", {}, el("span", {}, "城市税", el("span", { class: "o-note" }, "按所选住处自动算，到店付现金")), el("span", { class: "r" }, eur(taxR + taxN))));
     let tix = 0;
     const tixList = el("ul", { class: "b-tix" }, B.tickets.filter(inPlan).map(t => {
-      const on = tixOn(t), pp = t.pp;
-      if (on) tix += pp * P;
+      const on = tixOn(t), pp = t.pp, cost = t.total != null ? t.total : pp * P;
+      if (on) tix += cost;
       return el("li", {}, el("label", { class: "chk" },
         el("input", { type: "checkbox", checked: on, onchange: e => { bs.tix[bs.plan + ":" + t.id] = e.target.checked; bSave(); renderBudget(); } }),
         el("span", {}, t.name, " ", el("span", { class: "v v-" + (t.v === "可省" ? "skip" : t.v === "必去" ? "must" : "ok") }, t.v), el("span", { class: "o-note" }, t.why),
           t.more ? el("details", { class: "t-more" }, el("summary", {}, "介绍"),
             el("dl", {}, t.more.flatMap(([k, v]) => [el("dt", {}, k), el("dd", {}, v)]))) : null)),
-        el("span", { class: "r" }, eur(pp * P)));
+        el("span", { class: "r" }, eur(cost)));
     }));
     real += tix;
     const total = real + est;

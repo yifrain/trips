@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>罗马 + 那不勒斯 2026-12</name>
+<Folder><name>12/5 周六 晚上出发，半夜到罗马</name>
+<Placemark><name>1. 菲乌米奇诺机场 FCO</name><description>22:20：BER → FCO，00:30 落地</description><Point><coordinates>12.2389,41.8003,0</coordinates></Point></Placemark>
+<Placemark><name>2. hu Roma Camping In Town（住处）</name><description>00:45：机场打车去营地（打表，约 45–55€ / 车，约 30 分钟）；营地 24 小时前台</description><Point><coordinates>12.4045,41.8885,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/6 周日 免费日：从斗兽场一路往西走到特雷维</name>
+<Placemark><name>1. hu Roma Camping In Town（住处）</name><description>7:30：营地出发：公交到地铁 A 线 Cornelia → Termini 换 B 线 → Colosseo（约 1 小时）。凌晨 1 点多才入住，能睡 5–6 小时；早饭在路上的 bar 站着吃牛角包配卡布奇诺（约 3€）</description><Point><coordinates>12.4045,41.8885,0</coordinates></Point></Placemark>
+<Placemark><name>2. 斗兽场</name><description>8:30：斗兽场：售票处排免费票（不能预约，先到先得），进去约 1 小时。先上看台看地下层的兽笼通道，再看外墙三种柱式
+打卡：从对面的 Via Nicola Salvi 坡上可以拍到全景。</description><Point><coordinates>12.4922,41.8902,0</coordinates></Point></Placemark>
+<Placemark><name>3. 帕拉蒂尼山 / 古罗马广场</name><description>10:15：帕拉蒂尼山 → 古罗马广场（同样免费）：从 Via di San Gregorio 入口上帕拉蒂尼山，看皇宫遗址和俯瞰大竞技场的平台 → 下到广场：提图斯凯旋门 → 维斯塔贞女之家 → 凯撒火化处 → 元老院 → 塞维鲁凯旋门，从靠卡比托利欧山的西北出口出来</description><Point><coordinates>12.487,41.8918,0</coordinates></Point></Placemark>
+<Placemark><name>4. 卡比托利欧广场 / 维托里奥纪念堂</name><description>12:30：卡比托利欧广场：米开朗基罗设计的星形广场和马可·奥勒留骑马像 → 市政厅右后方的平台俯瞰整个古罗马广场 → 下台阶到维托里奥纪念堂正面（无名烈士墓、卫兵）</description><Point><coordinates>12.4828,41.8934,0</coordinates></Point></Placemark>
+<Placemark><name>5. 犹太区（午饭）</name><description>13:15：午饭：沿马切罗剧场（像个小斗兽场的古剧场）走进犹太区主街 Via del Portico d'Ottavia：坐下吃炸朝鲜蓟，或者在 Boccione 买点心、在 Largo Argentina 的 Antico Forno Roscioli 买块披萨</description><Point><coordinates>12.4777,41.8925,0</coordinates></Point></Placemark>
+<Placemark><name>6. Largo di Torre Argentina</name><description>14:15：路过 Largo di Torre Argentina：凯撒遇刺的庞培元老院遗址，现在住着一群流浪猫</description><Point><coordinates>12.4767,41.8955,0</coordinates></Point></Placemark>
+<Placemark><name>7. 万神殿</name><description>14:45：万神殿（免费日，排队可能 20–40 分钟）。出来后：门口的咖啡馆 Sant'Eustachio、Giolitti gelato；旁边 Santa Maria sopra Minerva 门口有贝尼尼的小象驮方尖碑（教堂免费）
+打卡：中午阳光会从圆孔斜射进来。</description><Point><coordinates>12.4769,41.8986,0</coordinates></Point></Placemark>
+<Placemark><name>8. 圣王路易堂（卡拉瓦乔）</name><description>15:30：圣王路易堂（San Luigi dei Francesi）：左侧最里面礼拜堂有卡拉瓦乔的《圣马太》三联画，免费，投币照明（开放时间以现场为准）</description><Point><coordinates>12.4745,41.8996,0</coordinates></Point></Placemark>
+<Placemark><name>9. 纳沃纳广场</name><description>16:00：纳沃纳广场圣诞市集：贝尼尼的四河喷泉，等天黑亮灯（日落约 16:35）；Gelateria del Teatro 在西边的 Via dei Coronari</description><Point><coordinates>12.4731,41.8992,0</coordinates></Point></Placemark>
+<Placemark><name>10. 特雷维喷泉</name><description>19:30：特雷维喷泉夜景（广场上看免费；下到池边 2€）。背对喷泉右手往左肩后扔一枚硬币
+打卡：早上 8 点前人最少；晚上灯光下更出片。</description><Point><coordinates>12.4833,41.9009,0</coordinates></Point></Placemark>
+<Placemark><name>11. 西班牙台阶 / 地铁 Spagna 站</name><description>20:00：沿 Via delle Muratte、Via del Corso 走 10 分钟到西班牙台阶，地铁 A 线 Spagna 站直达 Cornelia，回营地早点睡</description><Point><coordinates>12.4824,41.9063,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/7 周一 梵蒂冈、圣天使堡、特拉斯提弗列</name>
+<Placemark><name>1. hu Roma Camping In Town（住处）</name><description>6:45：从营地出发（营地在西边，离梵蒂冈近）；路上买好早饭</description><Point><coordinates>12.4045,41.8885,0</coordinates></Point></Placemark>
+<Placemark><name>2. 圣彼得大教堂（和穹顶）</name><description>7:15：三人一起：圣彼得大教堂，刚开门安检几乎不排队；遮肩过膝。进门右手第一个礼拜堂是米开朗基罗《圣殇》→ 中间贝尼尼的青铜华盖 → 摸得发亮的圣彼得铜像右脚 → 最里面的“圣彼得宝座”</description><Point><coordinates>12.4539,41.9022,0</coordinates></Point></Placemark>
+<Placemark><name>3. Bonci Pizzarium</name><description>11:00：Bonci Pizzarium 开门，买几种切块披萨当早午饭（按重量）</description><Point><coordinates>12.4471,41.9066,0</coordinates></Point></Placemark>
+<Placemark><name>4. 梵蒂冈博物馆入口（Viale Vaticano）</name><description>11:30：Yifan：到博物馆入口 Viale Vaticano，走右侧预约通道「Corridoio 1」，给工作人员看电子票和证件验票，再过安检、刷闸机
+打卡：出口的双螺旋楼梯很出片。</description><Point><coordinates>12.4536,41.9065,0</coordinates></Point></Placemark>
+<Placemark><name>5. Prati 区 Via Cola di Rienzo（朋友）</name><description>12:00：两位朋友：圣天使堡内部（约 16€，可选），或者 Prati 区 Via Cola di Rienzo 逛街、Mercato Trionfale 菜市场买水果火腿面包，找地方歇脚</description><Point><coordinates>12.464,41.9076,0</coordinates></Point></Placemark>
+<Placemark><name>6. 圣天使堡 / 圣天使桥</name><description>15:15：在圣天使桥会合：桥上 10 尊天使各拿一件耶稣受难的刑具
+打卡：黄昏从对岸拍城堡和桥，灯光亮起时最好。</description><Point><coordinates>12.4666,41.902,0</coordinates></Point></Placemark>
+<Placemark><name>7. 特拉斯提弗列</name><description>17:30：特拉斯提弗列：Santa Maria in Trastevere 广场（金色马赛克，免费）→ Via della Lungaretta 一带小巷；先在 Supplì Roma 垫一口，晚饭 Da Enzo al 29（要排队）</description><Point><coordinates>12.47,41.8894,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/8 周二 圣母无染原罪节：南边山丘、人民广场、教宗献花</name>
+<Placemark><name>1. hu Roma Camping In Town（住处）</name><description>8:30：营地出发：地铁 A 线到 Termini 换 B 线到 Circo Massimo 站（或公交到真理之口附近）</description><Point><coordinates>12.4045,41.8885,0</coordinates></Point></Placemark>
+<Placemark><name>2. 真理之口</name><description>9:30：真理之口（排队拍照，一人一张很快）；旁边希腊圣母堂内部免费，看中世纪彩色石地板
+打卡：排队轮流拍，一人一张，很快。</description><Point><coordinates>12.4815,41.8881,0</coordinates></Point></Placemark>
+<Placemark><name>3. 大竞技场遗址</name><description>10:00：大竞技场遗址：沿跑道草地走一段，再从 Via di Valle Murcia 走上阿文提诺山</description><Point><coordinates>12.4851,41.8861,0</coordinates></Point></Placemark>
+<Placemark><name>4. 橘子花园 / 骑士团钥匙孔</name><description>10:30：橘子花园俯瞰全城 → 隔壁圣撒比纳教堂（5 世纪，原装木门，免费）→ 走 5 分钟到马耳他骑士团广场，排队从钥匙孔看圣彼得圆顶
+打卡：钥匙孔前常常排队，手机贴近孔洞拍。</description><Point><coordinates>12.4795,41.8844,0</coordinates></Point></Placemark>
+<Placemark><name>5. 塞斯提伍斯金字塔</name><description>11:45：顺着山坡下到 Testaccio，路过塞斯提伍斯金字塔（古罗马人的金字塔形墓，地铁 Piramide 站旁）</description><Point><coordinates>12.4808,41.8763,0</coordinates></Point></Placemark>
+<Placemark><name>6. Testaccio 区（午饭）</name><description>12:00：午饭：Trapizzino 本店（Via Giovanni Branca 88）；Testaccio 市场节日可能不开</description><Point><coordinates>12.4752,41.8771,0</coordinates></Point></Placemark>
+<Placemark><name>7. 人民广场 / 人民圣母堂</name><description>14:00：人民广场：双子教堂和方尖碑 → 人民圣母堂：卡拉瓦乔两幅画（左侧最里面 Cerasi 礼拜堂）、拉斐尔设计的 Chigi 礼拜堂，免费（弥撒时不能参观）</description><Point><coordinates>12.4764,41.9115,0</coordinates></Point></Placemark>
+<Placemark><name>8. 平乔山露台</name><description>14:45：从广场东侧台阶走上平乔山露台看全城 → 沿博尔盖塞公园边走 Viale della Trinità dei Monti 到西班牙台阶顶上的天主圣三教堂</description><Point><coordinates>12.4797,41.9113,0</coordinates></Point></Placemark>
+<Placemark><name>9. 圣母无染原罪柱（教宗献花）</name><description>15:30：下到西班牙广场旁的 Piazza Mignanelli 占位置：约 16:00 教宗为圣母像献花（安检、封路，提前 30 分钟到）</description><Point><coordinates>12.4836,41.9045,0</coordinates></Point></Placemark>
+<Placemark><name>10. 孔多蒂街 / 科尔索大街</name><description>17:00：孔多蒂街 → 科尔索大街看圣诞灯饰；Pompi 买提拉米苏；晚饭 Pastificio Guerra 或附近</description><Point><coordinates>12.48,41.905,0</coordinates></Point></Placemark>
+<Placemark><name>11. 西班牙台阶 / 地铁 Spagna 站</name><description>20:00：地铁 A 线 Spagna 站直达 Cornelia 回营地</description><Point><coordinates>12.4824,41.9063,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/9 周三 去那不勒斯：老城、礼拜堂、山顶城堡</name>
+<Placemark><name>1. Napoli Station B&amp;B（住处）</name><description>11:30：到 Metropark（中央车站旁），走 10 分钟到 Napoli Station B&amp;B 寄存行李；穿过加里波第广场看好包</description><Point><coordinates>14.2682,40.8497,0</coordinates></Point></Placemark>
+<Placemark><name>2. Via dei Tribunali（午饭）</name><description>12:30：从住处走 15–20 分钟到 Via dei Tribunali（老城主街）：Di Matteo 窗口买炸披萨、frittatina，站着吃</description><Point><coordinates>14.2551,40.851,0</coordinates></Point></Placemark>
+<Placemark><name>3. Spaccanapoli / 圣格雷戈里奥街</name><description>13:30：圣格雷戈里奥街（圣诞马槽街）：一路看作坊里的小人偶，就在 Tribunali 旁边
+打卡：从高处的 Largo San Martino 往下能看到这条笔直的切线。</description><Point><coordinates>14.2575,40.8507,0</coordinates></Point></Placemark>
+<Placemark><name>4. 圣塞维罗礼拜堂</name><description>14:00：圣塞维罗礼拜堂：《蒙纱的基督》、《谦逊》、《解脱》、地下室的“解剖机器”（订 14:00 以后的时段）；出来隔壁 Scaturchio 吃 babà</description><Point><coordinates>14.2547,40.8495,0</coordinates></Point></Placemark>
+<Placemark><name>5. 新耶稣教堂 / Santa Chiara</name><description>14:45：沿 Spaccanapoli 直街往西：新耶稣教堂（钻石面外墙）→ 对面 Santa Chiara（回廊收费，可跳过）→ 走到托莱多大街</description><Point><coordinates>14.2505,40.8483,0</coordinates></Point></Placemark>
+<Placemark><name>6. 中央缆车 Augusteo 站</name><description>15:45：托莱多大街旁的 Augusteo 站坐中央缆车到终点 Fuga，走 10 分钟上山</description><Point><coordinates>14.2486,40.8384,0</coordinates></Point></Placemark>
+<Placemark><name>7. 圣艾尔莫城堡</name><description>16:10：圣艾尔莫城堡城墙上看日落（约 16:35）；不想买票就在下面的 Largo San Martino 观景台看，景色接近
+打卡：周二闭馆。下来后在 Largo San Martino 观景台再拍一次。</description><Point><coordinates>14.2389,40.8436,0</coordinates></Point></Placemark>
+<Placemark><name>8. 托莱多地铁站 / 翁贝托一世长廊</name><description>17:30：缆车下山 → 托莱多大街 → 翁贝托一世长廊（玻璃穹顶）→ 托莱多地铁站看“海底隧道”，Pintauro 买 sfogliatella
+打卡：在扶梯上往上拍“光之火山口”。</description><Point><coordinates>14.2486,40.843,0</coordinates></Point></Placemark>
+<Placemark><name>9. L'Antica Pizzeria da Michele</name><description>19:00：地铁 1 号线 Toledo → Garibaldi 回住处附近；晚饭 L'Antica Pizzeria da Michele（取号排队，离住处步行约 5 分钟）</description><Point><coordinates>14.2634,40.8497,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/10 周四 庞贝，傍晚到 Vico Equense 看海</name>
+<Placemark><name>1. Napoli Station B&amp;B（住处）</name><description>8:00：退房，背上小包，Porta Nolana 或 Garibaldi 坐 Circumvesuviana（索伦托方向）到 Pompei Scavi – Villa dei Misteri（约 35–40 分钟）</description><Point><coordinates>14.2682,40.8497,0</coordinates></Point></Placemark>
+<Placemark><name>2. 庞贝古城（Porta Marina 入口）</name><description>9:00：庞贝古城，留 3–4 小时；入口可以寄存背包（以现场为准）
+打卡：广场和朱庇特神庙后面就是维苏威火山。</description><Point><coordinates>14.4838,40.7486,0</coordinates></Point></Placemark>
+<Placemark><name>3. Antica Tenuta Celotto（住处）</name><description>14:30：继续坐同一条线（索伦托方向）到 Seiano 或 Meta 站（约 20–25 分钟，问店家哪个近），走去住处入住；入住时间 14:00–18:00，提前告诉店家到达时间</description><Point><coordinates>14.4082,40.65464,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/11 周五 上午索伦托，下午波西塔诺看日落</name>
+<Placemark><name>1. Antica Tenuta Celotto（住处）</name><description>8:45：从住处出发，走到最近的 Circumvesuviana 车站（Seiano 或 Meta，入住时问店家哪个近，也可以付费接送）</description><Point><coordinates>14.4082,40.65464,0</coordinates></Point></Placemark>
+<Placemark><name>2. 索伦托（火车站 / 塔索广场）</name><description>9:15：坐小火车到终点索伦托（约 10–15 分钟，约 2–3€）。上午逛索伦托：塔索广场 → 广场边往下看磨坊谷（Vallone dei Mulini）→ 老城小巷（Via San Cesareo，柠檬和柠檬酒小店）→ 市立公园观景台（Villa Comunale），正对海湾和维苏威火山；想多走就从观景台旁的台阶下到 Marina Grande 渔港</description><Point><coordinates>14.3756,40.6263,0</coordinates></Point></Placemark>
+<Placemark><name>3. 波西塔诺</name><description>12:40：波西塔诺：在镇子上方的公路边（Sponda 站）下车，先拍小镇全景 → 沿小路一路往下走到彩色马约利卡瓷砖圆顶的圣母升天教堂 → 大海滩 Spiaggia Grande；在海边吃午饭
+打卡：全景在镇子上方的公路边（巴士停靠的 Sponda 站一带）；往下走到海滩回头拍圆顶教堂。</description><Point><coordinates>14.485,40.6281,0</coordinates></Point></Placemark>
+<Placemark><name>4. Antica Tenuta Celotto（住处）</name><description>18:00：索伦托火车站坐小火车回 Seiano / Meta 站，走回住处；晚饭在索伦托车站附近吃完再回，或回住处自己做</description><Point><coordinates>14.4082,40.65464,0</coordinates></Point></Placemark>
+<Placemark><name>5. 卡普里岛</name><description>备选：卡普里岛：整天改去卡普里。从索伦托 Marina Piccola 坐船约 20–25 分钟，缆车上卡普里镇、奥古斯都花园；只在晴天、海面平静时去
+打卡：奥古斯都花园俯瞰法拉廖尼巨石和下面的之字形小路。</description><Point><coordinates>14.238,40.556,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/12 周六 回那不勒斯海边半天，下午回罗马</name>
+<Placemark><name>1. Napoli Metropark / 中央车站</name><description>9:15：行李多的话寄存在中央车站，只背小包就直接走；地铁 1 号线 Garibaldi → Toledo</description><Point><coordinates>14.272,40.853,0</coordinates></Point></Placemark>
+<Placemark><name>2. 西班牙区 / 马拉多纳壁画</name><description>9:45：西班牙区：从托莱多大街往西拐进窄巷，走到马拉多纳壁画（Largo Maradona）</description><Point><coordinates>14.246,40.841,0</coordinates></Point></Placemark>
+<Placemark><name>3. 翁贝托一世长廊</name><description>10:30：回到托莱多大街 → 翁贝托一世长廊（看地面的十二星座马赛克）</description><Point><coordinates>14.2496,40.8386,0</coordinates></Point></Placemark>
+<Placemark><name>4. 平民表决广场</name><description>10:45：平民表决广场：圣方济各教堂、王宫正面 8 尊国王像；Gambrinus 站着喝杯咖啡、吃个 babà</description><Point><coordinates>14.2484,40.8358,0</coordinates></Point></Placemark>
+<Placemark><name>5. 新堡 / 港口</name><description>11:15：新堡：入口两座塔之间的白色凯旋门；对面是去卡普里的 Molo Beverello 码头（JoJo）</description><Point><coordinates>14.2528,40.8384,0</coordinates></Point></Placemark>
+<Placemark><name>6. 蛋堡</name><description>11:45：沿海边 Via Partenope 走到蛋堡：城墙平台（免费）看维苏威火山和 Borgo Marinari 小港
+打卡：从 Via Partenope 拍城堡和背后的维苏威火山。</description><Point><coordinates>14.2475,40.8282,0</coordinates></Point></Placemark>
+<Placemark><name>7. Napoli Metropark / 中央车站</name><description>13:40：地铁 1 号线 Municipio → Garibaldi（或打车约 15 分钟）回 Metropark，取行李</description><Point><coordinates>14.272,40.853,0</coordinates></Point></Placemark>
+</Folder>
+<Folder><name>12/13 周日 早班机回柏林</name>
+<Placemark><name>1. hu Roma Camping In Town（住处）</name><description>6:45：营地出发去机场：营地的收费机场班车，或打车约 30 分钟</description><Point><coordinates>12.4045,41.8885,0</coordinates></Point></Placemark>
+<Placemark><name>2. 菲乌米奇诺机场 FCO</name><description>8:00：到 FCO。申根内航班，提前约 2 小时到就够</description><Point><coordinates>12.2389,41.8003,0</coordinates></Point></Placemark>
+</Folder>
+</Document></kml>
