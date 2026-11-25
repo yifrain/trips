@@ -3,6 +3,7 @@
 # 用法：在 _site 目录里运行 ./sync.sh
 set -e
 cd "$(dirname "$0")"
+git pull --ff-only   # 先拉取远端（Claude 也可能直接推送过）
 TRIPS=".."
 
 # 旅行文件夹 → 网址里的子目录名（以后新增旅行在这里加一行）
